@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class MenuManager : MonoBehaviour
     public void Play()
     {
         Debug.Log("Singleplayer or Multiplayer?");
+        SceneManager.LoadScene(1);
+
     }
 
     public void Settings()
