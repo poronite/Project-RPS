@@ -1970,7 +1970,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Turn: Player '
+  m_Text: Player x's turn
 --- !u!222 &1044570143
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2225,7 +2225,7 @@ MonoBehaviour:
   Player1: {fileID: 1730373072}
   Player2: {fileID: 501519583}
   WhosTurn: {fileID: 1044570142}
-  NumTurns: {fileID: 1949091762}
+  NumRounds: {fileID: 1949091762}
 --- !u!1 &1945214389
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,7 +2282,7 @@ GameObject:
   - component: {fileID: 1949091763}
   - component: {fileID: 1949091762}
   m_Layer: 5
-  m_Name: NumTurns
+  m_Name: NumRounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2339,7 +2339,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Number of Turns:'
+  m_Text: Round x
 --- !u!222 &1949091763
 CanvasRenderer:
   m_ObjectHideFlags: 0

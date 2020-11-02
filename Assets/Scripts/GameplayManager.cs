@@ -7,13 +7,17 @@ using UnityEngine.SceneManagement;
 public class GameplayManager : MonoBehaviour
 {
     public int PlayerTurn;
-    private int numTurns = 0;
-    private bool endTurn = true;
+
+    private int numRounds = 0;
+    private bool endRound = true;
+
     public int AssignNumberMoves = 0;
+
     public GameObject Player1;
     public GameObject Player2;
+
     public Text WhosTurn;
-    public Text NumTurns;
+    public Text NumRounds;
 
     void Start()
     {
@@ -29,7 +33,7 @@ public class GameplayManager : MonoBehaviour
 
     public void ChangePlayerTurn(int PTurnTemp)
     {
-        EndTurn();
+        EndRound();
 
         PlayerTurn = PTurnTemp;
 
@@ -47,20 +51,20 @@ public class GameplayManager : MonoBehaviour
             Player2.GetComponent<Player>().numberMovesLeft = AssignNumberMoves;
         }
 
-        WhosTurn.text = $"Player {PlayerTurn}'s turn" ;
-        NumTurns.text = "Number of Turns: " + numTurns;
+        WhosTurn.text = $"Player {PlayerTurn}'s turn";
+        NumRounds.text = "Round " + numRounds;
     }
 
-    public void EndTurn()
+    public void EndRound()
     {
-        if (endTurn == true)
+        if (endRound == true)
         {
-            numTurns += 1;
-            endTurn = false;
+            numRounds += 1;
+            endRound = false;
         }
         else
         {
-            endTurn = true;
+            endRound = true;
         }
     }
 
