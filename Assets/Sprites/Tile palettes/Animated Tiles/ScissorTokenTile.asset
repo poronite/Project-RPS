@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d9c0fbc4c2d0c747a6fadd99e97f577, type: 3}
+  m_Name: ScissorTokenTile
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -1586993184371695765, guid: e293eae6ba94748408ac5dc08adb5d15, type: 3}
+  - {fileID: 1201900955609626871, guid: e293eae6ba94748408ac5dc08adb5d15, type: 3}
+  - {fileID: 2375593524947774757, guid: e293eae6ba94748408ac5dc08adb5d15, type: 3}
+  - {fileID: 3989288698132219762, guid: e293eae6ba94748408ac5dc08adb5d15, type: 3}
+  m_MinSpeed: 1
+  m_MaxSpeed: 1
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
