@@ -6,18 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    //reference to the game logo in the menu
     public GameObject RPSLogo;
+
+    //references to the buttons in the menu
     public GameObject PlayButton;
     public GameObject SettingsButton;
     public GameObject CreditsButton;
     public GameObject ExitGameButton;
 
 
+    //starts scene in the Main menu
     void Start()
     {
         MainMenu();
     }
 
+    //enable Main menu's objects and disable the rest
     public void MainMenu()
     {
         Debug.Log("Going to Main Menu.");
@@ -28,6 +33,7 @@ public class MenuManager : MonoBehaviour
         ExitGameButton.SetActive(true);
     }
 
+    //for now it just loads play scene
     public void Play()
     {
         Debug.Log("Singleplayer or Multiplayer?");
@@ -35,16 +41,19 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    //disable Main menu's objects and enable Settings objects
     public void Settings()
     {
         Debug.Log("Going to Settings Menu.");
     }
 
+    //disable Main menu's objects and enable Credits objects
     public void Credits()
     {
         Debug.Log("Going to Credits.");
     }
 
+    //exit the game
     public void ExitGame()
     {
         Debug.Log("Exit Game");

@@ -8,22 +8,30 @@ public class GameplayManager : MonoBehaviour
 {
     public int PlayerTurn;
 
+    //1 Round = 2 player turns
     private int numRounds = 0;
+    //bool used to know when we can numRounds += 1
     private bool endRound = true;
 
+    //variable used to easily change player moves on Unity inspector
     public int AssignNumberMoves = 0;
 
+    //references to the players in the scene
     public GameObject Player1;
     public GameObject Player2;
 
+    //references to UI elements in the scene
     public Text WhosTurn;
+    public Text CurrentPlayerMovesLeft;
     public Text NumRounds;
+    public Button EndTurnButton;
 
     void Start()
     {
         DetermineFirstToPlay();
     }
 
+    //function to determine who goes first in a match
     private void DetermineFirstToPlay()
     {
         PlayerTurn = Random.Range(1, 3);
@@ -31,6 +39,22 @@ public class GameplayManager : MonoBehaviour
         Debug.Log($"Player{PlayerTurn} goes first.");
     }
 
+    //function to warn player how many moves are left
+    public void CurrentPlayerMovesLeftUI(int movesleft)
+    {
+        if (movesleft > 0)
+        {
+            CurrentPlayerMovesLeft.text = $"{movesleft} moves left";
+            EndTurnButton.GetComponent<Image>().color = new Color(255, 255, 255);
+        }
+        else if (movesleft == 0)
+        {
+            CurrentPlayerMovesLeft.text = "No moves left";
+            EndTurnButton.GetComponent<Image>().color = new Color(186, 253, 0); 
+        }
+    }
+
+    //function that runs when EndTurnButton is clicked
     public void EndTurn()
     {
         switch (PlayerTurn)
@@ -48,6 +72,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    //function that changes player turn
     public void ChangePlayerTurn(int PTurnTemp)
     {
         EndRound();
@@ -72,6 +97,7 @@ public class GameplayManager : MonoBehaviour
         NumRounds.text = "Round " + numRounds;
     }
 
+    //end round after both players play
     public void EndRound()
     {
         if (endRound == true)
@@ -85,6 +111,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    //function that runs when Menu Button in the scene is clicked
     public void MainMenu()
     {
         SceneManager.LoadScene(0);

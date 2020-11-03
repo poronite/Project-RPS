@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public int PlayerID;
     public GameplayManager GameplayManager;
 
-    //Each token quantity and their location in the array:
+    //each token quantity and their location in the array:
     //{RockAttack, RockDefense, PaperAttack, PaperDefense, ScissorAttack, ScissorDefense}
     public int[] Tokens = new int[] {0, 0, 0, 0, 0, 0}; 
 
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Turn based movement that consumes 1 move each time the player moves 1 tile
+    //turn based movement that consumes 1 move each time the player moves 1 tile
     private void Movement() 
     {
         if (Input.GetKeyDown("w"))
@@ -53,11 +53,9 @@ public class Player : MonoBehaviour
             numberMovesLeft -= 1;
         }
 
-        gameObject.transform.position = playerPosition;
+        //send player moves left to GameplayManager for the UI
+        GameplayManager.CurrentPlayerMovesLeftUI(numberMovesLeft);
 
-        if (numberMovesLeft == 0)
-        {
-            Debug.Log("No moves left");
-        }
+        gameObject.transform.position = playerPosition;
     }
 }
