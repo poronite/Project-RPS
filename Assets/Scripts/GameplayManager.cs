@@ -31,6 +31,23 @@ public class GameplayManager : MonoBehaviour
         Debug.Log($"Player{PlayerTurn} goes first.");
     }
 
+    public void EndTurn()
+    {
+        switch (PlayerTurn)
+        {
+            case 1:
+                ChangePlayerTurn(2);
+                break;
+
+            case 2:
+                ChangePlayerTurn(1);
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public void ChangePlayerTurn(int PTurnTemp)
     {
         EndRound();
