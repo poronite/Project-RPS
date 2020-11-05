@@ -26,8 +26,14 @@ public class GameplayManager : MonoBehaviour
     public Text NumRounds;
     public Button EndTurnButton;
 
+    //reference to camera
+    public Camera MainCamera;
+    private Vector3 cameraPosition = new Vector3(0, 0, -10);
+
+
     void Start()
     {
+        cameraPosition = Camera.main.transform.position;
         DetermineFirstToPlay();
     }
 
@@ -84,6 +90,7 @@ public class GameplayManager : MonoBehaviour
             Player1.GetComponent<Player>().enabled = true;
             Player2.GetComponent<Player>().enabled = false;
             Player1.GetComponent<Player>().numberMovesLeft = AssignNumberMoves;
+            cameraPosition.y = Player1.transform.position.y;
         }
 
         if (PlayerTurn == 2)
@@ -91,7 +98,10 @@ public class GameplayManager : MonoBehaviour
             Player1.GetComponent<Player>().enabled = false;
             Player2.GetComponent<Player>().enabled = true;
             Player2.GetComponent<Player>().numberMovesLeft = AssignNumberMoves;
+            cameraPosition.y = Player2.transform.position.y;
         }
+
+        Camera.main.transform.position = cameraPosition;
 
         WhosTurn.text = $"Player {PlayerTurn}'s turn";
         NumRounds.text = "Round " + numRounds;
