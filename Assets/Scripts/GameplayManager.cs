@@ -30,6 +30,11 @@ public class GameplayManager : MonoBehaviour
     public Camera MainCamera;
     private Vector3 cameraPosition = new Vector3(0, 0, -10);
 
+    //references to the special tiles
+    public GameObject RedTile;
+    public GameObject GreenTile;
+    public GameObject BlueTile;
+
 
     void Start()
     {
@@ -113,12 +118,18 @@ public class GameplayManager : MonoBehaviour
         if (endRound == true)
         {
             numRounds += 1;
+            ChangeCooldown();
             endRound = false;
         }
         else
         {
             endRound = true;
         }
+    }
+
+    private void ChangeCooldown()
+    {
+        //RedTile.GetComponent<GetSpecialToken>
     }
 
     //function that runs when Menu Button in the scene is clicked
