@@ -104,7 +104,7 @@ public class GameplayManager : MonoBehaviour
         {
             Player1.GetComponent<Player>().enabled = true;
             Player2.GetComponent<Player>().enabled = false;
-            Player1.GetComponent<Player>().numberMovesLeft = AssignNumberMoves;
+            Player1.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
             cameraPosition.y = Player1.transform.position.y;
         }
 
@@ -112,7 +112,7 @@ public class GameplayManager : MonoBehaviour
         {
             Player1.GetComponent<Player>().enabled = false;
             Player2.GetComponent<Player>().enabled = true;
-            Player2.GetComponent<Player>().numberMovesLeft = AssignNumberMoves;
+            Player2.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
             cameraPosition.y = Player2.transform.position.y;
         }
 

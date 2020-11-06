@@ -58,8 +58,6 @@ public class GetSpecialToken : MonoBehaviour
                     break;
             }
 
-            Debug.Log("aaaaaaaaaaaaaaaaa");
-
             EnterCooldown();
         }
     }
