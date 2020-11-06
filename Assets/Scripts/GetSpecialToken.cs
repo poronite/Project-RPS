@@ -6,7 +6,7 @@ public class GetSpecialToken : MonoBehaviour
 {
     //variable that shows if tile can give token
     public bool OffCooldown = true;
-    private int RoundsCooldownLeft;
+    private int RoundsCooldownLeft = 0;
     private string nameTile;
 
     //references to tile cooldown sprites
@@ -20,7 +20,15 @@ public class GetSpecialToken : MonoBehaviour
     public Sprite BlueCooldown2;
     public Sprite BlueCooldown1;
 
+    //references to special tile sprites (temporary until we implement animations)
+    public Sprite RedTile;
+    public Sprite GreenTile;
+    public Sprite BlueTile;
 
+    private void Start()
+    {
+        GameplayManager.instance.CooldownDelegate += ChangeCooldown;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -50,6 +58,8 @@ public class GetSpecialToken : MonoBehaviour
                     break;
             }
 
+            Debug.Log("aaaaaaaaaaaaaaaaa");
+
             EnterCooldown();
         }
     }
@@ -57,7 +67,8 @@ public class GetSpecialToken : MonoBehaviour
     private void EnterCooldown()
     {
         OffCooldown = false;
-        RoundsCooldownLeft = 3;
+        RoundsCooldownLeft = 4;
+        ChangeCooldown();
     }
 
     public void ChangeCooldown()
@@ -70,13 +81,17 @@ public class GetSpecialToken : MonoBehaviour
                 switch (RoundsCooldownLeft)
                 {
                     case 3:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown3;
                         break;
                     case 2:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown2;
                         break;
                     case 1:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown1;
+                        break;
+                    case 0:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = RedTile;
+                        OffCooldown = true;
                         break;
                     default:
                         break;
@@ -86,13 +101,17 @@ public class GetSpecialToken : MonoBehaviour
                 switch (RoundsCooldownLeft)
                 {
                     case 3:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown3;
                         break;
                     case 2:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown2;
                         break;
                     case 1:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown1;
+                        break;
+                    case 0:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenTile;
+                        OffCooldown = true;
                         break;
                     default:
                         break;
@@ -102,13 +121,17 @@ public class GetSpecialToken : MonoBehaviour
                 switch (RoundsCooldownLeft)
                 {
                     case 3:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown3;
                         break;
                     case 2:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown2;
                         break;
                     case 1:
-                        //gameObject.GetComponent<SpriteRenderer>().sprite = ;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown1;
+                        break;
+                    case 0:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueTile;
+                        OffCooldown = true;
                         break;
                     default:
                         break;
@@ -117,10 +140,5 @@ public class GetSpecialToken : MonoBehaviour
             default:
                 break;
         }
-
-
-        
-
-        
     }
 }

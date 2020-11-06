@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class GameplayManager : MonoBehaviour
 {
+    public static GameplayManager instance = null;
+
     public int PlayerTurn;
 
     //1 Round = 2 player turns
@@ -31,10 +34,17 @@ public class GameplayManager : MonoBehaviour
     private Vector3 cameraPosition = new Vector3(0, 0, -10);
 
     //references to the special tiles
-    public GameObject RedTile;
-    public GameObject GreenTile;
-    public GameObject BlueTile;
+    public GameObject SpecialTile;
 
+    public delegate void MultiDelegate();
+    public MultiDelegate CooldownDelegate;
+
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -118,8 +128,8 @@ public class GameplayManager : MonoBehaviour
         if (endRound == true)
         {
             numRounds += 1;
-            ChangeCooldown();
             endRound = false;
+            DelegateCooldowns();
         }
         else
         {
@@ -127,9 +137,9 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    private void ChangeCooldown()
+    private void DelegateCooldowns()
     {
-        //RedTile.GetComponent<GetSpecialToken>
+        CooldownDelegate();
     }
 
     //function that runs when Menu Button in the scene is clicked

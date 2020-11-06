@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4344020216323653378}
   - component: {fileID: -5249633051380554700}
-  - component: {fileID: 6100930150116331606}
+  - component: {fileID: 6773792727061949863}
+  - component: {fileID: -5012411580330689801}
+  - component: {fileID: -7399496863658417590}
   m_Layer: 0
-  m_Name: Blue_SpecialTile
-  m_TagString: BlueSpecialTile
+  m_Name: SpecialTile
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d9097050e022c83439c227e95f608ea9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 239087eebb34d0a4f9c426b2727d864d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6100930150116331606
+--- !u!61 &6773792727061949863
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,3 +110,49 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-5012411580330689801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803341887687027710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64edc0b7cd943284ab041f6a3e6e0e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OffCooldown: 1
+  RedCooldown3: {fileID: 21300000, guid: 528d9a887424a1b4e99ae4178e2ed8fd, type: 3}
+  RedCooldown2: {fileID: 21300000, guid: f5f535aae0aed4e42945cfdf416ede7d, type: 3}
+  RedCooldown1: {fileID: 21300000, guid: 50f46e0fff85a454795914a9678127d5, type: 3}
+  GreenCooldown3: {fileID: 21300000, guid: 36bfdda4f2fc262459fdc52dfda8416b, type: 3}
+  GreenCooldown2: {fileID: 21300000, guid: 54a0532349719214ca1e2ae03a9afc31, type: 3}
+  GreenCooldown1: {fileID: 21300000, guid: 9b2097c8636f2cd4891409f63421057f, type: 3}
+  BlueCooldown3: {fileID: 21300000, guid: d97e4e0553823f549a4fffa8b9a02116, type: 3}
+  BlueCooldown2: {fileID: 21300000, guid: 11ba86c03327adf409fdc6da85dda8a7, type: 3}
+  BlueCooldown1: {fileID: 21300000, guid: 4ac2f3092258d4f4293e83720b58be93, type: 3}
+  RedTile: {fileID: 21300000, guid: 239087eebb34d0a4f9c426b2727d864d, type: 3}
+  GreenTile: {fileID: 21300000, guid: b3a1f85c1fa0b8d4a854718944bc20a8, type: 3}
+  BlueTile: {fileID: 21300000, guid: d9097050e022c83439c227e95f608ea9, type: 3}
+--- !u!50 &-7399496863658417590
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803341887687027710}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 3
