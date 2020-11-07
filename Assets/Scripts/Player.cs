@@ -33,25 +33,25 @@ public class Player : MonoBehaviour
 
         float walk = speed * Time.deltaTime;
 
-        if (Input.GetKeyDown("w") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = 1; 
+        if (Input.GetButtonDown("TileUp") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = 1; 
         {
             targetPosition = new Vector2(playerPosition.x, playerPosition.y + 1);
             NumberMovesLeft -= 1;
         }
 
-        if (Input.GetKeyDown("a") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = -1;
+        if (Input.GetButtonDown("TileLeft") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = -1;
         {
             targetPosition = new Vector2(playerPosition.x - 1, playerPosition.y);
             NumberMovesLeft -= 1;
         }
 
-        if (Input.GetKeyDown("s") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = -1;
+        if (Input.GetButtonDown("TileDown") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = -1;
         {
             targetPosition = new Vector2(playerPosition.x, playerPosition.y - 1);
             NumberMovesLeft -= 1;
         }
 
-        if (Input.GetKeyDown("d") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = 1;
+        if (Input.GetButtonDown("TileRight") && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = 1;
         {
             targetPosition = new Vector2(playerPosition.x + 1, playerPosition.y);
             NumberMovesLeft -= 1;
