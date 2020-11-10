@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class GameplayManager : MonoBehaviour
 {
+    //Instance of the Gameplay Manager used for CooldownDelegate
     public static GameplayManager instance = null;
 
     public int PlayerTurn;
@@ -38,7 +39,6 @@ public class GameplayManager : MonoBehaviour
 
     public delegate void MultiDelegate();
     public MultiDelegate CooldownDelegate;
-
 
 
     private void Awake()
@@ -137,6 +137,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    //
     private void DelegateCooldowns()
     {
         CooldownDelegate();

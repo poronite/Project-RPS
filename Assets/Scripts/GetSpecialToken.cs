@@ -27,6 +27,7 @@ public class GetSpecialToken : MonoBehaviour
 
     private void Start()
     {
+        //Delegate ChangeCooldown to CooldownDelegate in the Gameplay Manager
         GameplayManager.instance.CooldownDelegate += ChangeCooldown;
     }
 
