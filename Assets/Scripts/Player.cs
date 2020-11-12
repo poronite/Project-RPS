@@ -8,12 +8,15 @@ public class Player : MonoBehaviour
     private Vector2 playerPosition;
     private Vector2 targetPosition;
     public int PlayerID;
+    public bool IsMoving = false;
     public float speed = 10;
     public GameplayManager GameplayManager;
 
     //each token quantity and their location in the array:
     //{RockAttack, RockDefense, PaperAttack, PaperDefense, ScissorAttack, ScissorDefense}
     public int[] Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
+
+    private string[] Colliders = new string[] {"Player", "Obstacle" };
 
     //each bool represents a direction and if the player can move or not in that direction
     //{up, left, down, right}
@@ -36,32 +39,42 @@ public class Player : MonoBehaviour
         playerPosition = gameObject.transform.position;
 
         float walk = speed * Time.deltaTime;
+        
 
-        if (Input.GetButtonDown("TileUp") && CanMoveInDirections[0] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = 1; 
+        if (Input.GetButtonDown("TileUp") && IsMoving == false && CanMoveInDirections[0] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = 1; 
         {
             targetPosition = new Vector2(playerPosition.x, playerPosition.y + 1);
             NumberMovesLeft -= 1;
+            IsMoving = true;
         }
 
-        if (Input.GetButtonDown("TileLeft") && CanMoveInDirections[1] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = -1;
+        if (Input.GetButtonDown("TileLeft") && IsMoving == false && CanMoveInDirections[1] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = -1;
         {
             targetPosition = new Vector2(playerPosition.x - 1, playerPosition.y);
             NumberMovesLeft -= 1;
+            IsMoving = true;
         }
 
-        if (Input.GetButtonDown("TileDown") && CanMoveInDirections[2] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = -1;
+        if (Input.GetButtonDown("TileDown") && IsMoving == false && CanMoveInDirections[2] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = -1;
         {
             targetPosition = new Vector2(playerPosition.x, playerPosition.y - 1);
             NumberMovesLeft -= 1;
+            IsMoving = true;
         }
 
-        if (Input.GetButtonDown("TileRight") && CanMoveInDirections[3] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = 1;
+        if (Input.GetButtonDown("TileRight") && IsMoving == false && CanMoveInDirections[3] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = 1;
         {
             targetPosition = new Vector2(playerPosition.x + 1, playerPosition.y);
             NumberMovesLeft -= 1;
+            IsMoving = true;
         }
 
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, walk);
+
+        if (playerPosition == targetPosition)
+        {
+            IsMoving = false;
+        }
 
         //send player moves left to GameplayManager for the UI
         GameplayManager.CurrentPlayerMovesLeftUI(NumberMovesLeft);
@@ -70,7 +83,7 @@ public class Player : MonoBehaviour
     //Collider that prevents Player from moving to an obstacle or player
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Obstacle") || collision.CompareTag("Player"))
+        if (IsCollider(gameObject))
         {
             Vector2 PlayerSide = transform.position - collision.transform.position;
 
@@ -91,18 +104,36 @@ public class Player : MonoBehaviour
                 default:
                     break;
             }
+            Debug.Log($"{collision.tag}");
         }
     }
 
     //resets array so that the Player can walk on every direction after not being on the side of an obstacle or player
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Obstacle") || collision.CompareTag("Player"))
+        if (IsCollider(gameObject))
         {
             for (int i = 0; i < CanMoveInDirections.Length; i++)
             {
                 CanMoveInDirections[i] = true;
             }
+            Debug.Log($"{collision.tag}");
         }
     }
+
+    //Function that checks if the Player is colliding with an object with a tag listed in Colliders array
+    private bool IsCollider(GameObject Player)
+    {
+        for (int i = 0; i < Colliders.Length; i++)
+        {
+            if (Player.CompareTag(Colliders[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    
 }

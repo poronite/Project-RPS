@@ -676,6 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumberMovesLeft: 0
   PlayerID: 2
+  IsMoving: 0
   speed: 10
   GameplayManager: {fileID: 1930918279}
   Tokens: 000000000000000000000000000000000000000000000000
@@ -718,7 +719,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0421f6446eaf573449050b752ba89f13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -789,7 +790,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,7 +2043,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1cbc5e98be5c0e249bf965015d961153, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2082,6 +2083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumberMovesLeft: 0
   PlayerID: 1
+  IsMoving: 0
   speed: 10
   GameplayManager: {fileID: 1930918279}
   Tokens: 000000000000000000000000000000000000000000000000
@@ -2131,7 +2133,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1001 &1830169822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2682,7 +2684,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: d9e38c21b083b4547b523d9b084bba6e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
