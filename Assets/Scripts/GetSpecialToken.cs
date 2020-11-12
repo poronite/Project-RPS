@@ -10,12 +10,15 @@ public class GetSpecialToken : MonoBehaviour
     private string nameTile;
 
     //references to tile cooldown sprites
+    public Sprite RedCooldown4;
     public Sprite RedCooldown3;
     public Sprite RedCooldown2;
     public Sprite RedCooldown1;
+    public Sprite GreenCooldown4;
     public Sprite GreenCooldown3;
     public Sprite GreenCooldown2;
     public Sprite GreenCooldown1;
+    public Sprite BlueCooldown4;
     public Sprite BlueCooldown3;
     public Sprite BlueCooldown2;
     public Sprite BlueCooldown1;
@@ -66,7 +69,7 @@ public class GetSpecialToken : MonoBehaviour
     private void EnterCooldown()
     {
         OffCooldown = false;
-        RoundsCooldownLeft = 4;
+        RoundsCooldownLeft = 5;
         ChangeCooldown();
     }
 
@@ -79,6 +82,9 @@ public class GetSpecialToken : MonoBehaviour
             case "Red":
                 switch (RoundsCooldownLeft)
                 {
+                    case 4:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown4;
+                        break;
                     case 3:
                         gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown3;
                         break;
@@ -99,6 +105,9 @@ public class GetSpecialToken : MonoBehaviour
             case "Green":
                 switch (RoundsCooldownLeft)
                 {
+                    case 4:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown4;
+                        break;
                     case 3:
                         gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown3;
                         break;
@@ -119,6 +128,9 @@ public class GetSpecialToken : MonoBehaviour
             case "Blue":
                 switch (RoundsCooldownLeft)
                 {
+                    case 4:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown4;
+                        break;
                     case 3:
                         gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown3;
                         break;

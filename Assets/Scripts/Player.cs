@@ -30,17 +30,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Movement();
+        Actions();
     }
 
-    //turn based movement that consumes 1 move each time the player moves 1 tile
-    private void Movement()
+    
+    private void Actions()
     {
         playerPosition = gameObject.transform.position;
 
         float walk = speed * Time.deltaTime;
-        
 
+        //turn based movement that consumes 1 move each time the player moves 1 tile
         if (Input.GetButtonDown("TileUp") && IsMoving == false && CanMoveInDirections[0] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = 1; 
         {
             targetPosition = new Vector2(playerPosition.x, playerPosition.y + 1);
@@ -78,6 +78,12 @@ public class Player : MonoBehaviour
 
         //send player moves left to GameplayManager for the UI
         GameplayManager.CurrentPlayerMovesLeftUI(NumberMovesLeft);
+
+        //Press EndTurn button to end turn
+        if (Input.GetButtonDown("EndTurn"))
+        {
+            GameplayManager.EndTurn();
+        }
     }
 
     //Collider that prevents Player from moving to an obstacle or player
