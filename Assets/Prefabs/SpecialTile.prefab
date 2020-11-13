@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6773792727061949863}
   - component: {fileID: -5012411580330689801}
   - component: {fileID: -7399496863658417590}
+  - component: {fileID: 1968850038596750424}
   m_Layer: 0
   m_Name: SpecialTile
   m_TagString: Untagged
@@ -119,10 +120,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2803341887687027710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64edc0b7cd943284ab041f6a3e6e0e52, type: 3}
+  m_Script: {fileID: 11500000, guid: e0acbe6dc61ce18418d1a469c60acc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OffCooldown: 1
+  AnimatorManager: {fileID: 1968850038596750424}
   RedCooldown4: {fileID: 21300000, guid: 1e20b356e76225e4da77c6fdbf3dedba, type: 3}
   RedCooldown3: {fileID: 21300000, guid: 528d9a887424a1b4e99ae4178e2ed8fd, type: 3}
   RedCooldown2: {fileID: 21300000, guid: f5f535aae0aed4e42945cfdf416ede7d, type: 3}
@@ -159,3 +161,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
+--- !u!95 &1968850038596750424
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803341887687027710}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d78f2bd171ad224a9a95e6c44186939, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

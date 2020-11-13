@@ -8,7 +8,6 @@ TagManager:
   - GreenSpecialTile
   - BlueSpecialTile
   - Obstacle
-  - Player123
   layers:
   - Default
   - TransparentFX
