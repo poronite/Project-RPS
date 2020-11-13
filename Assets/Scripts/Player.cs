@@ -12,11 +12,13 @@ public class Player : MonoBehaviour
     public float speed = 10;
     public GameplayManager GameplayManager;
 
+
+
     //each token quantity and their location in the array:
-    //{RockAttack, RockDefense, PaperAttack, PaperDefense, ScissorAttack, ScissorDefense}
+    //{RandomnessAttack, RandomnessDefense, PatienceAttack, PatienceDefense, StrategyAttack, StrategyDefense}
     public int[] Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
 
-    private string[] Colliders = new string[] {"Player", "Obstacle" };
+    private string[] Colliders = new string[] {"Player", "Obstacle"};
 
     //each bool represents a direction and if the player can move or not in that direction
     //{up, left, down, right}
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
     
     private void Actions()
     {
+        RaycastHit2D hit;
+
         playerPosition = gameObject.transform.position;
 
         float walk = speed * Time.deltaTime;
@@ -43,30 +47,79 @@ public class Player : MonoBehaviour
         //turn based movement that consumes 1 move each time the player moves 1 tile
         if (Input.GetButtonDown("TileUp") && IsMoving == false && CanMoveInDirections[0] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = 1; 
         {
-            targetPosition = new Vector2(playerPosition.x, playerPosition.y + 1);
-            NumberMovesLeft -= 1;
-            IsMoving = true;
+            hit = Physics2D.Raycast(playerPosition, new Vector2(0, 1), 0.5f);
+            if (hit.collider != null && IsCollider(hit.collider.gameObject))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //attack
+                    Debug.Log("Player Attack");
+                }
+            }
+            else
+            {
+                targetPosition = new Vector2(playerPosition.x, playerPosition.y + 1);
+                NumberMovesLeft -= 1;
+                IsMoving = true;
+            }
+            
         }
 
         if (Input.GetButtonDown("TileLeft") && IsMoving == false && CanMoveInDirections[1] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = -1;
         {
-            targetPosition = new Vector2(playerPosition.x - 1, playerPosition.y);
-            NumberMovesLeft -= 1;
-            IsMoving = true;
+            hit = Physics2D.Raycast(playerPosition, new Vector2(-1, 0), 0.5f);
+            if (hit.collider != null && IsCollider(hit.collider.gameObject))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //attack
+                    Debug.Log("Player Attack");
+                }
+            }
+            else
+            {
+                targetPosition = new Vector2(playerPosition.x - 1, playerPosition.y);
+                NumberMovesLeft -= 1;
+                IsMoving = true;
+            }
         }
 
         if (Input.GetButtonDown("TileDown") && IsMoving == false && CanMoveInDirections[2] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //y = -1;
         {
-            targetPosition = new Vector2(playerPosition.x, playerPosition.y - 1);
-            NumberMovesLeft -= 1;
-            IsMoving = true;
+            hit = Physics2D.Raycast(playerPosition, new Vector2(0, -1), 0.5f);
+            if (hit.collider != null && IsCollider(hit.collider.gameObject))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //attack
+                    Debug.Log("Player Attack");
+                }
+            }
+            else
+            {
+                targetPosition = new Vector2(playerPosition.x, playerPosition.y - 1);
+                NumberMovesLeft -= 1;
+                IsMoving = true;
+            }   
         }
 
         if (Input.GetButtonDown("TileRight") && IsMoving == false && CanMoveInDirections[3] == true && (GameplayManager.PlayerTurn == PlayerID && NumberMovesLeft > 0)) //x = 1;
         {
-            targetPosition = new Vector2(playerPosition.x + 1, playerPosition.y);
-            NumberMovesLeft -= 1;
-            IsMoving = true;
+            hit = Physics2D.Raycast(playerPosition, new Vector2(1, 0), 0.5f);
+            if (hit.collider != null && IsCollider(hit.collider.gameObject))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //attack
+                    Debug.Log("Player Attack");
+                }
+            }
+            else
+            {
+                targetPosition = new Vector2(playerPosition.x + 1, playerPosition.y);
+                NumberMovesLeft -= 1;
+                IsMoving = true;
+            }
         }
 
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, walk);
@@ -86,10 +139,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    /*
     //Collider that prevents Player from moving to an obstacle or player
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (IsCollider(gameObject))
+        if (IsCollider(collision.gameObject))
         {
             Vector2 PlayerSide = transform.position - collision.transform.position;
 
@@ -126,6 +180,7 @@ public class Player : MonoBehaviour
             Debug.Log($"{collision.tag}");
         }
     }
+    */
 
     //Function that checks if the Player is colliding with an object with a tag listed in Colliders array
     private bool IsCollider(GameObject Player)

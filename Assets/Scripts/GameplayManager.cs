@@ -137,7 +137,6 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    //
     private void DelegateCooldowns()
     {
         CooldownDelegate();
