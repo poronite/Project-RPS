@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Events;
 
 public class GameplayManager : MonoBehaviour
 {
     //Instance of the Gameplay Manager used for CooldownDelegate
     public static GameplayManager instance = null;
 
+    //1 = Player1's turn | 2 = Player2's turn
     public int PlayerTurn;
 
     //1 Round = 2 player turns
@@ -24,15 +24,13 @@ public class GameplayManager : MonoBehaviour
     public GameObject Player1;
     public GameObject Player2;
 
-    //references to UI elements in the scene
-    public Text WhosTurn;
-    public Text CurrentPlayerMovesLeft;
-    public Text NumRounds;
-    public Button EndTurnButton;
+    //reference to the HUD script
+    //created HUD script to declutter this one
+    public HUD HUD;
 
     //reference to camera
     public Camera MainCamera;
-    private Vector3 cameraPosition = new Vector3(0, 0, -10);
+    private Vector3 cameraPosition;
 
     //references to the special tiles
     public GameObject SpecialTile;
@@ -61,18 +59,9 @@ public class GameplayManager : MonoBehaviour
     }
 
     //function to warn player how many moves are left
-    public void CurrentPlayerMovesLeftUI(int movesleft)
+    public void MovesLeftUI(int movesleft)
     {
-        if (movesleft > 0)
-        {
-            CurrentPlayerMovesLeft.text = $"{movesleft} moves left";
-            EndTurnButton.GetComponent<Image>().color = new Color(255, 255, 255);
-        }
-        else if (movesleft == 0)
-        {
-            CurrentPlayerMovesLeft.text = "No moves left";
-            EndTurnButton.GetComponent<Image>().color = new Color(186, 253, 0); 
-        }
+        HUD.MovesLeftHUD(movesleft);
     }
 
     //function that runs when EndTurnButton is clicked
@@ -118,8 +107,7 @@ public class GameplayManager : MonoBehaviour
 
         Camera.main.transform.position = cameraPosition;
 
-        WhosTurn.text = $"Player {PlayerTurn}'s turn";
-        NumRounds.text = "Round " + numRounds;
+        HUD.ChangeTurnRoundHUD(PlayerTurn, numRounds);
     }
 
     //end round after both players play

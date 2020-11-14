@@ -124,13 +124,14 @@ public class Player : MonoBehaviour
 
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, walk);
 
+        //Player can't move while playerPosition isn't equal to targetPosition
         if (playerPosition == targetPosition)
         {
             IsMoving = false;
         }
 
         //send player moves left to GameplayManager for the UI
-        GameplayManager.CurrentPlayerMovesLeftUI(NumberMovesLeft);
+        GameplayManager.MovesLeftUI(NumberMovesLeft);
 
         //Press EndTurn button to end turn
         if (Input.GetButtonDown("EndTurn"))
@@ -138,49 +139,6 @@ public class Player : MonoBehaviour
             GameplayManager.EndTurn();
         }
     }
-
-    /*
-    //Collider that prevents Player from moving to an obstacle or player
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (IsCollider(collision.gameObject))
-        {
-            Vector2 PlayerSide = transform.position - collision.transform.position;
-
-            switch (PlayerSide)
-            {
-                case Vector2 side when side.Equals(Vector2.down): //if Collider is below
-                    CanMoveInDirections[0] = false;
-                    break;
-                case Vector2 side when side.Equals(Vector2.right): //if collider is on the right
-                    CanMoveInDirections[1] = false;
-                    break;
-                case Vector2 side when side.Equals(Vector2.up): //if collider is above
-                    CanMoveInDirections[2] = false;
-                    break;
-                case Vector2 side when side.Equals(Vector2.left): //if collider is on the left
-                    CanMoveInDirections[3] = false;
-                    break;
-                default:
-                    break;
-            }
-            Debug.Log($"{collision.tag}");
-        }
-    }
-
-    //resets array so that the Player can walk on every direction after not being on the side of an obstacle or player
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (IsCollider(gameObject))
-        {
-            for (int i = 0; i < CanMoveInDirections.Length; i++)
-            {
-                CanMoveInDirections[i] = true;
-            }
-            Debug.Log($"{collision.tag}");
-        }
-    }
-    */
 
     //Function that checks if the Player is colliding with an object with a tag listed in Colliders array
     private bool IsCollider(GameObject Player)
