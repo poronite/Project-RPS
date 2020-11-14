@@ -10,6 +10,8 @@ public class HUD : MonoBehaviour
     public Text CurrentPlayerMovesLeft;
     public Text NumRounds;
     public Button EndTurnButton;
+    public Button MainMenuButton;
+    public GameObject AttackConfimationBox;
 
     public void MovesLeftHUD(int movesleft)
     {
@@ -29,5 +31,14 @@ public class HUD : MonoBehaviour
     {
         WhosTurn.text = $"Player {playerturn}'s turn";
         NumRounds.text = "Round " + numRounds;
+    }
+
+    public void AttackConfirmationBox()
+    {
+        AttackConfimationBox.SetActive(true);
+
+        //disable other buttons' functions while the player decides to attack
+        EndTurnButton.GetComponent<Button>().enabled = false;
+        MainMenuButton.GetComponent<Button>().enabled = false;
     }
 }
