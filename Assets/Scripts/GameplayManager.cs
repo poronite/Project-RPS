@@ -34,10 +34,10 @@ public class GameplayManager : MonoBehaviour
     public GameObject Player2;
 
     //attacker defender and their tokens
-    private GameObject attacker;
-    private int[] AttackerTokens = new int[6];
-    private GameObject defender;
-    private int[] DefenderTokens = new int[6];
+    public GameObject Attacker;
+    public int[] AttackerTokens = new int[6];
+    public GameObject Defender;
+    public int[] DefenderTokens = new int[6];
 
     //reference to the HUD script
     //created HUD script to declutter this one
@@ -108,6 +108,7 @@ public class GameplayManager : MonoBehaviour
         {
             Player1.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
             Player1.GetComponent<Player>().hasAttackedthisTurn = false;
+            Player1.GetComponent<Player>().HasAttacked = false;
             cameraPosition.y = Player1.transform.position.y;
         }
 
@@ -115,6 +116,7 @@ public class GameplayManager : MonoBehaviour
         {
             Player2.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
             Player2.GetComponent<Player>().hasAttackedthisTurn = false;
+            Player2.GetComponent<Player>().HasAttacked = false;
             cameraPosition.y = Player2.transform.position.y;
         }
 
@@ -148,11 +150,11 @@ public class GameplayManager : MonoBehaviour
     //do you want to attack the enemy?
     public void AttackConfirmation(GameObject attackerTemp, GameObject defenderTemp)
     {
-        attacker = attackerTemp;
-        defender = defenderTemp;
+        Attacker = attackerTemp;
+        Defender = defenderTemp;
 
-        AttackerTokens = attacker.GetComponent<Player>().Tokens;
-        DefenderTokens = defender.GetComponent<Player>().Tokens;
+        AttackerTokens = Attacker.GetComponent<Player>().Tokens;
+        DefenderTokens = Defender.GetComponent<Player>().Tokens;
 
         if (AttackerTokens[0] == 0 && AttackerTokens[2] == 0 && AttackerTokens[4] == 0)
         {
@@ -164,8 +166,8 @@ public class GameplayManager : MonoBehaviour
         }
 
         //disable attacker and defender actions while attacker is choosing to attack
-        attacker.GetComponent<Player>().enabled = false;
-        defender.GetComponent<Player>().enabled = false;
+        Attacker.GetComponent<Player>().enabled = false;
+        Defender.GetComponent<Player>().enabled = false;
 
         HUD.AttackConfirmationScreen();
     }
@@ -174,15 +176,15 @@ public class GameplayManager : MonoBehaviour
     public void ReadyAttack()
     {
         //re-enable their components
-        attacker.GetComponent<Player>().enabled = true;
-        defender.GetComponent<Player>().enabled = true;
+        Attacker.GetComponent<Player>().enabled = true;
+        Defender.GetComponent<Player>().enabled = true;
 
         //both are now battling
-        attacker.GetComponent<Player>().IsBattling = true;
-        defender.GetComponent<Player>().IsBattling = true;
+        Attacker.GetComponent<Player>().HasAttacked = true;
+        Defender.GetComponent<Player>().HasAttacked = true;
 
         //attacker can't attack twice in their turn
-        attacker.GetComponent<Player>().hasAttackedthisTurn = true;
+        Attacker.GetComponent<Player>().hasAttackedthisTurn = true;
     }
 
     public void CheckTokenAvailability()
@@ -225,7 +227,7 @@ public class GameplayManager : MonoBehaviour
 
         if (DefenderTokens[1] == 0 && DefenderTokens[3] == 0 && DefenderTokens[5] == 0)
         {
-            Winner = attacker.name;
+            Winner = Attacker.name;
             HUD.Outcome();
         }
     }
@@ -307,11 +309,8 @@ public class GameplayManager : MonoBehaviour
     public void CancelAttack()
     {
         //re-enable their components in case attacker doesn't want to attack
-        attacker.GetComponent<Player>().enabled = true;
-        defender.GetComponent<Player>().enabled = true;
-
-        attacker.GetComponent<Player>().IsBattling = false;
-        defender.GetComponent<Player>().IsBattling = false;
+        Attacker.GetComponent<Player>().enabled = true;
+        Defender.GetComponent<Player>().enabled = true;
     }
 
     public void EndMatch()

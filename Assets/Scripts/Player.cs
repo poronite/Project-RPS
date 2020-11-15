@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private Vector2 targetPosition;
     public int PlayerID;
     public bool IsMoving = false;
-    public bool IsBattling = false;
+    public bool HasAttacked = false;
     public bool hasAttackedthisTurn = false;
     public float speed = 10;
     public GameplayManager GameplayManager;
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         float walk = speed * Time.deltaTime;
 
         //turn based movement that consumes 1 move each time the player moves 1 tile
-        if (Input.GetButtonDown("TileUp") && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = 1; 
+        if (Input.GetButtonDown("TileUp") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //y = 1; 
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, 1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
             
         }
 
-        if (Input.GetButtonDown("TileLeft") && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = -1;
+        if (Input.GetButtonDown("TileLeft") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //x = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(-1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("TileDown") && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = -1;
+        if (Input.GetButtonDown("TileDown") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //y = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, -1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
             }   
         }
 
-        if (Input.GetButtonDown("TileRight") && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = 1;
+        if (Input.GetButtonDown("TileRight") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //x = 1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))

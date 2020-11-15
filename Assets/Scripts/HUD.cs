@@ -24,6 +24,10 @@ public class HUD : MonoBehaviour
     public Button No;
     public Button Ok;
 
+    //references to the text that shows who's tokens belongs to
+    public Text AttackerTokensUI;
+    public Text DefenderTokensUI;
+
     //references to the Outcome's text
     public Text OutcomeUIText;
 
@@ -103,6 +107,18 @@ public class HUD : MonoBehaviour
     {
         AttackSelectionBox.SetActive(true);
 
+        //temporary while we hotsitting
+        if (GameplayManager.Attacker.GetComponent<Player>().PlayerID == 1)
+        {
+            AttackerTokensUI.text = "Player 1";
+            DefenderTokensUI.text = "Player 2";
+        }
+        else
+        {
+            AttackerTokensUI.text = "Player 2";
+            DefenderTokensUI.text = "Player 1";
+        }
+
         //ready attacker buttons
         AttackerRButton.interactable = true;
         AttackerRButton.image.color = Color.red;
@@ -150,6 +166,7 @@ public class HUD : MonoBehaviour
 
     public void Outcome()
     {
+        AttackSelectionBox.SetActive(false);
         OutcomeUI.SetActive(true);
 
         if (GameplayManager.Winner != "")
