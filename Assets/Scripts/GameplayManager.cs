@@ -17,6 +17,15 @@ public class GameplayManager : MonoBehaviour
     //bool used to know when we can numRounds += 1
     private bool endRound = true;
 
+    //variable that determines if attacker can attack (in case he doesn't have attack tokens)
+    public bool CanAttack;
+
+    //variable that represents the outcome through affinity
+    public string AffinityOutcome;
+
+    //variable who determines who is the winner
+    public string Winner = "";
+
     //variable used to easily change player moves on Unity inspector
     public int AssignNumberMoves = 0;
 
@@ -24,8 +33,11 @@ public class GameplayManager : MonoBehaviour
     public GameObject Player1;
     public GameObject Player2;
 
+    //attacker defender and their tokens
     private GameObject attacker;
+    private int[] AttackerTokens = new int[6];
     private GameObject defender;
+    private int[] DefenderTokens = new int[6];
 
     //reference to the HUD script
     //created HUD script to declutter this one
@@ -94,8 +106,6 @@ public class GameplayManager : MonoBehaviour
 
         if (PlayerTurn == 1)
         {
-            Player1.GetComponent<Player>().enabled = true;
-            Player2.GetComponent<Player>().enabled = false;
             Player1.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
             Player1.GetComponent<Player>().hasAttackedthisTurn = false;
             cameraPosition.y = Player1.transform.position.y;
@@ -103,8 +113,6 @@ public class GameplayManager : MonoBehaviour
 
         if (PlayerTurn == 2)
         {
-            Player1.GetComponent<Player>().enabled = false;
-            Player2.GetComponent<Player>().enabled = true;
             Player2.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
             Player2.GetComponent<Player>().hasAttackedthisTurn = false;
             cameraPosition.y = Player2.transform.position.y;
@@ -143,21 +151,175 @@ public class GameplayManager : MonoBehaviour
         attacker = attackerTemp;
         defender = defenderTemp;
 
-        HUD.AttackConfirmationBox();
+        AttackerTokens = attacker.GetComponent<Player>().Tokens;
+        DefenderTokens = defender.GetComponent<Player>().Tokens;
+
+        if (AttackerTokens[0] == 0 && AttackerTokens[2] == 0 && AttackerTokens[4] == 0)
+        {
+            CanAttack = false;
+        }
+        else
+        {
+            CanAttack = true;
+        }
+
+        //disable attacker and defender actions while attacker is choosing to attack
+        attacker.GetComponent<Player>().enabled = false;
+        defender.GetComponent<Player>().enabled = false;
+
+        HUD.AttackConfirmationScreen();
     }
 
-    //begin battle!
-    public void Attack()
+    //get players ready for battle!
+    public void ReadyAttack()
     {
-        //attack
-        Debug.Log($"Player{attacker.GetComponent<Player>().PlayerID} attacks Player{defender.GetComponent<Player>().PlayerID}!");
+        //re-enable their components
+        attacker.GetComponent<Player>().enabled = true;
+        defender.GetComponent<Player>().enabled = true;
+
+        //both are now battling
+        attacker.GetComponent<Player>().IsBattling = true;
+        defender.GetComponent<Player>().IsBattling = true;
 
         //attacker can't attack twice in their turn
         attacker.GetComponent<Player>().hasAttackedthisTurn = true;
+    }
 
-        //activate buttons (temporary)
-        HUD.EndTurnButton.GetComponent<Button>().enabled = true;
-        HUD.MainMenuButton.GetComponent<Button>().enabled = true;
+    public void CheckTokenAvailability()
+    {
+        if (AttackerTokens[0] == 0)
+        {
+            HUD.AttackerRButton.interactable = false;
+            HUD.AttackerRButton.image.color = Color.gray;
+        }
+
+        if (AttackerTokens[2] == 0)
+        {
+            HUD.AttackerPButton.interactable = false;
+            HUD.AttackerPButton.image.color = Color.gray;
+        }
+
+        if (AttackerTokens[4] == 0)
+        {
+            HUD.AttackerSButton.interactable = false;
+            HUD.AttackerSButton.image.color = Color.gray;
+        }
+
+        if (DefenderTokens[1] == 0)
+        {
+            HUD.DefenderRButton.interactable = false;
+            HUD.DefenderRButton.image.color = Color.gray;
+        }
+
+        if (DefenderTokens[3] == 0)
+        {
+            HUD.DefenderPButton.interactable = false;
+            HUD.DefenderPButton.image.color = Color.gray;
+        }
+
+        if (DefenderTokens[5] == 0)
+        {
+            HUD.DefenderSButton.interactable = false;
+            HUD.DefenderSButton.image.color = Color.gray;
+        }
+
+        if (DefenderTokens[1] == 0 && DefenderTokens[3] == 0 && DefenderTokens[5] == 0)
+        {
+            Winner = attacker.name;
+            HUD.Outcome();
+        }
+    }
+
+    public void AttackSystem(string attackerChoice, string defenderChoice)
+    {
+        if (attackerChoice == "Randomness")
+        {
+            AttackerTokens[0] -= 1;
+            switch (defenderChoice)
+            {
+                case "Randomness": //Neutral
+                    DefenderTokens[1] -= 1;
+                    AffinityOutcome = "Neutral";
+                    break;
+                case "Patience": //Disadvantage
+                    //Nothing happens
+                    AffinityOutcome = "Disadvantage";
+                    break;
+                case "Strategy": //Advantage
+                    DefenderTokens[5] -= 1;
+                    AttackerTokens[4] += 1;
+                    AffinityOutcome = "Advantage";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (attackerChoice == "Patience")
+        {
+            AttackerTokens[2] -= 1;
+            switch (defenderChoice)
+            {
+                case "Randomness": //Advantage
+                    DefenderTokens[1] -= 1;
+                    AttackerTokens[0] += 1;
+                    AffinityOutcome = "Advantage";
+                    break;
+                case "Patience": //Neutral
+                    DefenderTokens[3] -= 1;
+                    AffinityOutcome = "Neutral";
+                    break;
+                case "Strategy": //Disadvantage
+                    //Nothing happens
+                    AffinityOutcome = "Disadvantage";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (attackerChoice == "Strategy")
+        {
+            AttackerTokens[4] -= 1;
+            switch (defenderChoice)
+            {
+                case "Randomness": //Disadvantage
+                    //Nothing happens
+                    AffinityOutcome = "Disadvantage";
+                    break;
+                case "Patience": //Advantage
+                    DefenderTokens[3] -= 1;
+                    AttackerTokens[2] += 1;
+                    AffinityOutcome = "Advantage";
+                    break;
+                case "Strategy": //Neutral
+                    DefenderTokens[5] -= 1;
+                    AffinityOutcome = "Neutral";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        HUD.Outcome();
+    }
+
+    public void CancelAttack()
+    {
+        //re-enable their components in case attacker doesn't want to attack
+        attacker.GetComponent<Player>().enabled = true;
+        defender.GetComponent<Player>().enabled = true;
+
+        attacker.GetComponent<Player>().IsBattling = false;
+        defender.GetComponent<Player>().IsBattling = false;
+    }
+
+    public void EndMatch()
+    {
+        if (Winner != null)
+        {
+            Application.Quit();
+        }
     }
 
     //function that runs when Menu Button in the scene is clicked
