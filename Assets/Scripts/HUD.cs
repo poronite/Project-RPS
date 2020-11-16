@@ -57,7 +57,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-
     public void MovesLeftHUD(int movesleft)
     {
         if (movesleft > 0)
@@ -108,16 +107,8 @@ public class HUD : MonoBehaviour
         AttackSelectionBox.SetActive(true);
 
         //temporary while we hotsitting
-        if (GameplayManager.Attacker.GetComponent<Player>().PlayerID == 1)
-        {
-            AttackerTokensUI.text = "Player 1";
-            DefenderTokensUI.text = "Player 2";
-        }
-        else
-        {
-            AttackerTokensUI.text = "Player 2";
-            DefenderTokensUI.text = "Player 1";
-        }
+        AttackerTokensUI.text = GameplayManager.Attacker.name;
+        DefenderTokensUI.text = GameplayManager.Defender.name;
 
         //ready attacker buttons
         AttackerRButton.interactable = true;
@@ -138,6 +129,7 @@ public class HUD : MonoBehaviour
         GameplayManager.CheckTokenAvailability();
     }
 
+    //when Attacker chooses a token
     public void AttackersChoice(string choice)
     {
         AttackerChoice = choice;
@@ -151,6 +143,7 @@ public class HUD : MonoBehaviour
         AttackerSButton.image.color = Color.gray;
     }
 
+    //when Defender chooses a token
     public void DefendersChoice(string choice)
     {
         DefenderChoice = choice;
@@ -164,6 +157,7 @@ public class HUD : MonoBehaviour
         DefenderSButton.image.color = Color.gray;
     }
 
+    //box with text that shows outcome of the battle
     public void Outcome()
     {
         AttackSelectionBox.SetActive(false);
@@ -178,13 +172,13 @@ public class HUD : MonoBehaviour
             switch (GameplayManager.AffinityOutcome)
             {
                 case "Advantage":
-                    OutcomeUIText.text = $"Attacker consumes {AttackerChoice} Attack Token and receives {DefenderChoice} Attack Token. Defender loses their token.";
+                    OutcomeUIText.text = $"Attack successful! {GameplayManager.Attacker.name} consumes {AttackerChoice} Attack Token. {GameplayManager.Defender.name} loses {DefenderChoice} Defense token. {GameplayManager.Attacker.name} receives {DefenderChoice} Attack Token.";
                     break;
                 case "Disadvantage":
-                    OutcomeUIText.text = $"Attacker loses {AttackerChoice} Attack Token.";
+                    OutcomeUIText.text = $"Attack unsucessful! {GameplayManager.Attacker.name} loses {AttackerChoice} Attack Token.";
                     break;
                 case "Neutral":
-                    OutcomeUIText.text = $"Attacker loses {AttackerChoice} Attack Token. Defender loses {DefenderChoice} Defense Token.";
+                    OutcomeUIText.text = $"It's a draw! {GameplayManager.Attacker.name} loses {AttackerChoice} Attack Token. {GameplayManager.Defender.name} loses {DefenderChoice} Defense Token.";
                     break;
                 default:
                     break;

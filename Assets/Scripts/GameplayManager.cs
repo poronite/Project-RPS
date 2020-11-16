@@ -140,6 +140,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    //function that warns the special tiles that a round has passed
     private void DelegateCooldowns()
     {
         CooldownDelegate();
@@ -187,6 +188,7 @@ public class GameplayManager : MonoBehaviour
         Attacker.GetComponent<Player>().hasAttackedthisTurn = true;
     }
 
+    //function that decides if the players can choose a certain token during battle
     public void CheckTokenAvailability()
     {
         if (AttackerTokens[0] == 0)
@@ -225,6 +227,7 @@ public class GameplayManager : MonoBehaviour
             HUD.DefenderSButton.image.color = Color.gray;
         }
 
+        //in case defender doesn't have defense tokens aka Game over
         if (DefenderTokens[1] == 0 && DefenderTokens[3] == 0 && DefenderTokens[5] == 0)
         {
             Winner = Attacker.name;
@@ -232,6 +235,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    //what decides the outcome in case both players have tokens
     public void AttackSystem(string attackerChoice, string defenderChoice)
     {
         if (attackerChoice == "Randomness")
@@ -313,11 +317,12 @@ public class GameplayManager : MonoBehaviour
         Defender.GetComponent<Player>().enabled = true;
     }
 
+    //end the match after one of the players lose (for now it just goes back to the Main Menu)
     public void EndMatch()
     {
-        if (Winner != null)
+        if (Winner != "")
         {
-            Application.Quit();
+            MainMenu();
         }
     }
 
