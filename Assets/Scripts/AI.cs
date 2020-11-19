@@ -4,7 +4,27 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
+    public GameObject Player;
+
+    static int width = 17;
+    static int height = 32;
     
+    // create the tiles map
+    static float[,] tilesmap = new float[width, height];
+    // set values here....
+    // every float in the array represent the cost of passing the tile at that position.
+    // use 0.0f for blocking tiles.
+
+    // create a grid
+    static PathFind.Grid grid = new PathFind.Grid(width, height, tilesmap);
+
+    // create source and target points
+    //static PathFind.Point from = new PathFind.Point(transform.position.x, transform.position.y);
+    //static PathFind.Point to = new PathFind.Point(Player.transform.position.x, Player.transform.position.y);
+
+    // get path
+    // path will either be a list of Points (x, y), or an empty list if no path is found.
+    //List<PathFind.Point> path = PathFind.Pathfinding.FindPath(grid, from, to);
 
 
 
