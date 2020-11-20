@@ -62,7 +62,7 @@ public class SpecialToken : MonoBehaviour
     //when player enters the special tile
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && OffCooldown == true)
+        if ((collision.CompareTag("Player") || collision.CompareTag("AI")) && OffCooldown == true)
         {
             GameObject PlayerCollider = collision.gameObject;
 

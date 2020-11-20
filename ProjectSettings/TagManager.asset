@@ -8,6 +8,7 @@ TagManager:
   - GreenSpecialTile
   - BlueSpecialTile
   - Obstacle
+  - AI
   layers:
   - Default
   - TransparentFX

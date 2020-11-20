@@ -17,9 +17,6 @@ public class GameplayManager : MonoBehaviour
     //bool used to know when we can numRounds += 1
     private bool endRound = true;
 
-    //variable that determines if attacker can attack (in case he doesn't have attack tokens)
-    public bool CanAttack;
-
     //variable that represents the outcome through affinity
     public string AffinityOutcome;
 
@@ -31,7 +28,9 @@ public class GameplayManager : MonoBehaviour
 
     //references to the players in the scene
     public GameObject Player1;
+    public Player Player1Player;
     public GameObject Player2;
+    public Player Player2Player;
 
     //attacker defender and their tokens
     public GameObject Attacker;
@@ -104,19 +103,26 @@ public class GameplayManager : MonoBehaviour
 
         PlayerTurn = PTurnTemp;
 
+        Player1Player = Player1.GetComponent<Player>();
+        Player2Player = Player2.GetComponent<Player>();
+
         if (PlayerTurn == 1)
         {
-            Player1.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
-            Player1.GetComponent<Player>().hasAttackedthisTurn = false;
-            Player1.GetComponent<Player>().HasAttacked = false;
+            Player1Player.NumberMovesLeft = AssignNumberMoves;
+            Player1Player.HasAttackedThisTurn = false;
+            Player1Player.IsBattling = false;
+
+            cameraPosition.x = Player1.transform.position.x;
             cameraPosition.y = Player1.transform.position.y;
         }
 
         if (PlayerTurn == 2)
         {
-            Player2.GetComponent<Player>().NumberMovesLeft = AssignNumberMoves;
-            Player2.GetComponent<Player>().hasAttackedthisTurn = false;
-            Player2.GetComponent<Player>().HasAttacked = false;
+            Player2Player.NumberMovesLeft = AssignNumberMoves;
+            Player2Player.HasAttackedThisTurn = false;
+            Player2Player.IsBattling = false;
+
+            cameraPosition.x = Player2.transform.position.x;
             cameraPosition.y = Player2.transform.position.y;
         }
 
@@ -157,20 +163,25 @@ public class GameplayManager : MonoBehaviour
         AttackerTokens = Attacker.GetComponent<Player>().Tokens;
         DefenderTokens = Defender.GetComponent<Player>().Tokens;
 
-        if (AttackerTokens[0] == 0 && AttackerTokens[2] == 0 && AttackerTokens[4] == 0)
-        {
-            CanAttack = false;
-        }
-        else
-        {
-            CanAttack = true;
-        }
-
         //disable attacker and defender actions while attacker is choosing to attack
         Attacker.GetComponent<Player>().enabled = false;
         Defender.GetComponent<Player>().enabled = false;
 
-        HUD.AttackConfirmationScreen();
+        switch (Attacker.tag)
+        {
+            case "Player":
+                HUD.AttackConfirmationScreen();
+                break;
+            case "AI":
+                if (Attacker.GetComponent<Player>().CanAttack == true)
+                {
+                    ReadyAttack();
+                    HUD.AttackSelectionScreen();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     //get players ready for battle!
@@ -181,11 +192,11 @@ public class GameplayManager : MonoBehaviour
         Defender.GetComponent<Player>().enabled = true;
 
         //both are now battling
-        Attacker.GetComponent<Player>().HasAttacked = true;
-        Defender.GetComponent<Player>().HasAttacked = true;
+        Attacker.GetComponent<Player>().IsBattling = true;
+        Defender.GetComponent<Player>().IsBattling = true;
 
         //attacker can't attack twice in their turn
-        Attacker.GetComponent<Player>().hasAttackedthisTurn = true;
+        Attacker.GetComponent<Player>().HasAttackedThisTurn = true;
     }
 
     //function that decides if the players can choose a certain token during battle

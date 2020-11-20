@@ -1,5 +1,4 @@
-﻿
-namespace PathFind
+﻿namespace PathFind
 {
     /**
     * A 2d point on the grid

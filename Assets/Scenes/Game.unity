@@ -1136,11 +1136,12 @@ GameObject:
   - component: {fileID: 501519585}
   - component: {fileID: 501519588}
   - component: {fileID: 501519584}
+  - component: {fileID: 501519590}
   - component: {fileID: 501519587}
   - component: {fileID: 501519589}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Player
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1164,6 +1165,8 @@ MonoBehaviour:
   hasAttackedthisTurn: 0
   speed: 10
   GameplayManager: {fileID: 1930918279}
+  AI: {fileID: 501519590}
+  PathCount: 0
   Tokens: 000000000000000000000000000000000000000000000000
 --- !u!212 &501519585
 SpriteRenderer:
@@ -1295,6 +1298,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &501519590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501519583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b77d3b9803f04449345455b73823ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 1730373072}
+  AIPositionX: 0
+  AIPositionY: 0
+  PlayerPositionX: 0
+  PlayerPositionY: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,6 +2344,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: RedSpecialTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803341887687027710, guid: 51b3f603b9a313546aa31bf63cb44dbe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4344020216323653378, guid: 51b3f603b9a313546aa31bf63cb44dbe,
         type: 3}
@@ -5170,6 +5195,8 @@ MonoBehaviour:
   hasAttackedthisTurn: 0
   speed: 10
   GameplayManager: {fileID: 1930918279}
+  AI: {fileID: 0}
+  PathCount: 0
   Tokens: 000000000000000000000000000000000000000000000000
 --- !u!61 &1730373076
 BoxCollider2D:
@@ -5924,7 +5951,9 @@ MonoBehaviour:
   Winner: 
   AssignNumberMoves: 10
   Player1: {fileID: 1730373072}
+  Player1Player: {fileID: 0}
   Player2: {fileID: 501519583}
+  Player2Player: {fileID: 0}
   Attacker: {fileID: 0}
   AttackerTokens: 000000000000000000000000000000000000000000000000
   Defender: {fileID: 0}

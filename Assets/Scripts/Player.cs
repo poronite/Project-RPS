@@ -9,10 +9,13 @@ public class Player : MonoBehaviour
     private Vector2 targetPosition;
     public int PlayerID;
     public bool IsMoving = false;
-    public bool HasAttacked = false;
-    public bool hasAttackedthisTurn = false;
+    public bool CanAttack;
+    public bool IsBattling = false;
+    public bool HasAttackedThisTurn = false;
     public float speed = 10;
     public GameplayManager GameplayManager;
+    public AI AI;
+    public int PathCount = 0;
 
 
 
@@ -20,7 +23,7 @@ public class Player : MonoBehaviour
     //{RandomnessAttack, RandomnessDefense, PatienceAttack, PatienceDefense, StrategyAttack, StrategyDefense}
     public int[] Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
 
-    private string[] Colliders = new string[] {"Player", "Obstacle"};
+    private string[] Colliders = new string[] {"Player", "AI", "Obstacle"};
 
     private void Start()
     {
@@ -30,6 +33,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (Tokens[0] == 0 && Tokens[2] == 0 && Tokens[4] == 0)
+        {
+            CanAttack = false;
+        }
+        else
+        {
+            CanAttack = true;
+        }
+
         //can only play if it's their turn
         if (GameplayManager.PlayerTurn == PlayerID)
         {
@@ -38,7 +50,7 @@ public class Player : MonoBehaviour
     }
 
     
-    private void Actions()
+    private void Actions() 
     {
         RaycastHit2D hit;
 
@@ -46,8 +58,9 @@ public class Player : MonoBehaviour
 
         float walk = speed * Time.deltaTime;
 
-        //turn based movement that consumes 1 move each time the player moves 1 tile
-        if (Input.GetButtonDown("TileUp") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //y = 1; 
+        //turn based movement that consumes 1 move each time the player moves 1 tile | AI also uses this function
+        //up
+        if ((Input.GetButtonDown("TileUp") || (gameObject.CompareTag("AI") && playerPosition.y < AI.path[PathCount].y + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = 1; 
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, 1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -56,6 +69,13 @@ public class Player : MonoBehaviour
             }
             else
             {
+                if (gameObject.CompareTag("AI"))
+                {
+                    if (PathCount < AI.path.Count - 1)
+                    {
+                        PathCount++;
+                    }
+                }
                 targetPosition = new Vector2(playerPosition.x, playerPosition.y + 1);
                 NumberMovesLeft -= 1;
                 IsMoving = true;
@@ -63,7 +83,8 @@ public class Player : MonoBehaviour
             
         }
 
-        if (Input.GetButtonDown("TileLeft") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //x = -1;
+        //left
+        if ((Input.GetButtonDown("TileLeft") || (gameObject.CompareTag("AI") && playerPosition.x > AI.path[PathCount].x + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(-1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -72,13 +93,21 @@ public class Player : MonoBehaviour
             }
             else
             {
+                if (gameObject.CompareTag("AI"))
+                {
+                    if (PathCount < AI.path.Count - 1)
+                    {
+                        PathCount++;
+                    }
+                }
                 targetPosition = new Vector2(playerPosition.x - 1, playerPosition.y);
                 NumberMovesLeft -= 1;
                 IsMoving = true;
             }
         }
 
-        if (Input.GetButtonDown("TileDown") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //y = -1;
+        //down
+        if ((Input.GetButtonDown("TileDown") || (gameObject.CompareTag("AI") && playerPosition.y > AI.path[PathCount].y + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, -1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -87,13 +116,21 @@ public class Player : MonoBehaviour
             }
             else
             {
+                if (gameObject.CompareTag("AI"))
+                {
+                    if (PathCount < AI.path.Count - 1)
+                    {
+                        PathCount++;
+                    }
+                }
                 targetPosition = new Vector2(playerPosition.x, playerPosition.y - 1);
                 NumberMovesLeft -= 1;
                 IsMoving = true;
             }   
         }
 
-        if (Input.GetButtonDown("TileRight") && IsMoving == false && HasAttacked == false && NumberMovesLeft > 0) //x = 1;
+        //Right
+        if ((Input.GetButtonDown("TileRight") || (gameObject.CompareTag("AI") && playerPosition.x < AI.path[PathCount].x + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = 1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -102,6 +139,13 @@ public class Player : MonoBehaviour
             }
             else
             {
+                if (gameObject.CompareTag("AI"))
+                {
+                    if (PathCount < AI.path.Count - 1)
+                    {
+                        PathCount++;
+                    }
+                }
                 targetPosition = new Vector2(playerPosition.x + 1, playerPosition.y);
                 NumberMovesLeft -= 1;
                 IsMoving = true;
@@ -110,6 +154,7 @@ public class Player : MonoBehaviour
 
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, walk);
 
+        //Player
         //Player can't move while playerPosition isn't equal to targetPosition
         if (playerPosition == targetPosition)
         {
@@ -121,6 +166,13 @@ public class Player : MonoBehaviour
 
         //Press EndTurn button to end turn
         if (Input.GetButtonDown("EndTurn"))
+        {
+            GameplayManager.EndTurn();
+        }
+
+        //AI
+        //AI ends turn if it can't move or attack
+        if (gameObject.CompareTag("AI") && IsMoving == false && (NumberMovesLeft == 0 || HasAttackedThisTurn == true || (PathCount == AI.path.Count - 1 && CanAttack == false)))
         {
             GameplayManager.EndTurn();
         }
@@ -143,7 +195,7 @@ public class Player : MonoBehaviour
     //Check if the Player is colliding with another player (for attack purposes)
     private void ColliderIsPlayer(RaycastHit2D hit)
     {
-        if (hit.collider.CompareTag("Player") && hasAttackedthisTurn == false)
+        if (hit.collider.CompareTag("Player") || (hit.collider.CompareTag("AI")) && HasAttackedThisTurn == false)
         {
             //attack
             Debug.Log("Player Attack");

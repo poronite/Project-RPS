@@ -81,7 +81,7 @@ public class HUD : MonoBehaviour
     {
         AttackConfirmationBox.SetActive(true);
 
-        if (GameplayManager.CanAttack == true)
+        if (GameplayManager.Attacker.GetComponent<Player>().CanAttack == true)
         {
             Question.GetComponent<Text>().text = "Do you want to attack the enemy?";
             Yes.gameObject.SetActive(true);
