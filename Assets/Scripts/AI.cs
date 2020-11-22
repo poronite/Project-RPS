@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
+    public string AIObjective;
+
     public GameObject Player;
 
     public int AIPositionX;
     public int AIPositionY;
 
-    public int PlayerPositionX;
-    public int PlayerPositionY;
+    public int TargetPositionX;
+    public int TargetPositionY;
 
     PathFind.Grid grid;
     public List<PathFind.Point> path;
@@ -23,7 +25,7 @@ public class AI : MonoBehaviour
 
 
     void Start()
-    {   
+    {
         // create the tiles map
         // Tilesmap = new bool[width, height];
         // set values here....
@@ -53,8 +55,6 @@ public class AI : MonoBehaviour
 
         // create a grid
         grid = new PathFind.Grid(width, height, Tilesmap);
-
-        MakePath();
     }
 
     private void Update()
@@ -63,7 +63,6 @@ public class AI : MonoBehaviour
         {
             Debug.DrawLine(new Vector3(path[i - 1].x + 0.5f, path[i - 1].y + 0.5f), new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), Color.black, 5.0f);
         }
-        
     }
 
     public void MakePath()
@@ -71,15 +70,42 @@ public class AI : MonoBehaviour
         AIPositionX = (int)transform.position.x;
         AIPositionY = (int)transform.position.y;
 
-        PlayerPositionX = (int)Player.transform.position.x;
-        PlayerPositionY = (int)Player.transform.position.y;
+        switch (AIObjective)
+        {
+            case "Player":
+                TargetPositionX = (int)Player.transform.position.x;
+                TargetPositionY = (int)Player.transform.position.y;
+                break;
+            case "Tokens":
+                TargetPositionX = (int)Player.transform.position.x;
+                TargetPositionY = (int)Player.transform.position.y;
+                break;
+            default:
+                break;
+        }
+        
 
         // create source and target points
         PathFind.Point from = new PathFind.Point(AIPositionX, AIPositionY);
-        PathFind.Point to = new PathFind.Point(PlayerPositionX, PlayerPositionY);
+        PathFind.Point to = new PathFind.Point(TargetPositionX, TargetPositionY);
 
         // get path
         // path will either be a list of Points (x, y), or an empty list if no path is found.
         path = PathFind.Pathfinding.FindPath(grid, from, to);
+    }
+
+    public void FindAIObjective()
+    {
+        switch (gameObject.GetComponent<Player>().CanAttack)
+        {
+            case true:
+                AIObjective = "Player";
+                break;
+            case false:
+                AIObjective = "Tokens";
+                break;
+        }
+
+        MakePath();
     }
 }

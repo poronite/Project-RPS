@@ -84,6 +84,8 @@ public class SpecialToken : MonoBehaviour
                     break;
             }
 
+            PlayerCollider.GetComponent<Player>().EnoughTokensToAttack();
+
             EnterCooldown();
         }
     }

@@ -103,24 +103,27 @@ public class GameplayManager : MonoBehaviour
 
         PlayerTurn = PTurnTemp;
 
-        Player1Player = Player1.GetComponent<Player>();
-        Player2Player = Player2.GetComponent<Player>();
-
         if (PlayerTurn == 1)
         {
             Player1Player.NumberMovesLeft = AssignNumberMoves;
             Player1Player.HasAttackedThisTurn = false;
             Player1Player.IsBattling = false;
+            Player1Player.EnoughTokensToAttack();
 
             cameraPosition.x = Player1.transform.position.x;
             cameraPosition.y = Player1.transform.position.y;
         }
-
-        if (PlayerTurn == 2)
+        else if (PlayerTurn == 2)
         {
             Player2Player.NumberMovesLeft = AssignNumberMoves;
             Player2Player.HasAttackedThisTurn = false;
             Player2Player.IsBattling = false;
+            Player2Player.EnoughTokensToAttack();
+
+            if (Player2.CompareTag("AI"))
+            {
+                Player2.GetComponent<AI>().FindAIObjective();
+            }
 
             cameraPosition.x = Player2.transform.position.x;
             cameraPosition.y = Player2.transform.position.y;

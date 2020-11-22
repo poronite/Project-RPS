@@ -1161,11 +1161,13 @@ MonoBehaviour:
   NumberMovesLeft: 0
   PlayerID: 2
   IsMoving: 0
-  HasAttacked: 0
-  hasAttackedthisTurn: 0
+  CanAttack: 0
+  IsBattling: 0
+  HasAttackedThisTurn: 0
   speed: 10
   GameplayManager: {fileID: 1930918279}
   AI: {fileID: 501519590}
+  AITimer: 0
   PathCount: 0
   Tokens: 000000000000000000000000000000000000000000000000
 --- !u!212 &501519585
@@ -1310,11 +1312,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b77d3b9803f04449345455b73823ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AIObjective: 
   Player: {fileID: 1730373072}
   AIPositionX: 0
   AIPositionY: 0
-  PlayerPositionX: 0
-  PlayerPositionY: 0
+  TargetPositionX: 0
+  TargetPositionY: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5191,11 +5194,13 @@ MonoBehaviour:
   NumberMovesLeft: 0
   PlayerID: 1
   IsMoving: 0
-  HasAttacked: 0
-  hasAttackedthisTurn: 0
+  CanAttack: 0
+  IsBattling: 0
+  HasAttackedThisTurn: 0
   speed: 10
   GameplayManager: {fileID: 1930918279}
   AI: {fileID: 0}
+  AITimer: 0
   PathCount: 0
   Tokens: 000000000000000000000000000000000000000000000000
 --- !u!61 &1730373076
@@ -5946,14 +5951,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerTurn: 0
-  CanAttack: 0
   AffinityOutcome: 
   Winner: 
   AssignNumberMoves: 10
   Player1: {fileID: 1730373072}
-  Player1Player: {fileID: 0}
+  Player1Player: {fileID: 1730373075}
   Player2: {fileID: 501519583}
-  Player2Player: {fileID: 0}
+  Player2Player: {fileID: 501519584}
   Attacker: {fileID: 0}
   AttackerTokens: 000000000000000000000000000000000000000000000000
   Defender: {fileID: 0}
