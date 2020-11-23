@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
+    public bool DrawLine;
+
     public string AIObjective;
 
     public GameObject Player;
@@ -39,7 +41,7 @@ public class AI : MonoBehaviour
 
     private void Update()
     {
-        if (GameplayManager.PlayerTurn == 2)
+        if (GameplayManager.PlayerTurn == 2 && DrawLine == true)
         {
             for (int i = 1; i < path.Count; i++)
             {
