@@ -127,63 +127,90 @@ public class AI : MonoBehaviour
 
         Debug.Log(SpecialTileTargetTile);
 
-        float PlayerLocation = Player.transform.position.x + Player.transform.position.y;
-        float AILocation = AIPositionX + AIPositionY;
+        Vector2 PlayerLocation = new Vector2(Player.transform.position.x, Player.transform.position.y);
+        Vector2 AILocation = new Vector2(transform.position.x, transform.position.y);
 
         float AItoSpecialTile;
         float PlayertoSpecialTile;
 
-
-        switch (SpecialTileTargetTile)
+        do
         {
-            case 1:
-                foreach (GameObject RedSpecialTile in RedSpecialTiles)
-                {
-                    float RedSpecialTileLocation = RedSpecialTile.transform.position.x + RedSpecialTile.transform.position.y;
-
-                    AItoSpecialTile = RedSpecialTileLocation - AILocation;
-                    PlayertoSpecialTile = RedSpecialTileLocation - PlayerLocation;
-
-                    if (AItoSpecialTile < PlayertoSpecialTile)
+            switch (SpecialTileTargetTile)
+            {
+                case 1:
+                    foreach (GameObject RedSpecialTile in RedSpecialTiles)
                     {
-                        TargetPositionX = (int)RedSpecialTile.transform.position.x;
-                        TargetPositionY = (int)RedSpecialTile.transform.position.y;
+                        if (RedSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
+                        {
+                            Vector2 RedSpecialTileLocation = new Vector2(RedSpecialTile.transform.position.x, RedSpecialTile.transform.position.y);
+
+                            AItoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - AILocation);
+                            PlayertoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - PlayerLocation);
+
+                            if (AItoSpecialTile < PlayertoSpecialTile)
+                            {
+                                TargetPositionX = (int)RedSpecialTile.transform.position.x;
+                                TargetPositionY = (int)RedSpecialTile.transform.position.y;
+                            }
+                        }
+                        else
+                        {
+                            TargetPositionX = -1;
+                            TargetPositionY = -1;
+                        }
                     }
-                }
-                break;
-            case 2:
-                foreach (GameObject GreenSpecialTile in GreenSpecialTiles)
-                {
-                    float GreenSpecialTileLocation = GreenSpecialTile.transform.position.x + GreenSpecialTile.transform.position.y;
-
-                    AItoSpecialTile = GreenSpecialTileLocation - AILocation;
-                    PlayertoSpecialTile = GreenSpecialTileLocation - PlayerLocation;
-
-                    if (AItoSpecialTile < PlayertoSpecialTile)
+                    break;
+                case 2:
+                    foreach (GameObject GreenSpecialTile in GreenSpecialTiles)
                     {
-                        TargetPositionX = (int)GreenSpecialTile.transform.position.x;
-                        TargetPositionY = (int)GreenSpecialTile.transform.position.y;
+                        if (GreenSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
+                        {
+                            Vector2 GreenSpecialTileLocation = new Vector2(GreenSpecialTile.transform.position.x, GreenSpecialTile.transform.position.y);
+
+                            AItoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - AILocation);
+                            PlayertoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - PlayerLocation);
+
+                            if (AItoSpecialTile < PlayertoSpecialTile)
+                            {
+                                TargetPositionX = (int)GreenSpecialTile.transform.position.x;
+                                TargetPositionY = (int)GreenSpecialTile.transform.position.y;
+                            }
+                        }
+                        else
+                        {
+                            TargetPositionX = -1;
+                            TargetPositionY = -1;
+                        }
                     }
-                }
-                break;
-            case 3:
-                foreach (GameObject BlueSpecialTile in BlueSpecialTiles)
-                {
-                    float BlueSpecialTileLocation = BlueSpecialTile.transform.position.x + BlueSpecialTile.transform.position.y;
-
-                    AItoSpecialTile = BlueSpecialTileLocation - AILocation;
-                    PlayertoSpecialTile = BlueSpecialTileLocation - PlayerLocation;
-
-                    if (AItoSpecialTile < PlayertoSpecialTile)
+                    break;
+                case 3:
+                    foreach (GameObject BlueSpecialTile in BlueSpecialTiles)
                     {
-                        TargetPositionX = (int)BlueSpecialTile.transform.position.x;
-                        TargetPositionY = (int)BlueSpecialTile.transform.position.y;
+                        if (BlueSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
+                        {
+                            Vector2 BlueSpecialTileLocation = new Vector2(BlueSpecialTile.transform.position.x, BlueSpecialTile.transform.position.y);
+
+                            AItoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - AILocation);
+                            PlayertoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - PlayerLocation);
+
+                            if (AItoSpecialTile < PlayertoSpecialTile)
+                            {
+                                TargetPositionX = (int)BlueSpecialTile.transform.position.x;
+                                TargetPositionY = (int)BlueSpecialTile.transform.position.y;
+                            }
+                        }
+                        else
+                        {
+                            TargetPositionX = -1;
+                            TargetPositionY = -1;
+                        }
                     }
-                }
-                break;
-            default:
-                FindSpecialTile();
-                break;
-        }
+                    break;
+                default:
+                    FindSpecialTile();
+                    break;
+            }
+
+        }while (TargetPositionX == -1 && TargetPositionY == -1);
     }
 }

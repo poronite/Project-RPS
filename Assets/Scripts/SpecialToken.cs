@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpecialToken : MonoBehaviour
 {
-    private bool OffCooldown = true;
-    private int RoundsCooldownLeft = 0;
+    public bool OffCooldown = true;
+    private int roundsCooldownLeft = 0;
     private string nameTile;
     string specialTile;
     public Animator AnimatorManager;
@@ -24,10 +24,8 @@ public class SpecialToken : MonoBehaviour
     public Sprite BlueCooldown2;
     public Sprite BlueCooldown1;
 
-    //references to special tile sprites (temporary until we implement animations)
-    public Sprite RedTile;
-    public Sprite GreenTile;
-    public Sprite BlueTile;
+    //reference to the AI
+    public GameObject Player2AI;
 
     private void Start()
     {
@@ -86,6 +84,11 @@ public class SpecialToken : MonoBehaviour
 
             PlayerCollider.GetComponent<Player>().EnoughTokensToAttack();
 
+            if (collision.CompareTag("AI"))
+            {
+                Player2AI.GetComponent<AI>().FindAIObjective();
+            }
+
             EnterCooldown();
         }
     }
@@ -94,18 +97,18 @@ public class SpecialToken : MonoBehaviour
     {
         OffCooldown = false;
         AnimatorManager.enabled = false;
-        RoundsCooldownLeft = 5;
+        roundsCooldownLeft = 5;
         ChangeCooldown();
     }
 
     public void ChangeCooldown()
     {
-        RoundsCooldownLeft -= 1;
+        roundsCooldownLeft -= 1;
 
         switch (specialTile)
         {
             case "RedSpecialTile":
-                switch (RoundsCooldownLeft)
+                switch (roundsCooldownLeft)
                 {
                     case 4:
                         gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown4;
@@ -128,7 +131,7 @@ public class SpecialToken : MonoBehaviour
                 }
                 break;
             case "GreenSpecialTile":
-                switch (RoundsCooldownLeft)
+                switch (roundsCooldownLeft)
                 {
                     case 4:
                         gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown4;
@@ -151,7 +154,7 @@ public class SpecialToken : MonoBehaviour
                 }
                 break;
             case "BlueSpecialTile":
-                switch (RoundsCooldownLeft)
+                switch (roundsCooldownLeft)
                 {
                     case 4:
                         gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown4;
