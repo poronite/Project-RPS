@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
         GameplayManager.MovesLeftUI(NumberMovesLeft);
 
         //Press EndTurn button to end turn
-        if (Input.GetButtonDown("EndTurn"))
+        if (Input.GetButtonDown("EndTurn") && GameplayManager.PlayerTurn == 1 && IsMoving == false)
         {
             GameplayManager.EndTurn();
         }
@@ -208,7 +208,7 @@ public class Player : MonoBehaviour
     //Check if the Player is colliding with another player (for attack purposes)
     private void ColliderIsPlayer(RaycastHit2D hit)
     {
-        if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("AI")) && HasAttackedThisTurn == false)
+        if ((hit.collider.CompareTag("Player") || hit.collider.CompareTag("AI")) && HasAttackedThisTurn == false && CanAttack == true)
         {
             //attack
             Debug.Log("Player Attack");
@@ -219,5 +219,4 @@ public class Player : MonoBehaviour
             GameplayManager.AttackConfirmation(attacker, defender);
         }
     }
-    
 }

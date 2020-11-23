@@ -112,6 +112,8 @@ public class GameplayManager : MonoBehaviour
 
             cameraPosition.x = Player1.transform.position.x;
             cameraPosition.y = Player1.transform.position.y;
+
+            HUD.EndTurnButton.interactable = true;
         }
         else if (PlayerTurn == 2)
         {
@@ -127,6 +129,8 @@ public class GameplayManager : MonoBehaviour
 
             cameraPosition.x = Player2.transform.position.x;
             cameraPosition.y = Player2.transform.position.y;
+
+            HUD.EndTurnButton.interactable = false;
         }
 
         Camera.main.transform.position = cameraPosition;
@@ -181,6 +185,10 @@ public class GameplayManager : MonoBehaviour
                     ReadyAttack();
                     HUD.AttackSelectionScreen();
                 }
+                else
+                {
+                    CancelAttack();
+                }
                 break;
             default:
                 break;
@@ -205,47 +213,60 @@ public class GameplayManager : MonoBehaviour
     //function that decides if the players can choose a certain token during battle
     public void CheckTokenAvailability()
     {
-        if (AttackerTokens[0] == 0)
-        {
-            HUD.AttackerRButton.interactable = false;
-            HUD.AttackerRButton.image.color = Color.gray;
-        }
-
-        if (AttackerTokens[2] == 0)
-        {
-            HUD.AttackerPButton.interactable = false;
-            HUD.AttackerPButton.image.color = Color.gray;
-        }
-
-        if (AttackerTokens[4] == 0)
-        {
-            HUD.AttackerSButton.interactable = false;
-            HUD.AttackerSButton.image.color = Color.gray;
-        }
-
-        if (DefenderTokens[1] == 0)
-        {
-            HUD.DefenderRButton.interactable = false;
-            HUD.DefenderRButton.image.color = Color.gray;
-        }
-
-        if (DefenderTokens[3] == 0)
-        {
-            HUD.DefenderPButton.interactable = false;
-            HUD.DefenderPButton.image.color = Color.gray;
-        }
-
-        if (DefenderTokens[5] == 0)
-        {
-            HUD.DefenderSButton.interactable = false;
-            HUD.DefenderSButton.image.color = Color.gray;
-        }
-
         //in case defender doesn't have defense tokens aka Game over
         if (DefenderTokens[1] == 0 && DefenderTokens[3] == 0 && DefenderTokens[5] == 0)
         {
             Winner = Attacker.name;
             HUD.Outcome();
+        }
+
+        //check whether Player is attacker or defender then activate the buttons
+        switch (Attacker.GetComponent<Player>().PlayerID)
+        {
+            case 1:
+
+                if (Player1Player.Tokens[0] == 0)
+                {
+                    HUD.PlayerRButton.interactable = false;
+                    HUD.PlayerRButton.image.color = Color.gray;
+                }
+
+                if (Player1Player.Tokens[2] == 0)
+                {
+                    HUD.PlayerPButton.interactable = false;
+                    HUD.PlayerPButton.image.color = Color.gray;
+                }
+
+                if (Player1Player.Tokens[4] == 0)
+                {
+                    HUD.PlayerSButton.interactable = false;
+                    HUD.PlayerSButton.image.color = Color.gray;
+                }
+
+                break;
+            case 2:
+
+                if (Player1Player.Tokens[1] == 0)
+                {
+                    HUD.PlayerRButton.interactable = false;
+                    HUD.PlayerRButton.image.color = Color.gray;
+                }
+
+                if (Player1Player.Tokens[3] == 0)
+                {
+                    HUD.PlayerPButton.interactable = false;
+                    HUD.PlayerPButton.image.color = Color.gray;
+                }
+
+                if (Player1Player.Tokens[5] == 0)
+                {
+                    HUD.PlayerSButton.interactable = false;
+                    HUD.PlayerSButton.image.color = Color.gray;
+                }
+
+                break;
+            default:
+                break;
         }
     }
 

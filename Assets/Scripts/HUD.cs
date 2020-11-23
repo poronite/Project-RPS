@@ -24,20 +24,14 @@ public class HUD : MonoBehaviour
     public Button No;
     public Button Ok;
 
-    //references to the text that shows who's tokens belongs to
-    public Text AttackerTokensUI;
-    public Text DefenderTokensUI;
-
     //references to the Outcome's text
     public Text OutcomeUIText;
 
     //references to the AttackSelectionBox buttons
-    public Button AttackerRButton;
-    public Button AttackerPButton;
-    public Button AttackerSButton;
-    public Button DefenderRButton;
-    public Button DefenderPButton;
-    public Button DefenderSButton;
+    public Button PlayerRButton;
+    public Button PlayerPButton;
+    public Button PlayerSButton;
+    
 
     //strings that hold the player decisions
     public string AttackerChoice = "";
@@ -106,55 +100,109 @@ public class HUD : MonoBehaviour
     {
         AttackSelectionBox.SetActive(true);
 
-        //temporary while we hotsitting
-        AttackerTokensUI.text = GameplayManager.Attacker.name;
-        DefenderTokensUI.text = GameplayManager.Defender.name;
+        PlayerRButton.interactable = true;
+        PlayerRButton.image.color = Color.red;
 
-        //ready attacker buttons
-        AttackerRButton.interactable = true;
-        AttackerRButton.image.color = Color.red;
-        AttackerPButton.interactable = true;
-        AttackerPButton.image.color = Color.green;
-        AttackerSButton.interactable = true;
-        AttackerSButton.image.color = Color.blue;
+        PlayerPButton.interactable = true;
+        PlayerPButton.image.color = Color.green;
 
-        //ready defender buttons
-        DefenderRButton.interactable = true;
-        DefenderRButton.image.color = Color.red;
-        DefenderPButton.interactable = true;
-        DefenderPButton.image.color = Color.green;
-        DefenderSButton.interactable = true;
-        DefenderSButton.image.color = Color.blue;
+        PlayerSButton.interactable = true;
+        PlayerSButton.image.color = Color.blue;
 
         GameplayManager.CheckTokenAvailability();
+    }
+
+    public void Player1Choice(string choice)
+    {
+        switch (GameplayManager.Attacker.GetComponent<Player>().PlayerID)
+        {
+            case 1:
+                AttackersChoice(choice);
+                AIChoice("Defender");
+                break;
+            case 2:
+                DefendersChoice(choice);
+                AIChoice("Attacker");
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void AIChoice(string side)
+    {
+        int choice = -1;
+
+        while (choice == -1)
+        {
+            choice = Random.Range(0, 6);
+
+            switch (side)
+            {
+                case "Attacker":
+                    if (choice % 2 == 1)
+                    {
+                        choice--;
+                    }
+
+                    if (GameplayManager.AttackerTokens[choice] == 0)
+                    {
+                        choice = -1;
+                    }
+
+                    break;
+                case "Defender":
+                    if (choice % 2 == 0)
+                    {
+                        choice++;
+                    }
+
+                    if (GameplayManager.DefenderTokens[choice] == 0)
+                    {
+                        choice = -1;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        switch (choice)
+        {
+            case 0:
+                AttackersChoice("Randomness");
+                break;
+            case 1:
+                DefendersChoice("Randomness");
+                break;
+            case 2:
+                AttackersChoice("Patience");
+                break;
+            case 3:
+                DefendersChoice("Patience");
+                break;
+            case 4:
+                AttackersChoice("Strategy");
+                break;
+            case 5:
+                DefendersChoice("Strategy");
+                break;
+            default:
+                break;
+        }
     }
 
     //when Attacker chooses a token
     public void AttackersChoice(string choice)
     {
         AttackerChoice = choice;
-
-        //Disable buttons
-        AttackerRButton.interactable = false;
-        AttackerRButton.image.color = Color.gray;
-        AttackerPButton.interactable = false;
-        AttackerPButton.image.color = Color.gray;
-        AttackerSButton.interactable = false;
-        AttackerSButton.image.color = Color.gray;
     }
 
     //when Defender chooses a token
     public void DefendersChoice(string choice)
     {
         DefenderChoice = choice;
-
-        //Disable buttons
-        DefenderRButton.interactable = false;
-        DefenderRButton.image.color = Color.gray;
-        DefenderPButton.interactable = false;
-        DefenderPButton.image.color = Color.gray;
-        DefenderSButton.interactable = false;
-        DefenderSButton.image.color = Color.gray;
     }
 
     //box with text that shows outcome of the battle

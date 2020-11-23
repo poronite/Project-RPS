@@ -7,6 +7,11 @@ public class AI : MonoBehaviour
     public string AIObjective;
 
     public GameObject Player;
+    public GameplayManager GameplayManager;
+
+    public List<GameObject> RedSpecialTiles;
+    public List<GameObject> GreenSpecialTiles;
+    public List<GameObject> BlueSpecialTiles;
 
     public int AIPositionX;
     public int AIPositionY;
@@ -26,10 +31,28 @@ public class AI : MonoBehaviour
 
     void Start()
     {
-        // create the tiles map
-        // Tilesmap = new bool[width, height];
-        // set values here....
-        // true = walkable, false = blocking
+        map1AI();
+
+        // create a grid
+        grid = new PathFind.Grid(width, height, Tilesmap);
+    }
+
+    private void Update()
+    {
+        if (GameplayManager.PlayerTurn == 2)
+        {
+            for (int i = 1; i < path.Count; i++)
+            {
+                Debug.DrawLine(new Vector3(path[i - 1].x + 0.5f, path[i - 1].y + 0.5f), new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), Color.black, 5.0f);
+            }
+        }  
+    }
+
+    private void map1AI()
+    {
+        RedSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
+        GreenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
+        BlueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
 
         Tilesmap = new bool[,]
         {
@@ -51,22 +74,12 @@ public class AI : MonoBehaviour
             { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
             { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false }
         };
-
-
-        // create a grid
-        grid = new PathFind.Grid(width, height, Tilesmap);
-    }
-
-    private void Update()
-    {
-        for (int i = 1; i < path.Count; i++)
-        {
-            Debug.DrawLine(new Vector3(path[i - 1].x + 0.5f, path[i - 1].y + 0.5f), new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), Color.black, 5.0f);
-        }
     }
 
     public void MakePath()
     {
+        gameObject.GetComponent<Player>().PathCount = 0;
+
         AIPositionX = (int)transform.position.x;
         AIPositionY = (int)transform.position.y;
 
@@ -77,8 +90,7 @@ public class AI : MonoBehaviour
                 TargetPositionY = (int)Player.transform.position.y;
                 break;
             case "Tokens":
-                TargetPositionX = (int)Player.transform.position.x;
-                TargetPositionY = (int)Player.transform.position.y;
+                FindSpecialTile();
                 break;
             default:
                 break;
@@ -107,5 +119,71 @@ public class AI : MonoBehaviour
         }
 
         MakePath();
+    }
+
+    public void FindSpecialTile()
+    {
+        int SpecialTileTargetTile = Random.Range(1, 4);
+
+        Debug.Log(SpecialTileTargetTile);
+
+        float PlayerLocation = Player.transform.position.x + Player.transform.position.y;
+        float AILocation = AIPositionX + AIPositionY;
+
+        float AItoSpecialTile;
+        float PlayertoSpecialTile;
+
+
+        switch (SpecialTileTargetTile)
+        {
+            case 1:
+                foreach (GameObject RedSpecialTile in RedSpecialTiles)
+                {
+                    float RedSpecialTileLocation = RedSpecialTile.transform.position.x + RedSpecialTile.transform.position.y;
+
+                    AItoSpecialTile = RedSpecialTileLocation - AILocation;
+                    PlayertoSpecialTile = RedSpecialTileLocation - PlayerLocation;
+
+                    if (AItoSpecialTile < PlayertoSpecialTile)
+                    {
+                        TargetPositionX = (int)RedSpecialTile.transform.position.x;
+                        TargetPositionY = (int)RedSpecialTile.transform.position.y;
+                    }
+                }
+                break;
+            case 2:
+                foreach (GameObject GreenSpecialTile in GreenSpecialTiles)
+                {
+                    float GreenSpecialTileLocation = GreenSpecialTile.transform.position.x + GreenSpecialTile.transform.position.y;
+
+                    AItoSpecialTile = GreenSpecialTileLocation - AILocation;
+                    PlayertoSpecialTile = GreenSpecialTileLocation - PlayerLocation;
+
+                    if (AItoSpecialTile < PlayertoSpecialTile)
+                    {
+                        TargetPositionX = (int)GreenSpecialTile.transform.position.x;
+                        TargetPositionY = (int)GreenSpecialTile.transform.position.y;
+                    }
+                }
+                break;
+            case 3:
+                foreach (GameObject BlueSpecialTile in BlueSpecialTiles)
+                {
+                    float BlueSpecialTileLocation = BlueSpecialTile.transform.position.x + BlueSpecialTile.transform.position.y;
+
+                    AItoSpecialTile = BlueSpecialTileLocation - AILocation;
+                    PlayertoSpecialTile = BlueSpecialTileLocation - PlayerLocation;
+
+                    if (AItoSpecialTile < PlayertoSpecialTile)
+                    {
+                        TargetPositionX = (int)BlueSpecialTile.transform.position.x;
+                        TargetPositionY = (int)BlueSpecialTile.transform.position.y;
+                    }
+                }
+                break;
+            default:
+                FindSpecialTile();
+                break;
+        }
     }
 }
