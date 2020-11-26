@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
+    //scripts in the Pathfinding folder used for the AI Pathfinding are not made by me
+    //you can find them in here: https://github.com/RonenNess/Unity-2d-pathfinding
+    //pretty easy to use in case you find pathfinding difficult like me
+
     public bool DrawLine;
 
     public string AIObjective;
@@ -33,6 +37,8 @@ public class AI : MonoBehaviour
 
     void Start()
     {
+        //map function that is used to help the AI distinguish between walkable and non walkable tiles
+        //also puts the every object with special tiles tag in 3 different arrays depending on color
         map1AI();
 
         // create a grid
@@ -41,6 +47,7 @@ public class AI : MonoBehaviour
 
     private void Update()
     {
+        //debug purposes, it just draws a line that represents the path from the AI to his target (token tile or player)
         if (GameplayManager.PlayerTurn == 2 && DrawLine == true)
         {
             for (int i = 1; i < path.Count; i++)
@@ -50,7 +57,7 @@ public class AI : MonoBehaviour
         }  
     }
 
-    private void map1AI()
+    private void map1AI() //map1 function
     {
         RedSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
         GreenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
@@ -78,7 +85,8 @@ public class AI : MonoBehaviour
         };
     }
 
-    public void MakePath()
+    
+    public void MakePath() //function used to create a path for the AI depending on target
     {
         gameObject.GetComponent<Player>().PathCount = 0;
 
@@ -108,7 +116,8 @@ public class AI : MonoBehaviour
         path = PathFind.Pathfinding.FindPath(grid, from, to);
     }
 
-    public void FindAIObjective()
+
+    public void FindAIObjective() //find a target for the AI depending whether or not he can attack
     {
         switch (gameObject.GetComponent<Player>().CanAttack)
         {
@@ -123,18 +132,21 @@ public class AI : MonoBehaviour
         MakePath();
     }
 
-    public void FindSpecialTile()
+
+    public void FindSpecialTile() //in case AI chooses a token tile as a target, this function will select which specific tile he is going to
     {
-        int SpecialTileTargetTile = Random.Range(1, 4);
+        int SpecialTileTargetTile = Random.Range(1, 4); //1 = red, 2 = green, 3 = blue
 
         Debug.Log(SpecialTileTargetTile);
 
         Vector2 PlayerLocation = new Vector2(Player.transform.position.x, Player.transform.position.y);
         Vector2 AILocation = new Vector2(transform.position.x, transform.position.y);
 
+        //variables that will help the AI decide whether which [insert color] tile is near him and far from the player
         float AItoSpecialTile;
         float PlayertoSpecialTile;
 
+        //do while that runs until AI doesn't find a token tile to go to
         do
         {
             switch (SpecialTileTargetTile)

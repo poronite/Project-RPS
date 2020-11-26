@@ -126,7 +126,7 @@ public class Player : MonoBehaviour
             }   
         }
 
-        //Right
+        //right
         if ((Input.GetButtonDown("TileRight") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x < AI.path[PathCount].x + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = 1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(1, 0), 0.5f);

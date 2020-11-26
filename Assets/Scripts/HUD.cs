@@ -51,6 +51,7 @@ public class HUD : MonoBehaviour
         }
     }
 
+    //display moves left
     public void MovesLeftHUD(int movesleft)
     {
         if (movesleft > 0)
@@ -65,12 +66,14 @@ public class HUD : MonoBehaviour
         }
     }
 
+    //display round and player turn
     public void ChangeTurnRoundHUD(int playerturn, int numRounds)
     {
         WhosTurn.text = $"Player {playerturn}'s turn";
         NumRounds.text = "Round " + numRounds;
     }
 
+    //attack confirmation screen box
     public void AttackConfirmationScreen()
     {
         AttackConfirmationBox.SetActive(true);
@@ -96,6 +99,7 @@ public class HUD : MonoBehaviour
         MainMenuButton.GetComponent<Button>().interactable = false;
     }
 
+    //attack selection screen box
     public void AttackSelectionScreen()
     {
         AttackSelectionBox.SetActive(true);
@@ -112,7 +116,7 @@ public class HUD : MonoBehaviour
         GameplayManager.CheckTokenAvailability();
     }
 
-    public void Player1Choice(string choice)
+    public void Player1Choice(string choice) //function that runs when player chooses a token when attacking/defending
     {
         switch (GameplayManager.Attacker.GetComponent<Player>().PlayerID)
         {
@@ -129,7 +133,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    public void AIChoice(string side)
+    public void AIChoice(string side) //function that runs when player chooses his token
     {
         int choice = -1;
 
@@ -140,7 +144,7 @@ public class HUD : MonoBehaviour
             switch (side)
             {
                 case "Attacker":
-                    if (choice % 2 == 1)
+                    if (choice % 2 == 1) //attack token are in even indexes of the token's array so this prevents the AI from picking a defense token
                     {
                         choice--;
                     }
@@ -152,7 +156,7 @@ public class HUD : MonoBehaviour
 
                     break;
                 case "Defender":
-                    if (choice % 2 == 0)
+                    if (choice % 2 == 0) //same logic as above
                     {
                         choice++;
                     }

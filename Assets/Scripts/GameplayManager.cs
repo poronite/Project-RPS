@@ -127,8 +127,8 @@ public class GameplayManager : MonoBehaviour
                 Player2.GetComponent<AI>().FindAIObjective();
             }
 
-            cameraPosition.x = Player2.transform.position.x;
-            cameraPosition.y = Player2.transform.position.y;
+            //cameraPosition.x = Player2.transform.position.x;
+            //cameraPosition.y = Player2.transform.position.y;
 
             HUD.EndTurnButton.interactable = false;
         }
