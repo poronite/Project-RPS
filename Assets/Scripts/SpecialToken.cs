@@ -24,9 +24,6 @@ public class SpecialToken : MonoBehaviour
     public Sprite BlueCooldown2;
     public Sprite BlueCooldown1;
 
-    //reference to the AI
-    public GameObject Player2AI;
-
     private void Start()
     {
         //tag that determines type of tile
@@ -63,30 +60,31 @@ public class SpecialToken : MonoBehaviour
         if ((collision.CompareTag("Player") || collision.CompareTag("AI")) && OffCooldown == true)
         {
             GameObject PlayerCollider = collision.gameObject;
+            Player PlayerColliderController = PlayerCollider.GetComponent<Player>();
 
             switch (specialTile)
             {
                 case "RedSpecialTile":
-                    PlayerCollider.GetComponent<Player>().Tokens[0] += 1;
-                    PlayerCollider.GetComponent<Player>().Tokens[1] += 1;
+                    PlayerColliderController.Tokens[0] += 1;
+                    PlayerColliderController.Tokens[1] += 1;
                     break;
                 case "GreenSpecialTile":
-                    PlayerCollider.GetComponent<Player>().Tokens[2] += 1;
-                    PlayerCollider.GetComponent<Player>().Tokens[3] += 1;
+                    PlayerColliderController.Tokens[2] += 1;
+                    PlayerColliderController.Tokens[3] += 1;
                     break;
                 case "BlueSpecialTile":
-                    PlayerCollider.GetComponent<Player>().Tokens[4] += 1;
-                    PlayerCollider.GetComponent<Player>().Tokens[5] += 1;
+                    PlayerColliderController.Tokens[4] += 1;
+                    PlayerColliderController.Tokens[5] += 1;
                     break;
                 default:
                     break;
             }
 
-            PlayerCollider.GetComponent<Player>().EnoughTokensToAttack();
+            PlayerColliderController.EnoughTokensToAttack();
 
-            if (collision.CompareTag("AI"))
+            if (PlayerCollider.CompareTag("AI"))
             {
-                Player2AI.GetComponent<AI>().FindAIObjective();
+                PlayerCollider.GetComponent<AI>().FindAIObjective();
             }
 
             EnterCooldown();

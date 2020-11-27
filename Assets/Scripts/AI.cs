@@ -10,39 +10,49 @@ public class AI : MonoBehaviour
 
     public bool DrawLine;
 
-    public string AIObjective;
+    private string aiObjective;
 
     public GameObject Player;
     public GameplayManager GameplayManager;
+    private Player aiController;
 
-    public List<GameObject> RedSpecialTiles;
-    public List<GameObject> GreenSpecialTiles;
-    public List<GameObject> BlueSpecialTiles;
+    private List<GameObject> redSpecialTiles = new List<GameObject>();
+    private List<GameObject> greenSpecialTiles = new List<GameObject>();
+    private List<GameObject> blueSpecialTiles = new List<GameObject>();
 
-    public int AIPositionX;
-    public int AIPositionY;
+    private int trust; //level of trust depending on number of tokens the AI has that can go from 1 to 5;
+    private int confidence; //confidence of the AI, which is random between 1 and 5
+    private int risk; //level of risk that determines AI next move | risk = trust + confidence | min risk = 0 | max risk = 10
 
-    public int TargetPositionX;
-    public int TargetPositionY;
+    private int aiPositionX;
+    private int aiPositionY;
+
+    private int targetPositionX;
+    private int targetPositionY;
 
     PathFind.Grid grid;
-    public List<PathFind.Point> path;
+    public List<PathFind.Point> Path;
 
-    public bool[,] Tilesmap;
+    private bool[,] tilesmap;
 
-    int width = 17;
-    int height = 32;
+    int width;
+    int height;
 
 
 
     void Start()
     {
+        aiController = gameObject.GetComponent<Player>();
+
         //map function that is used to help the AI distinguish between walkable and non walkable tiles
         //also puts the every object with special tiles tag in 3 different arrays depending on color
         map1AI();
 
         // create a grid
-        grid = new PathFind.Grid(width, height, Tilesmap);
+        grid = new PathFind.Grid(width, height, tilesmap);
+
+        aiController.EnoughTokensToAttack();
+        FindAIObjective();
     }
 
     private void Update()
@@ -50,39 +60,38 @@ public class AI : MonoBehaviour
         //debug purposes, it just draws a line that represents the path from the AI to his target (token tile or player)
         if (GameplayManager.PlayerTurn == 2 && DrawLine == true)
         {
-            for (int i = 1; i < path.Count; i++)
+            for (int i = 1; i < Path.Count; i++)
             {
-                Debug.DrawLine(new Vector3(path[i - 1].x + 0.5f, path[i - 1].y + 0.5f), new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), Color.black, 5.0f);
+                Debug.DrawLine(new Vector3(Path[i - 1].x + 0.5f, Path[i - 1].y + 0.5f), new Vector3(Path[i].x + 0.5f, Path[i].y + 0.5f), Color.black, 5.0f);
             }
         }  
     }
 
     private void map1AI() //map1 function
     {
-        RedSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
-        GreenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
-        BlueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
+        redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
+        greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
+        blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
 
-        Tilesmap = new bool[,]
+        tilesmap = new bool[,]
         {
-            { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false },
-            { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false }
+           {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+           {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, false, false, true, true, true, true, false, false, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+           {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
+           {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}
         };
+
+        width = tilesmap.GetLength(0);
+        height = tilesmap.GetLength(1);
     }
 
     
@@ -90,17 +99,25 @@ public class AI : MonoBehaviour
     {
         gameObject.GetComponent<Player>().PathCount = 0;
 
-        AIPositionX = (int)transform.position.x;
-        AIPositionY = (int)transform.position.y;
+        aiPositionX = (int)transform.position.x;
+        aiPositionY = (int)transform.position.y;
 
-        switch (AIObjective)
+        switch (aiObjective)
         {
             case "Player":
-                TargetPositionX = (int)Player.transform.position.x;
-                TargetPositionY = (int)Player.transform.position.y;
+                targetPositionX = (int)Player.transform.position.x;
+                targetPositionY = (int)Player.transform.position.y;
                 break;
             case "Tokens":
-                FindSpecialTile();
+                if (CheckTileAvailability())
+                {
+                    FindSpecialTile();
+                }
+                else
+                {
+                    targetPositionX = (int)Player.transform.position.x;
+                    targetPositionY = (int)Player.transform.position.y;
+                }
                 break;
             default:
                 break;
@@ -108,37 +125,88 @@ public class AI : MonoBehaviour
         
 
         // create source and target points
-        PathFind.Point from = new PathFind.Point(AIPositionX, AIPositionY);
-        PathFind.Point to = new PathFind.Point(TargetPositionX, TargetPositionY);
+        PathFind.Point from = new PathFind.Point(aiPositionX, aiPositionY);
+        PathFind.Point to = new PathFind.Point(targetPositionX, targetPositionY);
 
         // get path
         // path will either be a list of Points (x, y), or an empty list if no path is found.
-        path = PathFind.Pathfinding.FindPath(grid, from, to);
+        Path = PathFind.Pathfinding.FindPath(grid, from, to);
     }
 
 
     public void FindAIObjective() //find a target for the AI depending whether or not he can attack
     {
-        switch (gameObject.GetComponent<Player>().CanAttack)
+        if (!aiController.CanAttack)
         {
-            case true:
-                AIObjective = "Player";
-                break;
-            case false:
-                AIObjective = "Tokens";
-                break;
+            aiObjective = "Tokens";
         }
+        else
+        {
+            int tokencount = System.Convert.ToInt32(aiController.Tokens[0] > 0) + System.Convert.ToInt32(aiController.Tokens[2] > 0) + System.Convert.ToInt32(aiController.Tokens[4] > 0);
 
+            switch (tokencount)
+            {
+                case 1: //if AI has only 1 attack token of any type
+                    trust = 1;
+                    break;
+                case 2: //if AI has 2 unique attack tokens of any type
+                    trust = 3;
+                    break;
+                case 3: //if AI has 1 attack token of each type
+                    trust = 5;
+                    break;
+                default:
+                    break;
+            }
+
+            confidence = Random.Range(1, 6);
+
+            risk = trust + confidence;
+
+            if (risk >= 5)
+            {
+                aiObjective = "Player";
+            }
+            else if (risk < 5)
+            {
+                aiObjective = "Tokens";
+            }
+        }
+        
         MakePath();
     }
 
+    private bool CheckTileAvailability() //verifies if there are tiles available
+    {
+        foreach (GameObject RedSpecialTile in redSpecialTiles)
+        {
+            if (RedSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
+            {
+                return true;
+            }
+        }
+
+        foreach (GameObject GreenSpecialTile in greenSpecialTiles)
+        {
+            if (GreenSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
+            {
+                return true;
+            }
+        }
+
+        foreach (GameObject BlueSpecialTile in blueSpecialTiles)
+        {
+            if (BlueSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public void FindSpecialTile() //in case AI chooses a token tile as a target, this function will select which specific tile he is going to
     {
-        int SpecialTileTargetTile = Random.Range(1, 4); //1 = red, 2 = green, 3 = blue
-
-        Debug.Log(SpecialTileTargetTile);
-
         Vector2 PlayerLocation = new Vector2(Player.transform.position.x, Player.transform.position.y);
         Vector2 AILocation = new Vector2(transform.position.x, transform.position.y);
 
@@ -149,10 +217,14 @@ public class AI : MonoBehaviour
         //do while that runs until AI doesn't find a token tile to go to
         do
         {
+            int SpecialTileTargetTile = Random.Range(1, 4); //1 = red, 2 = green, 3 = blue
+
+            Debug.Log(SpecialTileTargetTile);
+
             switch (SpecialTileTargetTile)
             {
                 case 1:
-                    foreach (GameObject RedSpecialTile in RedSpecialTiles)
+                    foreach (GameObject RedSpecialTile in redSpecialTiles)
                     {
                         if (RedSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
                         {
@@ -163,19 +235,19 @@ public class AI : MonoBehaviour
 
                             if (AItoSpecialTile < PlayertoSpecialTile)
                             {
-                                TargetPositionX = (int)RedSpecialTile.transform.position.x;
-                                TargetPositionY = (int)RedSpecialTile.transform.position.y;
+                                targetPositionX = (int)RedSpecialTile.transform.position.x;
+                                targetPositionY = (int)RedSpecialTile.transform.position.y;
                             }
                         }
                         else
                         {
-                            TargetPositionX = -1;
-                            TargetPositionY = -1;
+                            targetPositionX = -1;
+                            targetPositionY = -1;
                         }
                     }
                     break;
                 case 2:
-                    foreach (GameObject GreenSpecialTile in GreenSpecialTiles)
+                    foreach (GameObject GreenSpecialTile in greenSpecialTiles)
                     {
                         if (GreenSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
                         {
@@ -186,19 +258,19 @@ public class AI : MonoBehaviour
 
                             if (AItoSpecialTile < PlayertoSpecialTile)
                             {
-                                TargetPositionX = (int)GreenSpecialTile.transform.position.x;
-                                TargetPositionY = (int)GreenSpecialTile.transform.position.y;
+                                targetPositionX = (int)GreenSpecialTile.transform.position.x;
+                                targetPositionY = (int)GreenSpecialTile.transform.position.y;
                             }
                         }
                         else
                         {
-                            TargetPositionX = -1;
-                            TargetPositionY = -1;
+                            targetPositionX = -1;
+                            targetPositionY = -1;
                         }
                     }
                     break;
                 case 3:
-                    foreach (GameObject BlueSpecialTile in BlueSpecialTiles)
+                    foreach (GameObject BlueSpecialTile in blueSpecialTiles)
                     {
                         if (BlueSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
                         {
@@ -209,14 +281,14 @@ public class AI : MonoBehaviour
 
                             if (AItoSpecialTile < PlayertoSpecialTile)
                             {
-                                TargetPositionX = (int)BlueSpecialTile.transform.position.x;
-                                TargetPositionY = (int)BlueSpecialTile.transform.position.y;
+                                targetPositionX = (int)BlueSpecialTile.transform.position.x;
+                                targetPositionY = (int)BlueSpecialTile.transform.position.y;
                             }
                         }
                         else
                         {
-                            TargetPositionX = -1;
-                            TargetPositionY = -1;
+                            targetPositionX = -1;
+                            targetPositionY = -1;
                         }
                     }
                     break;
@@ -225,6 +297,6 @@ public class AI : MonoBehaviour
                     break;
             }
 
-        }while (TargetPositionX == -1 && TargetPositionY == -1);
+        }while (targetPositionX == -1 && targetPositionY == -1);
     }
 }

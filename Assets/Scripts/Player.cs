@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 
         //turn based movement that consumes 1 move each time the player moves 1 tile | AI also uses this function
         //up
-        if ((Input.GetButtonDown("TileUp") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y < AI.path[PathCount].y + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = 1; 
+        if ((Input.GetButtonDown("TileUp") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y < AI.Path[PathCount].y + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = 1; 
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, 1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
             {
                 if (gameObject.CompareTag("AI"))
                 {
-                    if (PathCount < AI.path.Count - 1)
+                    if (PathCount < AI.Path.Count - 1)
                     {
                         PathCount++;
                     }
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         }
 
         //left
-        if ((Input.GetButtonDown("TileLeft") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x > AI.path[PathCount].x + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = -1;
+        if ((Input.GetButtonDown("TileLeft") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x > AI.Path[PathCount].x + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(-1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
             {
                 if (gameObject.CompareTag("AI"))
                 {
-                    if (PathCount < AI.path.Count - 1)
+                    if (PathCount < AI.Path.Count - 1)
                     {
                         PathCount++;
                     }
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
         }
 
         //down
-        if ((Input.GetButtonDown("TileDown") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y > AI.path[PathCount].y + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = -1;
+        if ((Input.GetButtonDown("TileDown") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y > AI.Path[PathCount].y + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //y = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, -1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
             {
                 if (gameObject.CompareTag("AI"))
                 {
-                    if (PathCount < AI.path.Count - 1)
+                    if (PathCount < AI.Path.Count - 1)
                     {
                         PathCount++;
                     }
@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
         }
 
         //right
-        if ((Input.GetButtonDown("TileRight") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x < AI.path[PathCount].x + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = 1;
+        if ((Input.GetButtonDown("TileRight") || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x < AI.Path[PathCount].x + 0.5f)) && IsMoving == false && IsBattling == false && NumberMovesLeft > 0) //x = 1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
             {
                 if (gameObject.CompareTag("AI"))
                 {
-                    if (PathCount < AI.path.Count - 1)
+                    if (PathCount < AI.Path.Count - 1)
                     {
                         PathCount++;
                     }

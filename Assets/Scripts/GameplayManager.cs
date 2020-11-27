@@ -28,14 +28,17 @@ public class GameplayManager : MonoBehaviour
 
     //references to the players in the scene
     public GameObject Player1;
-    public Player Player1Player;
+    private Player Player1Player;
     public GameObject Player2;
-    public Player Player2Player;
+    private Player Player2Player;
+    private AI ai;
 
     //attacker defender and their tokens
     public GameObject Attacker;
+    public Player AttackerController;
     public int[] AttackerTokens = new int[6];
     public GameObject Defender;
+    public Player DefenderController;
     public int[] DefenderTokens = new int[6];
 
     //reference to the HUD script
@@ -60,6 +63,10 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
+        Player1Player = Player1.GetComponent<Player>();
+        Player2Player = Player2.GetComponent<Player>();
+        ai = Player2.GetComponent<AI>();
+
         cameraPosition = Camera.main.transform.position;
         DetermineFirstToPlay();
     }
@@ -124,7 +131,7 @@ public class GameplayManager : MonoBehaviour
 
             if (Player2.CompareTag("AI"))
             {
-                Player2.GetComponent<AI>().FindAIObjective();
+                ai.MakePath();
             }
 
             //cameraPosition.x = Player2.transform.position.x;
@@ -167,12 +174,15 @@ public class GameplayManager : MonoBehaviour
         Attacker = attackerTemp;
         Defender = defenderTemp;
 
-        AttackerTokens = Attacker.GetComponent<Player>().Tokens;
-        DefenderTokens = Defender.GetComponent<Player>().Tokens;
+        AttackerController = Attacker.GetComponent<Player>();
+        DefenderController = Defender.GetComponent<Player>();
+
+        AttackerTokens = AttackerController.Tokens;
+        DefenderTokens = DefenderController.Tokens;
 
         //disable attacker and defender actions while attacker is choosing to attack
-        Attacker.GetComponent<Player>().enabled = false;
-        Defender.GetComponent<Player>().enabled = false;
+        AttackerController.enabled = false;
+        DefenderController.enabled = false;
 
         switch (Attacker.tag)
         {
@@ -180,7 +190,7 @@ public class GameplayManager : MonoBehaviour
                 HUD.AttackConfirmationScreen();
                 break;
             case "AI":
-                if (Attacker.GetComponent<Player>().CanAttack == true)
+                if (AttackerController.CanAttack == true)
                 {
                     ReadyAttack();
                     HUD.AttackSelectionScreen();
@@ -199,15 +209,15 @@ public class GameplayManager : MonoBehaviour
     public void ReadyAttack()
     {
         //re-enable their components
-        Attacker.GetComponent<Player>().enabled = true;
-        Defender.GetComponent<Player>().enabled = true;
+        AttackerController.enabled = true;
+        DefenderController.enabled = true;
 
         //both are now battling
-        Attacker.GetComponent<Player>().IsBattling = true;
-        Defender.GetComponent<Player>().IsBattling = true;
+        AttackerController.IsBattling = true;
+        DefenderController.IsBattling = true;
 
         //attacker can't attack twice in their turn
-        Attacker.GetComponent<Player>().HasAttackedThisTurn = true;
+        AttackerController.HasAttackedThisTurn = true;
     }
 
     //function that decides if the players can choose a certain token during battle
@@ -221,7 +231,7 @@ public class GameplayManager : MonoBehaviour
         }
 
         //check whether Player is attacker or defender then activate the buttons
-        switch (Attacker.GetComponent<Player>().PlayerID)
+        switch (AttackerController.PlayerID)
         {
             case 1:
 
@@ -342,14 +352,17 @@ public class GameplayManager : MonoBehaviour
             }
         }
 
+        Player2Player.EnoughTokensToAttack();
+        ai.FindAIObjective();
+
         HUD.Outcome();
     }
 
     public void CancelAttack()
     {
         //re-enable their components in case attacker doesn't want to attack
-        Attacker.GetComponent<Player>().enabled = true;
-        Defender.GetComponent<Player>().enabled = true;
+        AttackerController.enabled = true;
+        DefenderController.enabled = true;
     }
 
     //end the match after one of the players lose (for now it just goes back to the Main Menu)

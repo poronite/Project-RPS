@@ -78,16 +78,16 @@ public class HUD : MonoBehaviour
     {
         AttackConfirmationBox.SetActive(true);
 
-        if (GameplayManager.Attacker.GetComponent<Player>().CanAttack == true)
+        if (GameplayManager.AttackerController.CanAttack == true)
         {
-            Question.GetComponent<Text>().text = "Do you want to attack the enemy?";
+            Question.text = "Do you want to attack the enemy?";
             Yes.gameObject.SetActive(true);
             No.gameObject.SetActive(true);
             Ok.gameObject.SetActive(false);
         }
         else
         {
-            Question.GetComponent<Text>().text = "Can't attack the enemy.";
+            Question.text = "Can't attack the enemy.";
             Yes.gameObject.SetActive(false);
             No.gameObject.SetActive(false);
             Ok.gameObject.SetActive(true);
@@ -95,8 +95,8 @@ public class HUD : MonoBehaviour
         }
 
         //disable other buttons' functions while the player decides to attack
-        EndTurnButton.GetComponent<Button>().interactable = false;
-        MainMenuButton.GetComponent<Button>().interactable = false;
+        EndTurnButton.interactable = false;
+        MainMenuButton.interactable = false;
     }
 
     //attack selection screen box
@@ -118,7 +118,7 @@ public class HUD : MonoBehaviour
 
     public void Player1Choice(string choice) //function that runs when player chooses a token when attacking/defending
     {
-        switch (GameplayManager.Attacker.GetComponent<Player>().PlayerID)
+        switch (GameplayManager.AttackerController.PlayerID)
         {
             case 1:
                 AttackersChoice(choice);
