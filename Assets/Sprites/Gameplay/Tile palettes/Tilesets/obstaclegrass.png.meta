@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a77cad7dbb021e44daac8f5090237e44
+guid: 46dc57c9f79b57c499c1fe25b9b4dec2
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -26,6 +26,18 @@ TextureImporter:
   - first:
       213: 3671070163147921223
     second: obstaclegrass_7
+  - first:
+      213: 8197460557100528195
+    second: obstaclegrass_8
+  - first:
+      213: 7339654977499074740
+    second: obstaclegrass_9
+  - first:
+      213: -4490550458785999443
+    second: obstaclegrass_10
+  - first:
+      213: -4878814114659822868
+    second: obstaclegrass_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -151,7 +163,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1120
+        y: 2240
         width: 1120
         height: 1120
       alignment: 0
@@ -172,7 +184,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 1120
+        y: 2240
         width: 1120
         height: 1120
       alignment: 0
@@ -193,7 +205,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2240
-        y: 1120
+        y: 2240
         width: 1120
         height: 1120
       alignment: 0
@@ -214,7 +226,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3360
-        y: 1120
+        y: 2240
         width: 1120
         height: 1120
       alignment: 0
@@ -235,7 +247,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 1120
         width: 1120
         height: 1120
       alignment: 0
@@ -256,7 +268,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1120
-        y: 0
+        y: 1120
         width: 1120
         height: 1120
       alignment: 0
@@ -277,7 +289,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2240
-        y: 0
+        y: 1120
         width: 1120
         height: 1120
       alignment: 0
@@ -298,7 +310,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3360
-        y: 0
+        y: 1120
         width: 1120
         height: 1120
       alignment: 0
@@ -310,6 +322,90 @@ TextureImporter:
       bones: []
       spriteID: 74797fbfcd242f230800000000000000
       internalID: 3671070163147921223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: obstaclegrass_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1120
+        height: 1120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 342b046d1fa33c170800000000000000
+      internalID: 8197460557100528195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: obstaclegrass_9
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 0
+        width: 1120
+        height: 1120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b092cb9051bbd560800000000000000
+      internalID: 7339654977499074740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: obstaclegrass_10
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 0
+        width: 1120
+        height: 1120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da5d712562c5ea1c0800000000000000
+      internalID: -4490550458785999443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: obstaclegrass_11
+      rect:
+        serializedVersion: 2
+        x: 3360
+        y: 0
+        width: 1120
+        height: 1120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce21a8a6968fa4cb0800000000000000
+      internalID: -4878814114659822868
       vertices: []
       indices: 
       edges: []

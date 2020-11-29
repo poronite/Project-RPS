@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: obstaclegrass_4
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 4591243103948114967, guid: a77cad7dbb021e44daac8f5090237e44,
+  m_Sprite: {fileID: 4591243103948114967, guid: 46dc57c9f79b57c499c1fe25b9b4dec2,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
