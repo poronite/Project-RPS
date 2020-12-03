@@ -85,6 +85,12 @@ public class GameplayManager : MonoBehaviour
         HUD.MovesLeftHUD(movesleft);
     }
 
+    //function to warn player how many tokens he has
+    public void TokensLeft(int[] tokens)
+    {
+        HUD.TokensLeft(tokens);
+    }
+
     //function that runs when EndTurnButton is clicked
     public void EndTurn()
     {

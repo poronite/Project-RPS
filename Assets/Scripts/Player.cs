@@ -161,6 +161,12 @@ public class Player : MonoBehaviour
         //send player moves left to GameplayManager for the UI
         GameplayManager.MovesLeftUI(NumberMovesLeft);
 
+        //send number of player tokens to GameplayManager for the UI
+        if (gameObject.CompareTag("Player"))
+        {
+            GameplayManager.TokensLeft(Tokens);
+        }
+
         //Press EndTurn button to end turn
         if (Input.GetButtonDown("EndTurn") && GameplayManager.PlayerTurn == 1 && IsMoving == false)
         {

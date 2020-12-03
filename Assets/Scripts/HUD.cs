@@ -12,11 +12,15 @@ public class HUD : MonoBehaviour
     public Text WhosTurn;
     public Text CurrentPlayerMovesLeft;
     public Text NumRounds;
+    public Text NumRTokens;
+    public Text NumPTokens;
+    public Text NumSTokens;
     public Button EndTurnButton;
     public Button MainMenuButton;
     public GameObject AttackConfirmationBox;
     public GameObject AttackSelectionBox;
     public GameObject OutcomeUI;
+     
 
     //references to the AttackConfirmationBox's UI elements
     public Text Question;
@@ -64,6 +68,14 @@ public class HUD : MonoBehaviour
             CurrentPlayerMovesLeft.text = "No moves left";
             EndTurnButton.image.color = new Color(186, 253, 0);
         }
+    }
+
+    //display number of tokens
+    public void TokensLeft(int[] tokens)
+    {
+        NumRTokens.text = $"Randomness Tokens: {tokens[0]}/{tokens[1]}";
+        NumPTokens.text = $"Patience Tokens: {tokens[2]}/{tokens[3]}";
+        NumSTokens.text = $"Strategy Tokens: {tokens[4]}/{tokens[5]}";
     }
 
     //display round and player turn
