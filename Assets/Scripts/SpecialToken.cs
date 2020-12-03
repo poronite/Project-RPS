@@ -55,6 +55,7 @@ public class SpecialToken : MonoBehaviour
     }
 
     //when player enters the special tile
+    //only gets tokens if number of attack or defense tokens below 2
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.CompareTag("Player") || collision.CompareTag("AI")) && OffCooldown == true)
@@ -62,32 +63,63 @@ public class SpecialToken : MonoBehaviour
             GameObject PlayerCollider = collision.gameObject;
             Player PlayerColliderController = PlayerCollider.GetComponent<Player>();
 
-            switch (specialTile)
+            int NumberAttackTokens = PlayerColliderController.Tokens[0] + PlayerColliderController.Tokens[2] + PlayerColliderController.Tokens[4];
+            int NumberDefenseTokens = PlayerColliderController.Tokens[1] + PlayerColliderController.Tokens[3] + PlayerColliderController.Tokens[5];
+
+            bool SpecialTileActivated = false;
+
+            if (NumberAttackTokens < 2)
             {
-                case "RedSpecialTile":
-                    PlayerColliderController.Tokens[0] += 1;
-                    PlayerColliderController.Tokens[1] += 1;
-                    break;
-                case "GreenSpecialTile":
-                    PlayerColliderController.Tokens[2] += 1;
-                    PlayerColliderController.Tokens[3] += 1;
-                    break;
-                case "BlueSpecialTile":
-                    PlayerColliderController.Tokens[4] += 1;
-                    PlayerColliderController.Tokens[5] += 1;
-                    break;
-                default:
-                    break;
+                switch (specialTile)
+                {
+                    case "RedSpecialTile":
+                        PlayerColliderController.Tokens[0] += 1;
+                        break;
+                    case "GreenSpecialTile":
+                        PlayerColliderController.Tokens[2] += 1;
+                        break;
+                    case "BlueSpecialTile":
+                        PlayerColliderController.Tokens[4] += 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                SpecialTileActivated = true;
             }
 
-            PlayerColliderController.EnoughTokensToAttack();
-
-            if (PlayerCollider.CompareTag("AI"))
+            if (NumberDefenseTokens < 2)
             {
-                PlayerCollider.GetComponent<AI>().FindAIObjective();
+                switch (specialTile)
+                {
+                    case "RedSpecialTile":
+                        PlayerColliderController.Tokens[1] += 1;
+                        break;
+                    case "GreenSpecialTile":
+                        PlayerColliderController.Tokens[3] += 1;
+                        break;
+                    case "BlueSpecialTile":
+                        PlayerColliderController.Tokens[5] += 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                SpecialTileActivated = true;
             }
 
-            EnterCooldown();
+            //this only happens if the player/ai gets a token aka activates the tile
+            if (SpecialTileActivated == true)
+            {
+                PlayerColliderController.EnoughTokensToAttack();
+
+                if (PlayerCollider.CompareTag("AI"))
+                {
+                    PlayerCollider.GetComponent<AI>().FindAIObjective();
+                }
+
+                EnterCooldown();
+            }
         }
     }
 

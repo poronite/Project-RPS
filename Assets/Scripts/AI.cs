@@ -142,18 +142,16 @@ public class AI : MonoBehaviour
         }
         else
         {
-            int tokencount = System.Convert.ToInt32(aiController.Tokens[0] > 0) + System.Convert.ToInt32(aiController.Tokens[2] > 0) + System.Convert.ToInt32(aiController.Tokens[4] > 0);
+            int numberAttackTokens = aiController.Tokens[0] + aiController.Tokens[2] + aiController.Tokens[4];
+            //int tokencount = System.Convert.ToInt32(aiController.Tokens[0] > 0) + System.Convert.ToInt32(aiController.Tokens[2] > 0) + System.Convert.ToInt32(aiController.Tokens[4] > 0);
 
-            switch (tokencount)
+            switch (numberAttackTokens)
             {
                 case 1: //if AI has only 1 attack token of any type
                     trust = 1;
                     break;
-                case 2: //if AI has 2 unique attack tokens of any type
-                    trust = 3;
-                    break;
-                case 3: //if AI has 1 attack token of each type
-                    trust = 5;
+                case 2: //if AI has 2 attack tokens of any type
+                    trust = 4;
                     break;
                 default:
                     break;
