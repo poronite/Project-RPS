@@ -28,9 +28,9 @@ public class GameplayManager : MonoBehaviour
 
     //references to the players in the scene
     public GameObject Player1;
-    private Player Player1Player;
+    public Player Player1Player;
     public GameObject Player2;
-    private Player Player2Player;
+    public Player Player2Player;
     private AI ai;
 
     //attacker defender and their tokens
@@ -120,19 +120,27 @@ public class GameplayManager : MonoBehaviour
         {
             Player1Player.NumberMovesLeft = AssignNumberMoves;
             Player1Player.HasAttackedThisTurn = false;
-            Player1Player.IsBattling = false;
+            Player1Player.IsInMenu = false;
             Player1Player.EnoughTokensToAttack();
 
             cameraPosition.x = Player1.transform.position.x;
             cameraPosition.y = Player1.transform.position.y;
 
             HUD.EndTurnButton.interactable = true;
+            if (Player1Player.ExtraMovesReady == true)
+            {
+                HUD.ExtraMovesButton.interactable = true;
+            }
+            else
+            {
+                HUD.ExtraMovesButton.interactable = false;
+            }
         }
         else if (PlayerTurn == 2)
         {
             Player2Player.NumberMovesLeft = AssignNumberMoves;
             Player2Player.HasAttackedThisTurn = false;
-            Player2Player.IsBattling = false;
+            Player2Player.IsInMenu = false;
             Player2Player.EnoughTokensToAttack();
 
             if (Player2.CompareTag("AI"))
@@ -144,6 +152,7 @@ public class GameplayManager : MonoBehaviour
             //cameraPosition.y = Player2.transform.position.y;
 
             HUD.EndTurnButton.interactable = false;
+            HUD.ExtraMovesButton.interactable = false;
         }
 
         Camera.main.transform.position = cameraPosition;
@@ -219,8 +228,8 @@ public class GameplayManager : MonoBehaviour
         DefenderController.enabled = true;
 
         //both are now battling
-        AttackerController.IsBattling = true;
-        DefenderController.IsBattling = true;
+        AttackerController.IsInMenu = true;
+        DefenderController.IsInMenu = true;
 
         //attacker can't attack twice in their turn
         AttackerController.HasAttackedThisTurn = true;
@@ -369,6 +378,65 @@ public class GameplayManager : MonoBehaviour
         //re-enable their components in case attacker doesn't want to attack
         AttackerController.enabled = true;
         DefenderController.enabled = true;
+
+        if (Player1Player.ExtraMovesReady == true)
+        {
+            HUD.ExtraMovesButton.interactable = true;
+        }
+    }
+
+    public void CheckSacrifice()
+    {
+        if (Player1Player.Tokens[0] == 0)
+        {
+            HUD.SacrificeRAToken.interactable = false;
+            HUD.SacrificeRAToken.image.color = Color.gray;
+        }
+
+        if (Player1Player.Tokens[1] == 0)
+        {
+            HUD.SacrificeRDToken.interactable = false;
+            HUD.SacrificeRDToken.image.color = Color.gray;
+        }
+
+        if (Player1Player.Tokens[2] == 0)
+        {
+            HUD.SacrificePAToken.interactable = false;
+            HUD.SacrificePAToken.image.color = Color.gray;
+        }
+
+        if (Player1Player.Tokens[3] == 0)
+        {
+            HUD.SacrificePDToken.interactable = false;
+            HUD.SacrificePDToken.image.color = Color.gray;
+        }
+
+        if (Player1Player.Tokens[4] == 0)
+        {
+            HUD.SacrificeSAToken.interactable = false;
+            HUD.SacrificeSAToken.image.color = Color.gray;
+        }
+
+        if (Player1Player.Tokens[5] == 0)
+        {
+            HUD.SacrificeSDToken.interactable = false;
+            HUD.SacrificeSDToken.image.color = Color.gray;
+        }
+    }
+
+    public void GetExtraMoves(int tokenChoice)
+    {
+        //sacrifice tokens
+        Player1Player.Tokens[tokenChoice] -= 1;
+
+        //give moves to player
+        Player1Player.NumberMovesLeft += Random.Range(1,7);
+
+        HUD.ExtraMovesBox.SetActive(false);
+
+        Player1Player.CancelExtraMoves();
+
+        Player1Player.ExtraMovesEnterCooldown();
     }
 
     //end the match after one of the players lose (for now it just goes back to the Main Menu)

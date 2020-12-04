@@ -16,9 +16,12 @@ public class HUD : MonoBehaviour
     public Text NumPTokens;
     public Text NumSTokens;
     public Button EndTurnButton;
+    public Button ExtraMovesButton;
+    public Text ExtraMovesText;
     public Button MainMenuButton;
     public GameObject AttackConfirmationBox;
     public GameObject AttackSelectionBox;
+    public GameObject ExtraMovesBox;
     public GameObject OutcomeUI;
      
 
@@ -35,7 +38,14 @@ public class HUD : MonoBehaviour
     public Button PlayerRButton;
     public Button PlayerPButton;
     public Button PlayerSButton;
-    
+
+    //references to the ExtraMovesBox buttons
+    public Button SacrificeRAToken;
+    public Button SacrificePAToken;
+    public Button SacrificeSAToken;
+    public Button SacrificeRDToken;
+    public Button SacrificePDToken;
+    public Button SacrificeSDToken;
 
     //strings that hold the player decisions
     public string AttackerChoice = "";
@@ -108,6 +118,7 @@ public class HUD : MonoBehaviour
 
         //disable other buttons' functions while the player decides to attack
         EndTurnButton.interactable = false;
+        ExtraMovesButton.interactable = false;
         MainMenuButton.interactable = false;
     }
 
@@ -248,5 +259,29 @@ public class HUD : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void ExtraMovesScreen()
+    {
+        GameplayManager.Player1Player.IsInMenu = true;
+
+        SacrificeRAToken.image.color = Color.red;
+        SacrificeRAToken.interactable = true;
+        SacrificeRDToken.image.color = Color.red;
+        SacrificeRDToken.interactable = true;
+
+        SacrificePAToken.image.color = Color.green;
+        SacrificePAToken.interactable = true;
+        SacrificePDToken.image.color = Color.green;
+        SacrificePDToken.interactable = true;
+
+        SacrificeSAToken.image.color = Color.blue;
+        SacrificeSAToken.interactable = true;
+        SacrificeSDToken.image.color = Color.blue;
+        SacrificeSDToken.interactable = true;
+
+        ExtraMovesBox.SetActive(true);
+
+        GameplayManager.CheckSacrifice();
     }
 }
