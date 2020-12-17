@@ -11,19 +11,26 @@ public class HUD : MonoBehaviour
     //references to HUD elements in the scene
     public Text WhosTurn;
     public Text CurrentPlayerMovesLeft;
+    public Text NumMatches;
     public Text NumRounds;
     public Text NumRTokens;
     public Text NumPTokens;
     public Text NumSTokens;
     public Button EndTurnButton;
     public Button ExtraMovesButton;
-    public Text ExtraMovesText;
     public Button MainMenuButton;
     public GameObject AttackConfirmationBox;
     public GameObject AttackSelectionBox;
     public GameObject ExtraMovesBox;
     public GameObject OutcomeUI;
-     
+
+    //references to Extra Moves Cooldown images
+    public Sprite ExtraMoves4;
+    public Sprite ExtraMoves3;
+    public Sprite ExtraMoves2;
+    public Sprite ExtraMoves1;
+    public Sprite ExtraMovesReady;
+
 
     //references to the AttackConfirmationBox's UI elements
     public Text Question;
@@ -238,9 +245,13 @@ public class HUD : MonoBehaviour
         AttackSelectionBox.SetActive(false);
         OutcomeUI.SetActive(true);
 
-        if (GameplayManager.Winner != "")
+        if (GameplayManager.Winner == "")
         {
-            OutcomeUIText.text = $"{GameplayManager.Winner} wins!";
+            OutcomeUIText.text = $"{GameplayManager.Attacker.name} wins this match.";
+        }
+        else if (GameplayManager.Winner != "")
+        {
+            OutcomeUIText.text = $"{GameplayManager.Winner} wins the game!";
         }
         else
         {
@@ -283,5 +294,12 @@ public class HUD : MonoBehaviour
         ExtraMovesBox.SetActive(true);
 
         GameplayManager.CheckSacrifice();
+    }
+
+    public void ChangeNumberMatch(int numMatches)
+    {
+        NumMatches.text = "Match " + numMatches;
+
+        NumRounds.text = "Round " + 0;
     }
 }

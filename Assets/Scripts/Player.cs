@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public AI AI;
     public float AITimer = 0.0f;
     public int PathCount = 0;
+    public int matchesWon = 0;
 
 
 
@@ -214,12 +215,27 @@ public class Player : MonoBehaviour
 
         if (ExtraMovesReady == false)
         {
-            UI.ExtraMovesText.text = $"On Cooldown: {ExtraMovesCooldownLeft}";
-
-            if (ExtraMovesCooldownLeft == 0)
+            //change sprite here
+            switch (ExtraMovesCooldownLeft)
             {
-                UI.ExtraMovesText.text = "Extra Moves Ready";
-                ExtraMovesReady = true;
+                case 4:
+                    UI.ExtraMovesButton.image.sprite = UI.ExtraMoves4;
+                    break;
+                case 3:
+                    UI.ExtraMovesButton.image.sprite = UI.ExtraMoves3;
+                    break;
+                case 2:
+                    UI.ExtraMovesButton.image.sprite = UI.ExtraMoves2;
+                    break;
+                case 1:
+                    UI.ExtraMovesButton.image.sprite = UI.ExtraMoves1;
+                    break;
+                case 0:
+                    UI.ExtraMovesButton.image.sprite = UI.ExtraMovesReady;
+                    ExtraMovesReady = true;
+                    break;
+                default:
+                    break;
             }
         }
     }

@@ -12,10 +12,17 @@ public class GameplayManager : MonoBehaviour
     //1 = Player1's turn | 2 = Player2's turn
     public int PlayerTurn;
 
+    //map number
+    private int map;
+    public GameObject Map1;
+
     //1 Round = 2 player turns
     private int numRounds = 0;
     //bool used to know when we can numRounds += 1
     private bool endRound = true;
+
+    //number of matches
+    private int numberMatches = 0;
 
     //variable that represents the outcome through affinity
     public string AffinityOutcome;
@@ -63,16 +70,44 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
+        map = 1;
+        numberMatches = 0;
         Player1Player = Player1.GetComponent<Player>();
         Player2Player = Player2.GetComponent<Player>();
         ai = Player2.GetComponent<AI>();
 
         cameraPosition = Camera.main.transform.position;
-        DetermineFirstToPlay();
+        resetGame();
+        determineFirstToPlay();
+    }
+
+    //resets positions after the current match ends
+    private void resetGame()
+    {
+        //private Vector3 player1Position = Player1.transform.position;
+
+        numberMatches += 1;
+        numRounds = 0;
+
+        HUD.ChangeNumberMatch(numberMatches);
+
+        switch (map)
+        {
+            case 1:
+                ai.Map1AI();
+                Map1.SetActive(true);
+                //new Vector2(4.5f, 2.5f);
+                //new Vector2(8.5f, 19.5f);
+                break;
+            default:
+                break;
+        }
+
+        ai.StartAI();
     }
 
     //function to determine who goes first in a match
-    private void DetermineFirstToPlay()
+    private void determineFirstToPlay()
     {
         PlayerTurn = Random.Range(1, 3);
         ChangePlayerTurn(PlayerTurn);
@@ -241,7 +276,13 @@ public class GameplayManager : MonoBehaviour
         //in case defender doesn't have defense tokens aka Game over
         if (DefenderTokens[1] == 0 && DefenderTokens[3] == 0 && DefenderTokens[5] == 0)
         {
-            Winner = Attacker.name;
+            AttackerController.matchesWon += 1;
+
+            if (AttackerController.matchesWon == 2)
+            {
+                Winner = Attacker.name;
+            }
+            
             HUD.Outcome();
         }
 
@@ -445,6 +486,10 @@ public class GameplayManager : MonoBehaviour
         if (Winner != "")
         {
             MainMenu();
+        }
+        else
+        {
+            resetGame();
         }
     }
 

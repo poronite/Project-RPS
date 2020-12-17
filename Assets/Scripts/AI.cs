@@ -38,15 +38,9 @@ public class AI : MonoBehaviour
     int width;
     int height;
 
-
-
-    void Start()
+    public void StartAI()
     {
         aiController = gameObject.GetComponent<Player>();
-
-        //map function that is used to help the AI distinguish between walkable and non walkable tiles
-        //also puts the every object with special tiles tag in 3 different arrays depending on color
-        map1AI();
 
         // create a grid
         grid = new PathFind.Grid(width, height, tilesmap);
@@ -67,7 +61,9 @@ public class AI : MonoBehaviour
         }  
     }
 
-    private void map1AI() //map1 function
+    //map function that is used to help the AI distinguish between walkable and non walkable tiles
+    //also puts the every object with special tiles tag in 3 different arrays depending on color
+    public void Map1AI() //map1 function
     {
         redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
         greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
@@ -89,6 +85,30 @@ public class AI : MonoBehaviour
            {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
            {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}
         };
+
+        width = tilesmap.GetLength(0);
+        height = tilesmap.GetLength(1);
+    }
+
+    public void Map2AI() //map2 function
+    {
+        redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
+        greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
+        blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
+
+        //tilemap
+
+        width = tilesmap.GetLength(0);
+        height = tilesmap.GetLength(1);
+    }
+    
+    public void Map3AI() //map3 function
+    {
+        redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
+        greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
+        blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
+
+        //tilemap
 
         width = tilesmap.GetLength(0);
         height = tilesmap.GetLength(1);
