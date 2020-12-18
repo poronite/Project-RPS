@@ -33,8 +33,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         GameplayManager.instance.CooldownDelegate += ExtraMovesCooldown;
-        playerPosition = gameObject.transform.position;
-        tilePosition = new Vector2(playerPosition.x, playerPosition.y);
+        
     }
 
     void Update()
@@ -193,6 +192,13 @@ public class Player : MonoBehaviour
                 GameplayManager.EndTurn();
             }
         }
+    }
+
+    public void ResetPosition(Vector3 position)
+    {
+        transform.position = position;
+        playerPosition = transform.position;
+        tilePosition = new Vector2(playerPosition.x, playerPosition.y);
     }
 
     //cancel sacrifice

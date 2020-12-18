@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameplayManager : MonoBehaviour
 {
-    //Instance of the Gameplay Manager used for CooldownDelegate
+    //instance of the Gameplay Manager used for CooldownDelegate
     public static GameplayManager instance = null;
 
     //1 = Player1's turn | 2 = Player2's turn
@@ -23,6 +23,8 @@ public class GameplayManager : MonoBehaviour
 
     //number of matches
     private int numberMatches = 0;
+    //win match
+    public bool MatchWin = false;
 
     //variable that represents the outcome through affinity
     public string AffinityOutcome;
@@ -70,24 +72,29 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
-        map = 1;
+        map = TransferVariables.statsInstance.Map;
         numberMatches = 0;
         Player1Player = Player1.GetComponent<Player>();
-        Player2Player = Player2.GetComponent<Player>();
-        ai = Player2.GetComponent<AI>();
 
+        if (TransferVariables.statsInstance.Gamemode == "Singleplayer")
+        {
+            Player2.tag = "AI";
+            Player2Player = Player2.GetComponent<Player>();
+            ai = Player2.GetComponent<AI>();
+        }
+        
         cameraPosition = Camera.main.transform.position;
         resetGame();
-        determineFirstToPlay();
     }
 
     //resets positions after the current match ends
     private void resetGame()
     {
-        //private Vector3 player1Position = Player1.transform.position;
-
         numberMatches += 1;
         numRounds = 0;
+
+        Player1Player.Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
+        Player2Player.Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
 
         HUD.ChangeNumberMatch(numberMatches);
 
@@ -96,14 +103,20 @@ public class GameplayManager : MonoBehaviour
             case 1:
                 ai.Map1AI();
                 Map1.SetActive(true);
-                //new Vector2(4.5f, 2.5f);
-                //new Vector2(8.5f, 19.5f);
+                ResetPlayerPosition(new Vector3(4.5f, 2.5f, 0), new Vector3(8.5f, 19.5f, 0));
                 break;
             default:
                 break;
         }
 
         ai.StartAI();
+        determineFirstToPlay();
+    }
+
+    private void ResetPlayerPosition(Vector3 p1pos, Vector3 p2pos)
+    {
+        Player1Player.ResetPosition(p1pos);
+        Player2Player.ResetPosition(p2pos);
     }
 
     //function to determine who goes first in a match
@@ -276,6 +289,8 @@ public class GameplayManager : MonoBehaviour
         //in case defender doesn't have defense tokens aka Game over
         if (DefenderTokens[1] == 0 && DefenderTokens[3] == 0 && DefenderTokens[5] == 0)
         {
+            MatchWin = true;
+
             AttackerController.matchesWon += 1;
 
             if (AttackerController.matchesWon == 2)

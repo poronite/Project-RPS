@@ -65,6 +65,10 @@ public class AI : MonoBehaviour
     //also puts the every object with special tiles tag in 3 different arrays depending on color
     public void Map1AI() //map1 function
     {
+        redSpecialTiles.Clear();
+        greenSpecialTiles.Clear();
+        blueSpecialTiles.Clear();
+
         redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
         greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
         blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
@@ -92,6 +96,10 @@ public class AI : MonoBehaviour
 
     public void Map2AI() //map2 function
     {
+        redSpecialTiles.Clear();
+        greenSpecialTiles.Clear();
+        blueSpecialTiles.Clear();
+
         redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
         greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
         blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
@@ -104,6 +112,10 @@ public class AI : MonoBehaviour
     
     public void Map3AI() //map3 function
     {
+        redSpecialTiles.Clear();
+        greenSpecialTiles.Clear();
+        blueSpecialTiles.Clear();
+
         redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
         greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
         blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));

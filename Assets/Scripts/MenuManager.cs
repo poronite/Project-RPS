@@ -6,14 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    //reference to the game logo in the menu
-    public GameObject RPSLogo;
+    //reference to class that stores variables needed
+    public TransferVariables TransferVariables;
 
-    //references to the buttons in the menu
-    public GameObject PlayButton;
-    public GameObject SettingsButton;
-    public GameObject CreditsButton;
-    public GameObject ExitGameButton;
+    //reference to the elements of the Main Menu
+    public GameObject MainMenuElements;
+
+    //references to the UI when choosing singleplayer or multiplayer
+    public GameObject GamemodeElements;
+
+    //references to the UI when choosing the map
+    public GameObject MapElements;
 
 
     //starts scene in the Main menu
@@ -25,32 +28,50 @@ public class MenuManager : MonoBehaviour
     //enable Main menu's objects and disable the rest
     public void MainMenu()
     {
-        Debug.Log("Going to Main Menu.");
-        RPSLogo.SetActive(true);
-        PlayButton.SetActive(true);
-        SettingsButton.SetActive(true);
-        CreditsButton.SetActive(true);
-        ExitGameButton.SetActive(true);
+        HideEveryElement();
+        
+        //display Main Menu
+        MainMenuElements.SetActive(true);
     }
 
-    //for now it just loads play scene
-    public void Play()
+    //display choose gamemode
+    public void ChooseGamemode()
     {
-        Debug.Log("Singleplayer or Multiplayer?");
-        SceneManager.LoadScene(1);
+        HideEveryElement();
 
+        GamemodeElements.SetActive(true);
+    }
+
+    //display choose map
+    public void ChooseMap(string gamemode)
+    {
+        TransferVariables.Gamemode = gamemode;
+
+        HideEveryElement();
+
+        MapElements.SetActive(true);
+    }
+
+    //change scene and start game
+    public void Play(int map)
+    {
+        TransferVariables.Map = map;
+
+        SceneManager.LoadScene(1);
     }
 
     //disable Main menu's objects and enable Settings objects
     public void Settings()
     {
         Debug.Log("Going to Settings Menu.");
+        //HideEveryElement();
     }
 
     //disable Main menu's objects and enable Credits objects
     public void Credits()
     {
         Debug.Log("Going to Credits.");
+        //HideEveryElement();
     }
 
     //exit the game
@@ -58,5 +79,13 @@ public class MenuManager : MonoBehaviour
     {
         Debug.Log("Exit Game");
         Application.Quit();
+    }
+
+    //Hide every element everytime the player goes to another part of the menu
+    public void HideEveryElement()
+    {
+        MainMenuElements.SetActive(false);
+        GamemodeElements.SetActive(false);
+        MapElements.SetActive(false);
     }
 }

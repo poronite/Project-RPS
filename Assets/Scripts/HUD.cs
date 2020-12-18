@@ -245,9 +245,10 @@ public class HUD : MonoBehaviour
         AttackSelectionBox.SetActive(false);
         OutcomeUI.SetActive(true);
 
-        if (GameplayManager.Winner == "")
+        if (GameplayManager.Winner == "" && GameplayManager.MatchWin == true)
         {
             OutcomeUIText.text = $"{GameplayManager.Attacker.name} wins this match.";
+            GameplayManager.MatchWin = false;
         }
         else if (GameplayManager.Winner != "")
         {
