@@ -90,6 +90,7 @@ public class GameplayManager : MonoBehaviour
     //resets positions after the current match ends
     private void resetGame()
     {
+        MatchWin = false;
         numberMatches += 1;
         numRounds = 0;
 
@@ -502,7 +503,7 @@ public class GameplayManager : MonoBehaviour
         {
             MainMenu();
         }
-        else
+        else if (Winner != "" && MatchWin == true)
         {
             resetGame();
         }

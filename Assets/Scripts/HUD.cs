@@ -248,13 +248,13 @@ public class HUD : MonoBehaviour
         if (GameplayManager.Winner == "" && GameplayManager.MatchWin == true)
         {
             OutcomeUIText.text = $"{GameplayManager.Attacker.name} wins this match.";
-            GameplayManager.MatchWin = false;
+            GameplayManager.MatchWin = true;
         }
         else if (GameplayManager.Winner != "")
         {
             OutcomeUIText.text = $"{GameplayManager.Winner} wins the game!";
         }
-        else
+        else if(GameplayManager.Winner == "" && GameplayManager.MatchWin == false)
         {
             switch (GameplayManager.AffinityOutcome)
             {
