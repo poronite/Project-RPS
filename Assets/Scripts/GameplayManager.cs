@@ -91,11 +91,15 @@ public class GameplayManager : MonoBehaviour
     private void resetGame()
     {
         MatchWin = false;
+        endRound = true;
         numberMatches += 1;
         numRounds = 0;
 
         Player1Player.Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
         Player2Player.Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
+        Player1Player.ExtraMovesReady = true;
+        HUD.ExtraMovesButton.image.sprite = HUD.ExtraMovesReady;
+        
 
         HUD.ChangeNumberMatch(numberMatches);
 
@@ -503,7 +507,7 @@ public class GameplayManager : MonoBehaviour
         {
             MainMenu();
         }
-        else if (Winner != "" && MatchWin == true)
+        else if (Winner == "" && MatchWin == true)
         {
             resetGame();
         }
