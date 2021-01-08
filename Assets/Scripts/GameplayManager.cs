@@ -13,7 +13,7 @@ public class GameplayManager : MonoBehaviour
     public int PlayerTurn;
 
     //map number
-    private int map;
+    public int Map;
     public GameObject Map1;
 
     //1 Round = 2 player turns
@@ -63,6 +63,7 @@ public class GameplayManager : MonoBehaviour
 
     public delegate void MultiDelegate();
     public MultiDelegate CooldownDelegate;
+    public MultiDelegate ResetCooldownDelegate;
 
 
     private void Awake()
@@ -72,7 +73,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
-        map = TransferVariables.statsInstance.Map;
+        Map = TransferVariables.statsInstance.Map;
         numberMatches = 0;
         Player1Player = Player1.GetComponent<Player>();
 
@@ -98,17 +99,20 @@ public class GameplayManager : MonoBehaviour
         Player1Player.Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
         Player2Player.Tokens = new int[] { 0, 0, 0, 0, 0, 0 };
         Player1Player.ExtraMovesReady = true;
-        HUD.ExtraMovesButton.image.sprite = HUD.ExtraMovesReady;
-        
+        HUD.ExtraMovesButton.image.sprite = HUD.ExtraMovesReady;       
 
         HUD.ChangeNumberMatch(numberMatches);
 
-        switch (map)
+        switch (Map)
         {
             case 1:
-                ai.Map1AI();
                 Map1.SetActive(true);
+                ai.MapAI();
                 ResetPlayerPosition(new Vector3(4.5f, 2.5f, 0), new Vector3(8.5f, 19.5f, 0));
+                break;
+            case 2:
+                break;
+            case 3:
                 break;
             default:
                 break;
@@ -116,6 +120,7 @@ public class GameplayManager : MonoBehaviour
 
         ai.StartAI();
         determineFirstToPlay();
+        ResetCooldownDelegate();
     }
 
     private void ResetPlayerPosition(Vector3 p1pos, Vector3 p2pos)
@@ -198,7 +203,7 @@ public class GameplayManager : MonoBehaviour
 
             if (Player2.CompareTag("AI"))
             {
-                ai.MakePath();
+                ai.FindAIObjective();
             }
 
             //cameraPosition.x = Player2.transform.position.x;
@@ -220,18 +225,12 @@ public class GameplayManager : MonoBehaviour
         {
             numRounds += 1;
             endRound = false;
-            DelegateCooldowns();
+            CooldownDelegate(); //delegate that warns the special tiles that a round has passed
         }
         else
         {
             endRound = true;
         }
-    }
-
-    //function that warns the special tiles that a round has passed
-    private void DelegateCooldowns()
-    {
-        CooldownDelegate();
     }
 
     //Attack functions

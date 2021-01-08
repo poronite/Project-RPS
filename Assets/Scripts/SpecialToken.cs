@@ -24,13 +24,16 @@ public class SpecialToken : MonoBehaviour
     public Sprite BlueCooldown2;
     public Sprite BlueCooldown1;
 
-    private void Start()
+    private void Awake()
     {
         //tag that determines type of tile
         specialTile = gameObject.tag;
 
         //Delegate ChangeCooldown to CooldownDelegate in the Gameplay Manager
         GameplayManager.instance.CooldownDelegate += ChangeCooldown;
+
+        //Delegate ResetCooldown to ResetCooldown Delegate in the Gameplay Manager
+        GameplayManager.instance.ResetCooldownDelegate += ResetCooldown;
 
         Animation();
     }
@@ -209,5 +212,12 @@ public class SpecialToken : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void ResetCooldown()
+    {
+        roundsCooldownLeft = 0;
+        OffCooldown = true;
+        AnimatorManager.enabled = true;
     }
 }

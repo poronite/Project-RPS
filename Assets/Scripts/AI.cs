@@ -10,7 +10,7 @@ public class AI : MonoBehaviour
 
     public bool DrawLine;
 
-    private string aiObjective;
+    public string AIObjective;
 
     public GameObject Player;
     public GameplayManager GameplayManager;
@@ -63,7 +63,7 @@ public class AI : MonoBehaviour
 
     //map function that is used to help the AI distinguish between walkable and non walkable tiles
     //also puts the every object with special tiles tag in 3 different arrays depending on color
-    public void Map1AI() //map1 function
+    public void MapAI() //map1 function
     {
         redSpecialTiles.Clear();
         greenSpecialTiles.Clear();
@@ -73,59 +73,37 @@ public class AI : MonoBehaviour
         greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
         blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
 
-        tilesmap = new bool[,]
+        switch (GameplayManager.Map)
         {
-           {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-           {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, false, false, true, true, true, true, false, false, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
-           {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
-           {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}
-        };
+            case 1:
+                tilesmap = new bool[,]
+                {
+                   {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+                   {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, false, false, true, true, true, true, false, false, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, false},
+                   {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                   {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}
+                };
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
 
         width = tilesmap.GetLength(0);
         height = tilesmap.GetLength(1);
     }
-
-    public void Map2AI() //map2 function
-    {
-        redSpecialTiles.Clear();
-        greenSpecialTiles.Clear();
-        blueSpecialTiles.Clear();
-
-        redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
-        greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
-        blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
-
-        //tilemap
-
-        width = tilesmap.GetLength(0);
-        height = tilesmap.GetLength(1);
-    }
-    
-    public void Map3AI() //map3 function
-    {
-        redSpecialTiles.Clear();
-        greenSpecialTiles.Clear();
-        blueSpecialTiles.Clear();
-
-        redSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("RedSpecialTile"));
-        greenSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("GreenSpecialTile"));
-        blueSpecialTiles.AddRange(GameObject.FindGameObjectsWithTag("BlueSpecialTile"));
-
-        //tilemap
-
-        width = tilesmap.GetLength(0);
-        height = tilesmap.GetLength(1);
-    }
-
     
     public void MakePath() //function used to create a path for the AI depending on target
     {
@@ -134,7 +112,7 @@ public class AI : MonoBehaviour
         aiPositionX = (int)transform.position.x;
         aiPositionY = (int)transform.position.y;
 
-        switch (aiObjective)
+        switch (AIObjective)
         {
             case "Player":
                 targetPositionX = (int)Player.transform.position.x;
@@ -170,7 +148,7 @@ public class AI : MonoBehaviour
     {
         if (!aiController.CanAttack)
         {
-            aiObjective = "Tokens";
+            AIObjective = "Tokens";
         }
         else
         {
@@ -195,11 +173,11 @@ public class AI : MonoBehaviour
 
             if (risk >= 5)
             {
-                aiObjective = "Player";
+                AIObjective = "Player";
             }
             else if (risk < 5)
             {
-                aiObjective = "Tokens";
+                AIObjective = "Tokens";
             }
         }
         
