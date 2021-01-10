@@ -12,9 +12,6 @@ public class MenuManager : MonoBehaviour
     //reference to the elements of the Main Menu
     public GameObject MainMenuElements;
 
-    //references to the UI when choosing singleplayer or multiplayer
-    public GameObject GamemodeElements;
-
     //references to the UI when choosing the map
     public GameObject MapElements;
 
@@ -34,19 +31,9 @@ public class MenuManager : MonoBehaviour
         MainMenuElements.SetActive(true);
     }
 
-    //display choose gamemode
-    public void ChooseGamemode()
-    {
-        HideEveryElement();
-
-        GamemodeElements.SetActive(true);
-    }
-
     //display choose map
-    public void ChooseMap(string gamemode)
+    public void ChooseMap()
     {
-        TransferVariables.Gamemode = gamemode;
-
         HideEveryElement();
 
         MapElements.SetActive(true);
@@ -85,7 +72,6 @@ public class MenuManager : MonoBehaviour
     public void HideEveryElement()
     {
         MainMenuElements.SetActive(false);
-        GamemodeElements.SetActive(false);
         MapElements.SetActive(false);
     }
 }

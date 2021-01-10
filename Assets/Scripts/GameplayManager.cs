@@ -77,13 +77,10 @@ public class GameplayManager : MonoBehaviour
         numberMatches = 0;
         Player1Player = Player1.GetComponent<Player>();
 
-        if (TransferVariables.statsInstance.Gamemode == "Singleplayer")
-        {
-            Player2.tag = "AI";
-            Player2Player = Player2.GetComponent<Player>();
-            ai = Player2.GetComponent<AI>();
-        }
-        
+        Player2.tag = "AI";
+        Player2Player = Player2.GetComponent<Player>();
+        ai = Player2.GetComponent<AI>();
+
         cameraPosition = Camera.main.transform.position;
         resetGame();
     }
