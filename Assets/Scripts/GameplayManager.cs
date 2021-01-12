@@ -175,7 +175,7 @@ public class GameplayManager : MonoBehaviour
         {
             Player1Player.NumberMovesLeft = AssignNumberMoves;
             Player1Player.HasAttackedThisTurn = false;
-            Player1Player.IsInMenu = false;
+            Player1Player.IsInAttackMenu = false;
             Player1Player.EnoughTokensToAttack();
 
             cameraPosition.x = Player1.transform.position.x;
@@ -195,12 +195,12 @@ public class GameplayManager : MonoBehaviour
         {
             Player2Player.NumberMovesLeft = AssignNumberMoves;
             Player2Player.HasAttackedThisTurn = false;
-            Player2Player.IsInMenu = false;
+            Player2Player.IsInAttackMenu = false;
             Player2Player.EnoughTokensToAttack();
 
             if (Player2.CompareTag("AI"))
             {
-                ai.FindAIObjective();
+                ai.MakePath();
             }
 
             //cameraPosition.x = Player2.transform.position.x;
@@ -277,8 +277,8 @@ public class GameplayManager : MonoBehaviour
         DefenderController.enabled = true;
 
         //both are now battling
-        AttackerController.IsInMenu = true;
-        DefenderController.IsInMenu = true;
+        AttackerController.IsInAttackMenu = true;
+        DefenderController.IsInAttackMenu = true;
 
         //attacker can't attack twice in their turn
         AttackerController.HasAttackedThisTurn = true;
@@ -427,6 +427,8 @@ public class GameplayManager : MonoBehaviour
         Player2Player.EnoughTokensToAttack();
         ai.FindAIObjective();
 
+        AttackerController.NumberMovesLeft = 0;
+        AttackerController.enabled = true;
         HUD.Outcome();
     }
 

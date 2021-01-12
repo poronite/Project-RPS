@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public int PlayerID;
     public bool IsMoving = false;
     public bool CanAttack;
-    public bool IsInMenu = false;
+    public bool IsInAttackMenu = false;
     public bool HasAttackedThisTurn = false;
     public bool ExtraMovesReady = true;
     public int ExtraMovesCooldownLeft = 0;
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 
         //turn based movement that consumes 1 move each time the player moves 1 tile | AI also uses this function
         //up
-        if (((Input.GetButtonDown("TileUp") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y < AI.Path[PathCount].y + 0.5f)) && IsMoving == false && IsInMenu == false && NumberMovesLeft > 0) //y = 1; 
+        if (((Input.GetButtonDown("TileUp") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y < AI.Path[PathCount].y + 0.5f)) && IsMoving == false && IsInAttackMenu == false && NumberMovesLeft > 0) //y = 1; 
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, 1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
         }
 
         //left
-        if (((Input.GetButtonDown("TileLeft") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x > AI.Path[PathCount].x + 0.5f)) && IsMoving == false && IsInMenu == false && NumberMovesLeft > 0) //x = -1;
+        if (((Input.GetButtonDown("TileLeft") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x > AI.Path[PathCount].x + 0.5f)) && IsMoving == false && IsInAttackMenu == false && NumberMovesLeft > 0) //x = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(-1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         }
 
         //down
-        if (((Input.GetButtonDown("TileDown") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y > AI.Path[PathCount].y + 0.5f)) && IsMoving == false && IsInMenu == false && NumberMovesLeft > 0) //y = -1;
+        if (((Input.GetButtonDown("TileDown") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.y > AI.Path[PathCount].y + 0.5f)) && IsMoving == false && IsInAttackMenu == false && NumberMovesLeft > 0) //y = -1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(0, -1), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
         }
 
         //right
-        if (((Input.GetButtonDown("TileRight") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x < AI.Path[PathCount].x + 0.5f)) && IsMoving == false && IsInMenu == false && NumberMovesLeft > 0) //x = 1;
+        if (((Input.GetButtonDown("TileRight") && GameplayManager.PlayerTurn == 1) || (gameObject.CompareTag("AI") && AITimer >= 1.0f && playerPosition.x < AI.Path[PathCount].x + 0.5f)) && IsMoving == false && IsInAttackMenu == false && NumberMovesLeft > 0) //x = 1;
         {
             hit = Physics2D.Raycast(playerPosition, new Vector2(1, 0), 0.5f);
             if (hit.collider != null && IsCollider(hit.collider.gameObject))
@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
     //cancel sacrifice
     public void CancelExtraMoves()
     {
-        IsInMenu = false;
+        IsInAttackMenu = false;
     }
 
     public void ExtraMovesEnterCooldown()

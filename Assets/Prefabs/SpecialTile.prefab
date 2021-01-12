@@ -125,18 +125,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OffCooldown: 1
   AnimatorManager: {fileID: 1968850038596750424}
-  RedCooldown4: {fileID: 21300000, guid: 1e20b356e76225e4da77c6fdbf3dedba, type: 3}
-  RedCooldown3: {fileID: 21300000, guid: 528d9a887424a1b4e99ae4178e2ed8fd, type: 3}
-  RedCooldown2: {fileID: 21300000, guid: f5f535aae0aed4e42945cfdf416ede7d, type: 3}
-  RedCooldown1: {fileID: 21300000, guid: 50f46e0fff85a454795914a9678127d5, type: 3}
-  GreenCooldown4: {fileID: 21300000, guid: 701efe3c88296e4469af00f9477fdc82, type: 3}
-  GreenCooldown3: {fileID: 21300000, guid: 36bfdda4f2fc262459fdc52dfda8416b, type: 3}
-  GreenCooldown2: {fileID: 21300000, guid: 54a0532349719214ca1e2ae03a9afc31, type: 3}
-  GreenCooldown1: {fileID: 21300000, guid: 9b2097c8636f2cd4891409f63421057f, type: 3}
-  BlueCooldown4: {fileID: 21300000, guid: cf6f5a9795a2fd94282c19fc19253b44, type: 3}
-  BlueCooldown3: {fileID: 21300000, guid: d97e4e0553823f549a4fffa8b9a02116, type: 3}
-  BlueCooldown2: {fileID: 21300000, guid: 11ba86c03327adf409fdc6da85dda8a7, type: 3}
-  BlueCooldown1: {fileID: 21300000, guid: 4ac2f3092258d4f4293e83720b58be93, type: 3}
+  TileCooldown4: {fileID: 21300000, guid: 037cbe3ac649102459f89a14b501bf31, type: 3}
+  TileCooldown3: {fileID: 21300000, guid: b8e2fc5aad2d44c49bc27e92285f9461, type: 3}
+  TileCooldown2: {fileID: 21300000, guid: 14dae13eb909f104f856b28a4edbd20d, type: 3}
+  TileCooldown1: {fileID: 21300000, guid: 8d3284102a92aaa4080e1e759cdc8d70, type: 3}
 --- !u!50 &-7399496863658417590
 Rigidbody2D:
   serializedVersion: 4

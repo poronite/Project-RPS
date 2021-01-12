@@ -11,18 +11,10 @@ public class SpecialToken : MonoBehaviour
     public Animator AnimatorManager;
 
     //references to tile cooldown sprites
-    public Sprite RedCooldown4;
-    public Sprite RedCooldown3;
-    public Sprite RedCooldown2;
-    public Sprite RedCooldown1;
-    public Sprite GreenCooldown4;
-    public Sprite GreenCooldown3;
-    public Sprite GreenCooldown2;
-    public Sprite GreenCooldown1;
-    public Sprite BlueCooldown4;
-    public Sprite BlueCooldown3;
-    public Sprite BlueCooldown2;
-    public Sprite BlueCooldown1;
+    public Sprite TileCooldown4;
+    public Sprite TileCooldown3;
+    public Sprite TileCooldown2;
+    public Sprite TileCooldown1;
 
     private void Awake()
     {
@@ -138,76 +130,23 @@ public class SpecialToken : MonoBehaviour
     {
         roundsCooldownLeft -= 1;
 
-        switch (specialTile)
+        switch (roundsCooldownLeft)
         {
-            case "RedSpecialTile":
-                switch (roundsCooldownLeft)
-                {
-                    case 4:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown4;
-                        break;
-                    case 3:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown3;
-                        break;
-                    case 2:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown2;
-                        break;
-                    case 1:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = RedCooldown1;
-                        break;
-                    case 0:
-                        AnimatorManager.enabled = true;
-                        OffCooldown = true;   
-                        break;
-                    default:
-                        break;
-                }
+            case 4:
+                gameObject.GetComponent<SpriteRenderer>().sprite = TileCooldown4;
                 break;
-            case "GreenSpecialTile":
-                switch (roundsCooldownLeft)
-                {
-                    case 4:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown4;
-                        break;
-                    case 3:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown3;
-                        break;
-                    case 2:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown2;
-                        break;
-                    case 1:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = GreenCooldown1;
-                        break;
-                    case 0:
-                        AnimatorManager.enabled = true;
-                        OffCooldown = true;
-                        break;
-                    default:
-                        break;
-                }
+            case 3:
+                gameObject.GetComponent<SpriteRenderer>().sprite = TileCooldown3;
                 break;
-            case "BlueSpecialTile":
-                switch (roundsCooldownLeft)
-                {
-                    case 4:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown4;
-                        break;
-                    case 3:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown3;
-                        break;
-                    case 2:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown2;
-                        break;
-                    case 1:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = BlueCooldown1;
-                        break;
-                    case 0:
-                        AnimatorManager.enabled = true;
-                        OffCooldown = true;
-                        break;
-                    default:
-                        break;
-                }
+            case 2:
+                gameObject.GetComponent<SpriteRenderer>().sprite = TileCooldown2;
+                break;
+            case 1:
+                gameObject.GetComponent<SpriteRenderer>().sprite = TileCooldown1;
+                break;
+            case 0:
+                AnimatorManager.enabled = true;
+                OffCooldown = true;
                 break;
             default:
                 break;

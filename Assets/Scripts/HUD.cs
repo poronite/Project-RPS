@@ -78,12 +78,12 @@ public class HUD : MonoBehaviour
         if (movesleft > 0)
         {
             CurrentPlayerMovesLeft.text = $"{movesleft} moves left";
-            EndTurnButton.image.color = new Color(255, 255, 255);
+            EndTurnButton.image.color = new Color32(255, 255, 255, 255);
         }
         else if (movesleft == 0)
         {
             CurrentPlayerMovesLeft.text = "No moves left";
-            EndTurnButton.image.color = new Color(186, 253, 0);
+            EndTurnButton.image.color = new Color32(255, 242, 136, 255);
         }
     }
 
@@ -274,7 +274,7 @@ public class HUD : MonoBehaviour
 
     public void ExtraMovesScreen()
     {
-        GameplayManager.Player1Player.IsInMenu = true;
+        GameplayManager.Player1Player.IsInAttackMenu = true;
 
         SacrificeRAToken.image.color = Color.red;
         SacrificeRAToken.interactable = true;
