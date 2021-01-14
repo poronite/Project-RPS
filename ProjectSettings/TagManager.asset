@@ -9,6 +9,7 @@ TagManager:
   - BlueSpecialTile
   - Obstacle
   - AI
+  - WaterSpawner
   layers:
   - Default
   - TransparentFX

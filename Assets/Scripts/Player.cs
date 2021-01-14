@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public bool HasAttackedThisTurn = false;
     public bool ExtraMovesReady = true;
     public int ExtraMovesCooldownLeft = 0;
-    public float speed = 10;
+    public float Speed = 10;
     public GameplayManager GameplayManager;
     public HUD UI;
     public AI AI;
@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         GameplayManager.instance.CooldownDelegate += ExtraMovesCooldown;
-        
     }
 
     void Update()
@@ -52,7 +51,7 @@ public class Player : MonoBehaviour
 
         playerPosition = gameObject.transform.position;
 
-        float walk = speed * Time.deltaTime;
+        float walk = Speed * Time.deltaTime;
 
         AITimer += Time.deltaTime; //so that the AI doesn't move fast af
 

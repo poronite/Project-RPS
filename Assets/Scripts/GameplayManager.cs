@@ -15,6 +15,7 @@ public class GameplayManager : MonoBehaviour
     //map number
     public int Map;
     public GameObject Map1;
+    public GameObject Map2;
 
     //1 Round = 2 player turns
     private int numRounds = 0;
@@ -104,10 +105,11 @@ public class GameplayManager : MonoBehaviour
         {
             case 1:
                 Map1.SetActive(true);
-                ai.MapAI();
                 ResetPlayerPosition(new Vector3(4.5f, 2.5f, 0), new Vector3(8.5f, 19.5f, 0));
                 break;
             case 2:
+                Map2.SetActive(true);
+                ResetPlayerPosition(new Vector3(15.5f, 2.5f, 0), new Vector3(-2.5f, 10.5f, 0));
                 break;
             case 3:
                 break;
@@ -115,8 +117,11 @@ public class GameplayManager : MonoBehaviour
                 break;
         }
 
+        ai.MapAI();
         ai.StartAI();
+
         determineFirstToPlay();
+
         ResetCooldownDelegate();
     }
 
