@@ -159,11 +159,9 @@ public class GameplayManager : MonoBehaviour
             case 1:
                 ChangePlayerTurn(2);
                 break;
-
             case 2:
                 ChangePlayerTurn(1);
                 break;
-
             default:
                 break;
         }
@@ -191,6 +189,7 @@ public class GameplayManager : MonoBehaviour
                     AdjustCamera(5, 17);
                     break;
                 case 2:
+                    AdjustCamera(5, 8);
                     break;
                 case 3:
                     break;

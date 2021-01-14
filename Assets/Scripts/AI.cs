@@ -94,6 +94,32 @@ public class AI : MonoBehaviour
                 };
                 break;
             case 2:
+                tilesmap = new bool[,]
+                {
+                    {true, true, true, true, true, true, true, true, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
+                    {true, true, true, true, true, false, false, false, true, true, true, true, true}
+                };
                 break;
             case 3:
                 break;

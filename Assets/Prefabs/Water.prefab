@@ -97,7 +97,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -13.217773, y: 0}
+  m_Offset: {x: -13.003059, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -108,7 +108,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.13339996, y: 4.8259997}
+  m_Size: {x: 0.56282806, y: 4.8259997}
   m_EdgeRadius: 0
 --- !u!50 &1995743455432825509
 Rigidbody2D:
@@ -144,4 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaterObject: {fileID: 5242813472035339866}
-  Speed: 0.1
+  Speed: 0.015
