@@ -21,13 +21,16 @@ public class SpecialToken : MonoBehaviour
         //tag that determines type of tile
         specialTile = gameObject.tag;
 
+        Animation();
+    }
+
+    private void Start()
+    {
         //Delegate ChangeCooldown to CooldownDelegate in the Gameplay Manager
         GameplayManager.instance.CooldownDelegate += ChangeCooldown;
 
         //Delegate ResetCooldown to ResetCooldown Delegate in the Gameplay Manager
         GameplayManager.instance.ResetCooldownDelegate += ResetCooldown;
-
-        Animation();
     }
 
     //function that decides what animation to play based on tile tag

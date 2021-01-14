@@ -178,9 +178,22 @@ public class GameplayManager : MonoBehaviour
             Player1Player.IsInAttackMenu = false;
             Player1Player.EnoughTokensToAttack();
 
-            cameraPosition.x = Player1.transform.position.x;
-            cameraPosition.y = Player1.transform.position.y;
 
+            //adjust camera
+            switch (Map)
+            {
+                case 1:
+                    AdjustCamera(5, 17);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+
+            //re-activate buttons
             HUD.EndTurnButton.interactable = true;
             if (Player1Player.ExtraMovesReady == true)
             {
@@ -213,6 +226,19 @@ public class GameplayManager : MonoBehaviour
         Camera.main.transform.position = cameraPosition;
 
         HUD.ChangeTurnRoundHUD(PlayerTurn, numRounds);
+    }
+
+    public void AdjustCamera(int min, int max)
+    {
+        cameraPosition.y = Player1.transform.position.y;
+        if (cameraPosition.y < min)
+        {
+            cameraPosition.y = min;
+        }
+        if (cameraPosition.y > max)
+        {
+            cameraPosition.y = max;
+        }
     }
 
     //end round after both players play
