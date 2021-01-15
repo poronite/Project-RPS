@@ -106,10 +106,12 @@ public class GameplayManager : MonoBehaviour
             case 1:
                 Map1.SetActive(true);
                 ResetPlayerPosition(new Vector3(4.5f, 2.5f, 0), new Vector3(8.5f, 19.5f, 0));
+                cameraPosition.x = 7;
                 break;
             case 2:
                 Map2.SetActive(true);
-                ResetPlayerPosition(new Vector3(15.5f, 2.5f, 0), new Vector3(-2.5f, 10.5f, 0));
+                ResetPlayerPosition(new Vector3(15.5f, 3.5f, 0), new Vector3(2.5f, 11.5f, 0));
+                cameraPosition.x = 9;
                 break;
             case 3:
                 break;
@@ -189,7 +191,7 @@ public class GameplayManager : MonoBehaviour
                     AdjustCamera(5, 17);
                     break;
                 case 2:
-                    AdjustCamera(5, 8);
+                    AdjustCamera(6, 8);
                     break;
                 case 3:
                     break;

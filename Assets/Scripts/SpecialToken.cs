@@ -9,6 +9,7 @@ public class SpecialToken : MonoBehaviour
     private string nameTile;
     string specialTile;
     public Animator AnimatorManager;
+    public GameObject Player2;
 
     //references to tile cooldown sprites
     public Sprite TileCooldown4;
@@ -109,14 +110,10 @@ public class SpecialToken : MonoBehaviour
             //this only happens if the player/ai gets a token aka activates the tile
             if (SpecialTileActivated == true)
             {
-                PlayerColliderController.EnoughTokensToAttack();
-
-                if (PlayerCollider.CompareTag("AI"))
-                {
-                    PlayerCollider.GetComponent<AI>().FindAIObjective();
-                }
-
                 EnterCooldown();
+
+                PlayerColliderController.EnoughTokensToAttack();
+                Player2.GetComponent<AI>().FindAIObjective();
             }
         }
     }

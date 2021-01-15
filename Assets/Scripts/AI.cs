@@ -30,6 +30,9 @@ public class AI : MonoBehaviour
     private int targetPositionX;
     private int targetPositionY;
 
+    private int targetTokenPositionX;
+    private int targetTokenPositionY;
+
     PathFind.Grid grid;
     public List<PathFind.Point> Path;
 
@@ -96,29 +99,24 @@ public class AI : MonoBehaviour
             case 2:
                 tilesmap = new bool[,]
                 {
-                    {true, true, true, true, true, true, true, true, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true},
-                    {true, true, true, true, true, false, false, false, true, true, true, true, true}
+                    {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, false, false, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, false, false, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, false, false, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, false, false, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
+                    {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}
                 };
                 break;
             case 3:
@@ -144,16 +142,9 @@ public class AI : MonoBehaviour
                 targetPositionX = (int)Player.transform.position.x;
                 targetPositionY = (int)Player.transform.position.y;
                 break;
-            case "Tokens":
-                if (CheckTileAvailability())
-                {
-                    FindSpecialTile();
-                }
-                else
-                {
-                    targetPositionX = (int)Player.transform.position.x;
-                    targetPositionY = (int)Player.transform.position.y;
-                }
+            case "Tokens": //targetTokenPosition is so that the AI doesn't always change target(special tile) when making a path
+                targetPositionX = targetTokenPositionX;
+                targetPositionY = targetTokenPositionY;
                 break;
             default:
                 break;
@@ -175,6 +166,7 @@ public class AI : MonoBehaviour
         if (!aiController.CanAttack)
         {
             AIObjective = "Tokens";
+            FindSpecialTile();
         }
         else
         {
@@ -204,6 +196,15 @@ public class AI : MonoBehaviour
             else if (risk < 5)
             {
                 AIObjective = "Tokens";
+                if (CheckTileAvailability())
+                {
+                    FindSpecialTile();
+                }
+                else
+                {
+                    targetTokenPositionX = (int)Player.transform.position.x;
+                    targetTokenPositionY = (int)Player.transform.position.y;
+                }
             }
         }
         
@@ -269,14 +270,14 @@ public class AI : MonoBehaviour
 
                             if (AItoSpecialTile < PlayertoSpecialTile)
                             {
-                                targetPositionX = (int)RedSpecialTile.transform.position.x;
-                                targetPositionY = (int)RedSpecialTile.transform.position.y;
+                                targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
+                                targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
                             }
                         }
                         else
                         {
-                            targetPositionX = -1;
-                            targetPositionY = -1;
+                            targetTokenPositionX = -1;
+                            targetTokenPositionY = -1;
                         }
                     }
                     break;
@@ -292,14 +293,14 @@ public class AI : MonoBehaviour
 
                             if (AItoSpecialTile < PlayertoSpecialTile)
                             {
-                                targetPositionX = (int)GreenSpecialTile.transform.position.x;
-                                targetPositionY = (int)GreenSpecialTile.transform.position.y;
+                                targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
+                                targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
                             }
                         }
                         else
                         {
-                            targetPositionX = -1;
-                            targetPositionY = -1;
+                            targetTokenPositionX = -1;
+                            targetTokenPositionY = -1;
                         }
                     }
                     break;
@@ -315,14 +316,14 @@ public class AI : MonoBehaviour
 
                             if (AItoSpecialTile < PlayertoSpecialTile)
                             {
-                                targetPositionX = (int)BlueSpecialTile.transform.position.x;
-                                targetPositionY = (int)BlueSpecialTile.transform.position.y;
+                                targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
+                                targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;
                             }
                         }
                         else
                         {
-                            targetPositionX = -1;
-                            targetPositionY = -1;
+                            targetTokenPositionX = -1;
+                            targetTokenPositionY = -1;
                         }
                     }
                     break;
@@ -331,6 +332,6 @@ public class AI : MonoBehaviour
                     break;
             }
 
-        }while (targetPositionX == -1 && targetPositionY == -1);
+        }while (targetTokenPositionX == -1 && targetTokenPositionY == -1);
     }
 }

@@ -44,6 +44,8 @@ namespace PathFind
         // internal function to find path, don't use this one from outside
         private static List<Node> _ImpFindPath(Grid grid, Point startPos, Point targetPos)
         {
+            Debug.Log($"X: {startPos.x}");
+            Debug.Log($"Y: {startPos.y}");
             Node startNode = grid.nodes[startPos.x, startPos.y];
             Node targetNode = grid.nodes[targetPos.x, targetPos.y];
 
