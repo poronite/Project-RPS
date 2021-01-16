@@ -15,6 +15,12 @@ public class MenuManager : MonoBehaviour
     //references to the UI when choosing the map
     public GameObject MapElements;
 
+    //references to the Settings Menu
+    public GameObject SettingsMenu;
+
+    //references to the Credits Screen
+    public GameObject CreditsScreen;
+
 
     //starts scene in the Main menu
     void Start()
@@ -51,14 +57,16 @@ public class MenuManager : MonoBehaviour
     public void Settings()
     {
         Debug.Log("Going to Settings Menu.");
-        //HideEveryElement();
+        HideEveryElement();
+        SettingsMenu.SetActive(true);
     }
 
     //disable Main menu's objects and enable Credits objects
     public void Credits()
     {
         Debug.Log("Going to Credits.");
-        //HideEveryElement();
+        HideEveryElement();
+        CreditsScreen.SetActive(true);
     }
 
     //exit the game
@@ -73,5 +81,7 @@ public class MenuManager : MonoBehaviour
     {
         MainMenuElements.SetActive(false);
         MapElements.SetActive(false);
+        SettingsMenu.SetActive(false);
+        CreditsScreen.SetActive(false);
     }
 }

@@ -124,7 +124,10 @@ public class GameplayManager : MonoBehaviour
 
         determineFirstToPlay();
 
-        ResetCooldownDelegate();
+        if (numberMatches > 1)
+        {
+            ResetCooldownDelegate();
+        }
     }
 
     private void ResetPlayerPosition(Vector3 p1pos, Vector3 p2pos)
