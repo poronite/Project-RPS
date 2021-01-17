@@ -2236,6 +2236,8 @@ MonoBehaviour:
   AIObjective: 
   Player: {fileID: 1730373072}
   GameplayManager: {fileID: 1930918279}
+  TargetPositionX: 0
+  TargetPositionY: 0
 --- !u!1001 &509508954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2569,9 +2571,11 @@ GameObject:
   m_Component:
   - component: {fileID: 539476618}
   - component: {fileID: 539476617}
+  - component: {fileID: 539476619}
+  - component: {fileID: 539476620}
   m_Layer: 0
   m_Name: water
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2640,6 +2644,53 @@ Transform:
   m_Father: {fileID: 38426276}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &539476619
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539476616}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.03302288}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 26.568945, y: 4.8259997}
+    newSize: {x: 26.568945, y: 4.8259997}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 26.568945, y: 2.9247608}
+  m_EdgeRadius: 0
+--- !u!50 &539476620
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539476616}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 7
 --- !u!1 &554915509
 GameObject:
   m_ObjectHideFlags: 0
@@ -5959,10 +6010,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1682767836}
     m_Modifications:
+    - target: {fileID: -4646563427488465677, guid: f12a6e150d35d1e489ad71c5d199a2a9,
+        type: 3}
+      propertyPath: GameplayManager
+      value: 
+      objectReference: {fileID: 1930918279}
+    - target: {fileID: -4646563427488465677, guid: f12a6e150d35d1e489ad71c5d199a2a9,
+        type: 3}
+      propertyPath: AI
+      value: 
+      objectReference: {fileID: 501519590}
     - target: {fileID: 4953167797088480515, guid: f12a6e150d35d1e489ad71c5d199a2a9,
         type: 3}
       propertyPath: m_Name
-      value: PlankRight
+      value: PlankLeft
       objectReference: {fileID: 0}
     - target: {fileID: 4953167797088480525, guid: f12a6e150d35d1e489ad71c5d199a2a9,
         type: 3}
@@ -9277,6 +9338,7 @@ MonoBehaviour:
   Map: 0
   Map1: {fileID: 347532667}
   Map2: {fileID: 38426275}
+  Map2Planks: 0
   MatchWin: 0
   AffinityOutcome: 
   Winner: 
@@ -9293,8 +9355,6 @@ MonoBehaviour:
   DefenderTokens: 000000000000000000000000000000000000000000000000
   HUD: {fileID: 1930918280}
   MainCamera: {fileID: 519420031}
-  SpecialTile: {fileID: 2803341887687027710, guid: 51b3f603b9a313546aa31bf63cb44dbe,
-    type: 3}
 --- !u!114 &1930918280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9714,6 +9774,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1682767836}
     m_Modifications:
+    - target: {fileID: -4646563427488465677, guid: f12a6e150d35d1e489ad71c5d199a2a9,
+        type: 3}
+      propertyPath: GameplayManager
+      value: 
+      objectReference: {fileID: 1930918279}
+    - target: {fileID: -4646563427488465677, guid: f12a6e150d35d1e489ad71c5d199a2a9,
+        type: 3}
+      propertyPath: AI
+      value: 
+      objectReference: {fileID: 501519590}
     - target: {fileID: 4953167797088480515, guid: f12a6e150d35d1e489ad71c5d199a2a9,
         type: 3}
       propertyPath: m_Name
@@ -10022,10 +10092,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1682767836}
     m_Modifications:
+    - target: {fileID: -4646563427488465677, guid: f12a6e150d35d1e489ad71c5d199a2a9,
+        type: 3}
+      propertyPath: GameplayManager
+      value: 
+      objectReference: {fileID: 1930918279}
+    - target: {fileID: -4646563427488465677, guid: f12a6e150d35d1e489ad71c5d199a2a9,
+        type: 3}
+      propertyPath: AI
+      value: 
+      objectReference: {fileID: 501519590}
     - target: {fileID: 4953167797088480515, guid: f12a6e150d35d1e489ad71c5d199a2a9,
         type: 3}
       propertyPath: m_Name
-      value: PlankLeft
+      value: PlankRight
       objectReference: {fileID: 0}
     - target: {fileID: 4953167797088480525, guid: f12a6e150d35d1e489ad71c5d199a2a9,
         type: 3}

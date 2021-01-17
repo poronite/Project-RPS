@@ -16,6 +16,7 @@ public class GameplayManager : MonoBehaviour
     public int Map;
     public GameObject Map1;
     public GameObject Map2;
+    public int Map2Planks;
 
     //1 Round = 2 player turns
     private int numRounds = 0;
@@ -59,12 +60,10 @@ public class GameplayManager : MonoBehaviour
     public Camera MainCamera;
     private Vector3 cameraPosition;
 
-    //references to the special tiles
-    public GameObject SpecialTile;
-
     public delegate void MultiDelegate();
     public MultiDelegate CooldownDelegate;
     public MultiDelegate ResetCooldownDelegate;
+    public MultiDelegate ResetPlanksDelegate;
 
 
     private void Awake()
@@ -112,6 +111,7 @@ public class GameplayManager : MonoBehaviour
                 Map2.SetActive(true);
                 ResetPlayerPosition(new Vector3(15.5f, 3.5f, 0), new Vector3(2.5f, 11.5f, 0));
                 cameraPosition.x = 9;
+                Map2Planks = 3;
                 break;
             case 3:
                 break;
@@ -127,6 +127,7 @@ public class GameplayManager : MonoBehaviour
         if (numberMatches > 1)
         {
             ResetCooldownDelegate();
+            ResetPlanksDelegate();
         }
     }
 

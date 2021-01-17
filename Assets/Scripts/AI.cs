@@ -11,6 +11,7 @@ public class AI : MonoBehaviour
     public bool DrawLine;
 
     public string AIObjective;
+    private bool foundTarget;
 
     public GameObject Player;
     public GameplayManager GameplayManager;
@@ -27,8 +28,8 @@ public class AI : MonoBehaviour
     private int aiPositionX;
     private int aiPositionY;
 
-    private int targetPositionX;
-    private int targetPositionY;
+    public int TargetPositionX;
+    public int TargetPositionY;
 
     private int targetTokenPositionX;
     private int targetTokenPositionY;
@@ -36,7 +37,7 @@ public class AI : MonoBehaviour
     PathFind.Grid grid;
     public List<PathFind.Point> Path;
 
-    private bool[,] tilesmap;
+    public bool[,] Tilesmap;
 
     int width;
     int height;
@@ -45,8 +46,7 @@ public class AI : MonoBehaviour
     {
         aiController = gameObject.GetComponent<Player>();
 
-        // create a grid
-        grid = new PathFind.Grid(width, height, tilesmap);
+        MakeGrid();
 
         aiController.EnoughTokensToAttack();
         FindAIObjective();
@@ -79,7 +79,7 @@ public class AI : MonoBehaviour
         switch (GameplayManager.Map)
         {
             case 1:
-                tilesmap = new bool[,]
+                Tilesmap = new bool[,]
                 {
                    {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
                    {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false},
@@ -97,7 +97,7 @@ public class AI : MonoBehaviour
                 };
                 break;
             case 2:
-                tilesmap = new bool[,]
+                Tilesmap = new bool[,]
                 {
                     {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
                     {false, true, true, true, true, true, false, false, false, true, true, true, true, true, false},
@@ -125,8 +125,14 @@ public class AI : MonoBehaviour
                 break;
         }
 
-        width = tilesmap.GetLength(0);
-        height = tilesmap.GetLength(1);
+        width = Tilesmap.GetLength(0);
+        height = Tilesmap.GetLength(1);
+    }
+
+    public void MakeGrid()
+    {
+        // create a grid
+        grid = new PathFind.Grid(width, height, Tilesmap);
     }
     
     public void MakePath() //function used to create a path for the AI depending on target
@@ -139,21 +145,23 @@ public class AI : MonoBehaviour
         switch (AIObjective)
         {
             case "Player":
-                targetPositionX = (int)Player.transform.position.x;
-                targetPositionY = (int)Player.transform.position.y;
+                TargetPositionX = (int)Player.transform.position.x;
+                TargetPositionY = (int)Player.transform.position.y;
                 break;
             case "Tokens": //targetTokenPosition is so that the AI doesn't always change target(special tile) when making a path
-                targetPositionX = targetTokenPositionX;
-                targetPositionY = targetTokenPositionY;
+                TargetPositionX = targetTokenPositionX;
+                TargetPositionY = targetTokenPositionY;
                 break;
             default:
                 break;
         }
-        
+
+        Debug.Log($"Target X: {TargetPositionX}  |  Target Y: {TargetPositionY}");
+
 
         // create source and target points
         PathFind.Point from = new PathFind.Point(aiPositionX, aiPositionY);
-        PathFind.Point to = new PathFind.Point(targetPositionX, targetPositionY);
+        PathFind.Point to = new PathFind.Point(TargetPositionX, TargetPositionY);
 
         // get path
         // path will either be a list of Points (x, y), or an empty list if no path is found.
@@ -163,51 +171,55 @@ public class AI : MonoBehaviour
 
     public void FindAIObjective() //find a target for the AI depending whether or not he can attack
     {
-        if (!aiController.CanAttack)
+        do
         {
-            AIObjective = "Tokens";
-            FindSpecialTile();
-        }
-        else
-        {
-            int numberAttackTokens = aiController.Tokens[0] + aiController.Tokens[2] + aiController.Tokens[4];
-            //int tokencount = System.Convert.ToInt32(aiController.Tokens[0] > 0) + System.Convert.ToInt32(aiController.Tokens[2] > 0) + System.Convert.ToInt32(aiController.Tokens[4] > 0);
-
-            switch (numberAttackTokens)
-            {
-                case 1: //if AI has only 1 attack token of any type
-                    trust = 1;
-                    break;
-                case 2: //if AI has 2 attack tokens of any type
-                    trust = 4;
-                    break;
-                default:
-                    break;
-            }
-
-            confidence = Random.Range(1, 6);
-
-            risk = trust + confidence;
-
-            if (risk >= 5)
-            {
-                AIObjective = "Player";
-            }
-            else if (risk < 5)
+            if (!aiController.CanAttack)
             {
                 AIObjective = "Tokens";
-                if (CheckTileAvailability())
+                FindSpecialTile();
+            }
+            else
+            {
+                int numberAttackTokens = aiController.Tokens[0] + aiController.Tokens[2] + aiController.Tokens[4];
+                //int tokencount = System.Convert.ToInt32(aiController.Tokens[0] > 0) + System.Convert.ToInt32(aiController.Tokens[2] > 0) + System.Convert.ToInt32(aiController.Tokens[4] > 0);
+
+                switch (numberAttackTokens)
                 {
-                    FindSpecialTile();
+                    case 1: //if AI has only 1 attack token of any type
+                        trust = 1;
+                        break;
+                    case 2: //if AI has 2 attack tokens of any type
+                        trust = 4;
+                        break;
+                    default:
+                        break;
                 }
-                else
+
+                confidence = Random.Range(1, 6);
+
+                risk = trust + confidence;
+
+                if (risk >= 5)
                 {
-                    targetTokenPositionX = (int)Player.transform.position.x;
-                    targetTokenPositionY = (int)Player.transform.position.y;
+                    AIObjective = "Player";
+                }
+                else if (risk < 5)
+                {
+                    AIObjective = "Tokens";
+                    if (CheckTileAvailability())
+                    {
+                        FindSpecialTile();
+                    }
+                    else
+                    {
+                        targetTokenPositionX = (int)Player.transform.position.x;
+                        targetTokenPositionY = (int)Player.transform.position.y;
+                    }
                 }
             }
-        }
-        
+        } while (targetTokenPositionX == 0 && targetTokenPositionY == 0);      
+
+            
         MakePath();
     }
 
@@ -242,6 +254,8 @@ public class AI : MonoBehaviour
 
     public void FindSpecialTile() //in case AI chooses a token tile as a target, this function will select which specific tile he is going to
     {
+        foundTarget = false;
+
         Vector2 PlayerLocation = new Vector2(Player.transform.position.x, Player.transform.position.y);
         Vector2 AILocation = new Vector2(transform.position.x, transform.position.y);
 
@@ -268,10 +282,11 @@ public class AI : MonoBehaviour
                             AItoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - AILocation);
                             PlayertoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - PlayerLocation);
 
-                            if (AItoSpecialTile < PlayertoSpecialTile)
+                            if (foundTarget == false && AItoSpecialTile < PlayertoSpecialTile)
                             {
                                 targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
                                 targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
+                                foundTarget = true;
                             }
                         }
                         else
@@ -291,10 +306,11 @@ public class AI : MonoBehaviour
                             AItoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - AILocation);
                             PlayertoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - PlayerLocation);
 
-                            if (AItoSpecialTile < PlayertoSpecialTile)
+                            if (foundTarget == false && AItoSpecialTile < PlayertoSpecialTile)
                             {
                                 targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
                                 targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
+                                foundTarget = true;
                             }
                         }
                         else
@@ -314,10 +330,11 @@ public class AI : MonoBehaviour
                             AItoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - AILocation);
                             PlayertoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - PlayerLocation);
 
-                            if (AItoSpecialTile < PlayertoSpecialTile)
+                            if (foundTarget == false && AItoSpecialTile < PlayertoSpecialTile)
                             {
                                 targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
                                 targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;
+                                foundTarget = true;
                             }
                         }
                         else
