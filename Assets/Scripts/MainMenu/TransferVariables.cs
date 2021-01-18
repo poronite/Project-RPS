@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//I know this is unacceptable but for now it works
+
 public class TransferVariables : MonoBehaviour
 {
     public static TransferVariables statsInstance = null;

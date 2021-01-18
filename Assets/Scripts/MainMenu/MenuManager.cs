@@ -21,13 +21,6 @@ public class MenuManager : MonoBehaviour
     //references to the Credits Screen
     public GameObject CreditsScreen;
 
-
-    //starts scene in the Main menu
-    void Start()
-    {
-        MainMenu();
-    }
-
     //enable Main menu's objects and disable the rest
     public void MainMenu()
     {
@@ -79,6 +72,9 @@ public class MenuManager : MonoBehaviour
     //Hide every element everytime the player goes to another part of the menu
     public void HideEveryElement()
     {
+        //Play ButtonPress Clip
+        FindObjectOfType<AudioManager>().PlayClip("ButtonPress");
+
         MainMenuElements.SetActive(false);
         MapElements.SetActive(false);
         SettingsMenu.SetActive(false);
