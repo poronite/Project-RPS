@@ -60,6 +60,9 @@ public class GameplayManager : MonoBehaviour
     public Camera MainCamera;
     private Vector3 cameraPosition;
 
+    public SpecialToken SpecialToken;
+    public Plank Plank;
+
     public delegate void MultiDelegate();
     public MultiDelegate CooldownDelegate;
     public MultiDelegate ResetCooldownDelegate;
@@ -73,7 +76,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
-        Map = TransferVariables.statsInstance.Map;
+        Map = TransferMap.TransferMapInst.Map;
         numberMatches = 0;
         Player1Player = Player1.GetComponent<Player>();
 
@@ -82,6 +85,13 @@ public class GameplayManager : MonoBehaviour
         ai = Player2.GetComponent<AI>();
 
         cameraPosition = Camera.main.transform.position;
+        AudioManager.AudioInstance.PlayMusic();
+        SpecialToken.DelegateTiles();
+        if (Map == 2)
+        {
+            Plank.DelegatePlanks();
+        }
+
         resetGame();
     }
 
@@ -124,9 +134,10 @@ public class GameplayManager : MonoBehaviour
 
         determineFirstToPlay();
 
-        if (numberMatches > 1)
+        ResetCooldownDelegate();
+
+        if (Map == 2)
         {
-            ResetCooldownDelegate();
             ResetPlanksDelegate();
         }
     }
@@ -550,6 +561,9 @@ public class GameplayManager : MonoBehaviour
     //function that runs when Menu Button in the scene is clicked
     public void MainMenu()
     {
+        TransferMap.TransferMapInst.Map = 0;
+        AudioManager.AudioInstance.PlayMusic();
+
         SceneManager.LoadScene(0);
     }
 }

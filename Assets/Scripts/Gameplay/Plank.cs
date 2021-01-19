@@ -8,10 +8,15 @@ public class Plank : MonoBehaviour
     public AI AI;
     private int playercount = 0;
 
-    private void Start()
+    private void Awake()
     {
         //Delegate ResetPlanks to ResetPlanksDelegate in the Gameplay Manager
         GameplayManager.instance.ResetPlanksDelegate += ResetPlanks;
+    }
+
+    public void DelegatePlanks()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

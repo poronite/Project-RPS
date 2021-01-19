@@ -50,6 +50,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        PlayMusic();
+    }
+
     public void PlayClip(string name)
     {
         //find audio clip
@@ -63,5 +68,31 @@ public class AudioManager : MonoBehaviour
         }
 
         ClipReady.Source.Play();
+    }
+
+    public void PlayMusic()
+    {
+        foreach (AudioClips clip in Clips)
+        {
+            if (clip.MixerType == "Music")
+            {
+                clip.Source.Stop();
+            }
+        }
+
+        switch (TransferMap.TransferMapInst.Map)
+        {
+            case 0:
+                PlayClip("MenuTheme");
+                break;
+            case 1:
+                PlayClip("Map1Theme");
+                break;
+            case 2:
+                PlayClip("Map2Theme");
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class AI : MonoBehaviour
 
     public string AIObjective;
     private bool foundTarget;
+    private int availableTiles = 0;
 
     public GameObject Player;
     public GameplayManager GameplayManager;
@@ -225,11 +226,16 @@ public class AI : MonoBehaviour
 
     private bool CheckTileAvailability() //verifies if there are tiles available
     {
+        bool availability = false;
+
+        availableTiles = 0;
+
         foreach (GameObject RedSpecialTile in redSpecialTiles)
         {
             if (RedSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
             {
-                return true;
+                availableTiles += 1;
+                availability = true;
             }
         }
 
@@ -237,7 +243,8 @@ public class AI : MonoBehaviour
         {
             if (GreenSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
             {
-                return true;
+                availableTiles += 1;
+                availability = true;
             }
         }
 
@@ -245,16 +252,18 @@ public class AI : MonoBehaviour
         {
             if (BlueSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
             {
-                return true;
+                availableTiles += 1;
+                availability = true;
             }
         }
 
-        return false;
+        return availability;
     }
 
     public void FindSpecialTile() //in case AI chooses a token tile as a target, this function will select which specific tile he is going to
     {
         foundTarget = false;
+        int tilesNearEnemy = 0;
 
         Vector2 PlayerLocation = new Vector2(Player.transform.position.x, Player.transform.position.y);
         Vector2 AILocation = new Vector2(transform.position.x, transform.position.y);
@@ -282,11 +291,18 @@ public class AI : MonoBehaviour
                             AItoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - AILocation);
                             PlayertoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - PlayerLocation);
 
-                            if (foundTarget == false && AItoSpecialTile < PlayertoSpecialTile)
+                            if (foundTarget == false)
                             {
-                                targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
-                                targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
-                                foundTarget = true;
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy == availableTiles)
+                                {
+                                    targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
+                                    targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
+                                    foundTarget = true;
+                                }
+                                else
+                                {
+                                    tilesNearEnemy += 1;
+                                }
                             }
                         }
                         else
@@ -306,11 +322,18 @@ public class AI : MonoBehaviour
                             AItoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - AILocation);
                             PlayertoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - PlayerLocation);
 
-                            if (foundTarget == false && AItoSpecialTile < PlayertoSpecialTile)
+                            if (foundTarget == false)
                             {
-                                targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
-                                targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
-                                foundTarget = true;
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy == availableTiles)
+                                {
+                                    targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
+                                    targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
+                                    foundTarget = true;
+                                }
+                                else
+                                {
+                                    tilesNearEnemy += 1;
+                                }
                             }
                         }
                         else
@@ -330,11 +353,18 @@ public class AI : MonoBehaviour
                             AItoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - AILocation);
                             PlayertoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - PlayerLocation);
 
-                            if (foundTarget == false && AItoSpecialTile < PlayertoSpecialTile)
+                            if (foundTarget == false)
                             {
-                                targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
-                                targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;
-                                foundTarget = true;
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy == availableTiles)
+                                {
+                                    targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
+                                    targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;
+                                    foundTarget = true;
+                                }
+                                else
+                                {
+                                    tilesNearEnemy += 1;
+                                }
                             }
                         }
                         else
@@ -345,7 +375,6 @@ public class AI : MonoBehaviour
                     }
                     break;
                 default:
-                    FindSpecialTile();
                     break;
             }
 

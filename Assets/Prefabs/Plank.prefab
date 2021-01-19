@@ -144,3 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameplayManager: {fileID: 0}
+  AI: {fileID: 0}

@@ -2232,7 +2232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b77d3b9803f04449345455b73823ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DrawLine: 1
+  DrawLine: 0
   AIObjective: 
   Player: {fileID: 1730373072}
   GameplayManager: {fileID: 1930918279}
@@ -9355,6 +9355,9 @@ MonoBehaviour:
   DefenderTokens: 000000000000000000000000000000000000000000000000
   HUD: {fileID: 1930918280}
   MainCamera: {fileID: 519420031}
+  SpecialToken: {fileID: -5012411580330689801, guid: 51b3f603b9a313546aa31bf63cb44dbe,
+    type: 3}
+  Plank: {fileID: -4646563427488465677, guid: f12a6e150d35d1e489ad71c5d199a2a9, type: 3}
 --- !u!114 &1930918280
 MonoBehaviour:
   m_ObjectHideFlags: 0

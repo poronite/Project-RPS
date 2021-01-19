@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    //reference to class that stores variables needed
-    public TransferVariables TransferVariables;
-
     //reference to the elements of the Main Menu
     public GameObject MainMenuElements;
 
@@ -19,13 +16,13 @@ public class MenuManager : MonoBehaviour
     public GameObject SettingsMenu;
 
     //references to the Credits Screen
-    public GameObject CreditsScreen;
+    public GameObject CreditsScreen;    
 
     //enable Main menu's objects and disable the rest
     public void MainMenu()
     {
         HideEveryElement();
-        
+
         //display Main Menu
         MainMenuElements.SetActive(true);
     }
@@ -41,7 +38,7 @@ public class MenuManager : MonoBehaviour
     //change scene and start game
     public void Play(int map)
     {
-        TransferVariables.Map = map;
+        TransferMap.TransferMapInst.Map = map;
 
         SceneManager.LoadScene(1);
     }
@@ -49,7 +46,6 @@ public class MenuManager : MonoBehaviour
     //disable Main menu's objects and enable Settings objects
     public void Settings()
     {
-        Debug.Log("Going to Settings Menu.");
         HideEveryElement();
         SettingsMenu.SetActive(true);
     }
@@ -57,7 +53,6 @@ public class MenuManager : MonoBehaviour
     //disable Main menu's objects and enable Credits objects
     public void Credits()
     {
-        Debug.Log("Going to Credits.");
         HideEveryElement();
         CreditsScreen.SetActive(true);
     }
