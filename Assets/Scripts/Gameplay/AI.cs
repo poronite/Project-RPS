@@ -298,6 +298,7 @@ public class AI : MonoBehaviour
                                     targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
                                     foundTarget = true;
+                                    availableTiles = 0;
                                 }
                                 else
                                 {
@@ -329,6 +330,7 @@ public class AI : MonoBehaviour
                                     targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
                                     foundTarget = true;
+                                    availableTiles = 0;
                                 }
                                 else
                                 {
@@ -360,6 +362,7 @@ public class AI : MonoBehaviour
                                     targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;
                                     foundTarget = true;
+                                    availableTiles = 0;
                                 }
                                 else
                                 {
