@@ -80,7 +80,7 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        switch (TransferMap.TransferMapInst.Map)
+        switch (MenuManager.MenuInstance.Map)
         {
             case 0:
                 PlayClip("MenuTheme");

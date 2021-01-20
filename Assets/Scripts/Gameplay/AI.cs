@@ -293,7 +293,7 @@ public class AI : MonoBehaviour
 
                             if (foundTarget == false)
                             {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy == availableTiles)
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 1)
                                 {
                                     targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
@@ -325,7 +325,7 @@ public class AI : MonoBehaviour
 
                             if (foundTarget == false)
                             {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy == availableTiles)
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 1)
                                 {
                                     targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
@@ -357,7 +357,7 @@ public class AI : MonoBehaviour
 
                             if (foundTarget == false)
                             {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy == availableTiles)
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 1)
                                 {
                                     targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;

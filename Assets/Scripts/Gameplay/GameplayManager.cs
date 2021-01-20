@@ -76,7 +76,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
-        Map = TransferMap.TransferMapInst.Map;
+        Map = MenuManager.MenuInstance.Map;
         numberMatches = 0;
         Player1Player = Player1.GetComponent<Player>();
 
@@ -85,12 +85,7 @@ public class GameplayManager : MonoBehaviour
         ai = Player2.GetComponent<AI>();
 
         cameraPosition = Camera.main.transform.position;
-        AudioManager.AudioInstance.PlayMusic();
-        SpecialToken.DelegateTiles();
-        if (Map == 2)
-        {
-            Plank.DelegatePlanks();
-        }
+        AudioManager.AudioInstance.PlayMusic();        
 
         resetGame();
     }
@@ -116,11 +111,13 @@ public class GameplayManager : MonoBehaviour
                 Map1.SetActive(true);
                 ResetPlayerPosition(new Vector3(4.5f, 2.5f, 0), new Vector3(8.5f, 19.5f, 0));
                 cameraPosition.x = 7;
+                AdjustCamera(5, 17);
                 break;
             case 2:
                 Map2.SetActive(true);
                 ResetPlayerPosition(new Vector3(15.5f, 3.5f, 0), new Vector3(2.5f, 11.5f, 0));
                 cameraPosition.x = 9;
+                AdjustCamera(6, 8);
                 Map2Planks = 3;
                 break;
             case 3:
@@ -561,9 +558,9 @@ public class GameplayManager : MonoBehaviour
     //function that runs when Menu Button in the scene is clicked
     public void MainMenu()
     {
-        TransferMap.TransferMapInst.Map = 0;
+        MenuManager.MenuInstance.Map = 0;
         AudioManager.AudioInstance.PlayMusic();
-
+        Destroy(MenuManager.MenuInstance.gameObject);
         SceneManager.LoadScene(0);
     }
 }

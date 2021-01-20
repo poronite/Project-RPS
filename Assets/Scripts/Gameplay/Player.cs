@@ -285,5 +285,9 @@ public class Player : MonoBehaviour
 
             GameplayManager.AttackConfirmation(attacker, defender);
         }
+        else if(gameObject.CompareTag("AI") && CanAttack == false) //making sure that the AI doesn't get stuck
+        {
+            AI.FindAIObjective();
+        }
     }
 }

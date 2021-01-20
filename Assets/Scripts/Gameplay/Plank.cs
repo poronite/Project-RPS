@@ -14,11 +14,6 @@ public class Plank : MonoBehaviour
         GameplayManager.instance.ResetPlanksDelegate += ResetPlanks;
     }
 
-    public void DelegatePlanks()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") || collision.CompareTag("AI"))

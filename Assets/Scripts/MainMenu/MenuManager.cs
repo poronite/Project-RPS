@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public int Map = 0;
+
+    //instance of Menu Manager
+    public static MenuManager MenuInstance = null;
+
     //reference to the elements of the Main Menu
     public GameObject MainMenuElements;
 
@@ -16,7 +21,14 @@ public class MenuManager : MonoBehaviour
     public GameObject SettingsMenu;
 
     //references to the Credits Screen
-    public GameObject CreditsScreen;    
+    public GameObject CreditsScreen;
+
+    private void Awake()
+    {
+        MenuInstance = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
 
     //enable Main menu's objects and disable the rest
     public void MainMenu()
@@ -38,7 +50,7 @@ public class MenuManager : MonoBehaviour
     //change scene and start game
     public void Play(int map)
     {
-        TransferMap.TransferMapInst.Map = map;
+        MenuInstance.Map = map;
 
         SceneManager.LoadScene(1);
     }

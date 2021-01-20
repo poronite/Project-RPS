@@ -31,11 +31,6 @@ public class SpecialToken : MonoBehaviour
         Animation();
     }
 
-    public void DelegateTiles()
-    {
-        
-    }
-
     //function that decides what animation to play based on tile tag
     private void Animation()
     {
