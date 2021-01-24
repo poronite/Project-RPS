@@ -13,9 +13,14 @@ public class HUD : MonoBehaviour
     public Text CurrentPlayerMovesLeft;
     public Text NumMatches;
     public Text NumRounds;
-    public Text NumRTokens;
-    public Text NumPTokens;
-    public Text NumSTokens;
+
+    public Text NumRAtkTokens;
+    public Text NumRDefTokens;
+    public Text NumPAtkTokens;
+    public Text NumPDefTokens;
+    public Text NumSAtkTokens;
+    public Text NumSDefTokens;
+
     public Button EndTurnButton;
     public Button ExtraMovesButton;
     public Button MainMenuButton;
@@ -90,9 +95,12 @@ public class HUD : MonoBehaviour
     //display number of tokens
     public void TokensLeft(int[] tokens)
     {
-        NumRTokens.text = $"Randomness Tokens: {tokens[0]}/{tokens[1]}";
-        NumPTokens.text = $"Patience Tokens: {tokens[2]}/{tokens[3]}";
-        NumSTokens.text = $"Strategy Tokens: {tokens[4]}/{tokens[5]}";
+        NumRAtkTokens.text = tokens[0] == 0 ? "" : $"{tokens[0]}";
+        NumRDefTokens.text = tokens[1] == 0 ? "" : $"{tokens[1]}";
+        NumPAtkTokens.text = tokens[2] == 0 ? "" : $"{tokens[2]}";
+        NumPDefTokens.text = tokens[3] == 0 ? "" : $"{tokens[3]}";
+        NumSAtkTokens.text = tokens[4] == 0 ? "" : $"{tokens[4]}";
+        NumSDefTokens.text = tokens[5] == 0 ? "" : $"{tokens[5]}";
     }
 
     //display round and player turn
