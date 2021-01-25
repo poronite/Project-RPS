@@ -17,6 +17,8 @@ public class GameplayManager : MonoBehaviour
     public GameObject Map1;
     public GameObject Map2;
     public int Map2Planks;
+    public GameObject Map3;
+    public Snow SnowTiles;
 
     //1 Round = 2 player turns
     private int numRounds = 0;
@@ -121,6 +123,11 @@ public class GameplayManager : MonoBehaviour
                 Map2Planks = 3;
                 break;
             case 3:
+                Map3.SetActive(true);
+                ResetPlayerPosition(new Vector3(13.5f, 3.5f, 0), new Vector3(3.5f, 12.5f, 0));
+                SnowTiles.ResetSnowTiles();
+                cameraPosition.x = 8.5f;
+                AdjustCamera(6, 10);
                 break;
             default:
                 break;

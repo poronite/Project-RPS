@@ -10,6 +10,7 @@ TagManager:
   - Obstacle
   - AI
   - WaterSpawner
+  - Snow
   layers:
   - Default
   - TransparentFX

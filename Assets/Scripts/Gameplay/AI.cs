@@ -121,6 +121,26 @@ public class AI : MonoBehaviour
                 };
                 break;
             case 3:
+                Tilesmap = new bool[,]
+                {
+                    {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+                    {false, false, false, false, false, true, true, true, true, true, true, false, false, false, false, false},
+                    {false, false, false, true, true, true, true, true, true, true, true, true, true, false, false, false},
+                    {false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false},
+                    {false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false},
+                    {false, true, true, true, true, true, false, false, false, false, true, true, true, true, true, false},
+                    {false, true, true, true, true, false, false, false, false, false, false, true, true, true, true, false},
+                    {false, true, true, true, false, false, false, false, false, false, false, false, true, true, true, false},
+                    {false, true, true, true, false, false, false, false, false, false, false, false, true, true, true, false},
+                    {false, true, true, true, false, false, false, false, false, false, false, false, true, true, true, false},
+                    {false, true, true, true, true, false, false, false, false, false, false, true, true, true, true, false},
+                    {false, true, true, true, true, true, false, false, false, false, true, true, true, true, true, false},
+                    {false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false},
+                    {false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false},
+                    {false, false, false, true, true, true, true, true, true, true, true, true, true, false, false, false},
+                    {false, false, false, false, false, true, true, true, true, true, true, false, false, false, false, false},
+                    {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+                };
                 break;
             default:
                 break;
@@ -293,7 +313,7 @@ public class AI : MonoBehaviour
 
                             if (foundTarget == false)
                             {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 1)
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 2)
                                 {
                                     targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
@@ -325,7 +345,7 @@ public class AI : MonoBehaviour
 
                             if (foundTarget == false)
                             {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 1)
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 2)
                                 {
                                     targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
@@ -357,7 +377,7 @@ public class AI : MonoBehaviour
 
                             if (foundTarget == false)
                             {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 1)
+                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 2)
                                 {
                                     targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
                                     targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;
