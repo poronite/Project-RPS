@@ -112,13 +112,15 @@ public class GameplayManager : MonoBehaviour
             case 1:
                 Map1.SetActive(true);
                 ResetPlayerPosition(new Vector3(4.5f, 2.5f, 0), new Vector3(8.5f, 19.5f, 0));
-                cameraPosition.x = 7;
+                cameraPosition.x = 6.5f;
+                MainCamera.orthographicSize = 5;
                 AdjustCamera(5, 17);
                 break;
             case 2:
                 Map2.SetActive(true);
                 ResetPlayerPosition(new Vector3(15.5f, 3.5f, 0), new Vector3(2.5f, 11.5f, 0));
                 cameraPosition.x = 9;
+                MainCamera.orthographicSize = 5;
                 AdjustCamera(6, 8);
                 Map2Planks = 3;
                 break;
@@ -127,6 +129,7 @@ public class GameplayManager : MonoBehaviour
                 ResetPlayerPosition(new Vector3(13.5f, 3.5f, 0), new Vector3(3.5f, 12.5f, 0));
                 SnowTiles.ResetSnowTiles();
                 cameraPosition.x = 8.5f;
+                MainCamera.orthographicSize = 6;
                 AdjustCamera(6, 10);
                 break;
             default:
@@ -303,16 +306,28 @@ public class GameplayManager : MonoBehaviour
         {
             case "Player":
                 HUD.AttackConfirmationScreen();
+
+                //attack button animations
+                HUD.PlayerRButton.animator.runtimeAnimatorController = HUD.RedAttackToken;
+                HUD.PlayerPButton.animator.runtimeAnimatorController = HUD.GreenAttackToken;
+                HUD.PlayerSButton.animator.runtimeAnimatorController = HUD.BlueAttackToken;
+
                 break;
             case "AI":
                 if (AttackerController.CanAttack == true)
                 {
                     ReadyAttack();
                     HUD.AttackSelectionScreen();
+
+                    //defense button animations
+                    HUD.PlayerRButton.animator.runtimeAnimatorController = HUD.RedDefenseToken;
+                    HUD.PlayerPButton.animator.runtimeAnimatorController = HUD.GreenDefenseToken;
+                    HUD.PlayerSButton.animator.runtimeAnimatorController = HUD.BlueDefenseToken;
                 }
                 else
                 {
                     CancelAttack();
+                    ai.FindAIObjective();
                 }
                 break;
             default:
@@ -360,20 +375,17 @@ public class GameplayManager : MonoBehaviour
 
                 if (Player1Player.Tokens[0] == 0)
                 {
-                    HUD.PlayerRButton.interactable = false;
-                    HUD.PlayerRButton.image.color = Color.gray;
+                    HUD.PlayerRButton.interactable = false;                    
                 }
 
                 if (Player1Player.Tokens[2] == 0)
                 {
-                    HUD.PlayerPButton.interactable = false;
-                    HUD.PlayerPButton.image.color = Color.gray;
+                    HUD.PlayerPButton.interactable = false;                    
                 }
 
                 if (Player1Player.Tokens[4] == 0)
                 {
-                    HUD.PlayerSButton.interactable = false;
-                    HUD.PlayerSButton.image.color = Color.gray;
+                    HUD.PlayerSButton.interactable = false;                    
                 }
 
                 break;
@@ -381,20 +393,17 @@ public class GameplayManager : MonoBehaviour
 
                 if (Player1Player.Tokens[1] == 0)
                 {
-                    HUD.PlayerRButton.interactable = false;
-                    HUD.PlayerRButton.image.color = Color.gray;
+                    HUD.PlayerRButton.interactable = false;                   
                 }
 
                 if (Player1Player.Tokens[3] == 0)
                 {
-                    HUD.PlayerPButton.interactable = false;
-                    HUD.PlayerPButton.image.color = Color.gray;
+                    HUD.PlayerPButton.interactable = false;                   
                 }
 
                 if (Player1Player.Tokens[5] == 0)
                 {
                     HUD.PlayerSButton.interactable = false;
-                    HUD.PlayerSButton.image.color = Color.gray;
                 }
 
                 break;

@@ -51,6 +51,14 @@ public class HUD : MonoBehaviour
     public Button PlayerPButton;
     public Button PlayerSButton;
 
+    //references to the animations used for attack/defense tokens
+    public RuntimeAnimatorController RedAttackToken;
+    public RuntimeAnimatorController RedDefenseToken;
+    public RuntimeAnimatorController GreenAttackToken;
+    public RuntimeAnimatorController GreenDefenseToken;
+    public RuntimeAnimatorController BlueAttackToken;
+    public RuntimeAnimatorController BlueDefenseToken;
+
     //references to the ExtraMovesBox buttons
     public Button SacrificeRAToken;
     public Button SacrificePAToken;
@@ -143,13 +151,10 @@ public class HUD : MonoBehaviour
         AttackSelectionBox.SetActive(true);
 
         PlayerRButton.interactable = true;
-        PlayerRButton.image.color = Color.red;
 
         PlayerPButton.interactable = true;
-        PlayerPButton.image.color = Color.green;
 
         PlayerSButton.interactable = true;
-        PlayerSButton.image.color = Color.blue;
 
         GameplayManager.CheckTokenAvailability();
     }
@@ -283,20 +288,14 @@ public class HUD : MonoBehaviour
     public void ExtraMovesScreen()
     {
         GameplayManager.Player1Player.IsInAttackMenu = true;
-
-        SacrificeRAToken.image.color = Color.red;
+        
         SacrificeRAToken.interactable = true;
-        SacrificeRDToken.image.color = Color.red;
         SacrificeRDToken.interactable = true;
-
-        SacrificePAToken.image.color = Color.green;
+        
         SacrificePAToken.interactable = true;
-        SacrificePDToken.image.color = Color.green;
         SacrificePDToken.interactable = true;
-
-        SacrificeSAToken.image.color = Color.blue;
+        
         SacrificeSAToken.interactable = true;
-        SacrificeSDToken.image.color = Color.blue;
         SacrificeSDToken.interactable = true;
 
         ExtraMovesBox.SetActive(true);
