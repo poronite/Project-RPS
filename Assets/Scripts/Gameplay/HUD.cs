@@ -36,28 +36,39 @@ public class HUD : MonoBehaviour
     public Sprite ExtraMoves1;
     public Sprite ExtraMovesReady;
 
-
     //references to the AttackConfirmationBox's UI elements
-    public Text Question;
-    public Button Yes;
-    public Button No;
-    public Button Ok;
+    public Button AttackButton;
+    public Button RefuseAttackButton;
 
-    //references to the Outcome's text
+    //screen gets darker when player is choosing the token
+    public GameObject Filter;
+
+    //references to the Outcome's elements
     public Text OutcomeUIText;
+    public GameObject AttackerAvatar;
+    public GameObject DefenderAvatar;
+    public GameObject AttackerLostToken;
+    public GameObject AttackerObtainedToken;
+    public GameObject DefenderLostToken;
 
     //references to the AttackSelectionBox buttons
     public Button PlayerRButton;
     public Button PlayerPButton;
     public Button PlayerSButton;
 
-    //references to the animations used for attack/defense tokens
+    //images
+    public Sprite Player1Image;
+    public Sprite Player2Image;
+
+    //animations
     public RuntimeAnimatorController RedAttackToken;
     public RuntimeAnimatorController RedDefenseToken;
     public RuntimeAnimatorController GreenAttackToken;
     public RuntimeAnimatorController GreenDefenseToken;
     public RuntimeAnimatorController BlueAttackToken;
     public RuntimeAnimatorController BlueDefenseToken;
+    public RuntimeAnimatorController Player1Animation;
+    public RuntimeAnimatorController Player2Animation;
 
     //references to the ExtraMovesBox buttons
     public Button SacrificeRAToken;
@@ -125,36 +136,35 @@ public class HUD : MonoBehaviour
 
         if (GameplayManager.AttackerController.CanAttack == true)
         {
-            Question.text = "Do you want to attack the enemy?";
-            Yes.gameObject.SetActive(true);
-            No.gameObject.SetActive(true);
-            Ok.gameObject.SetActive(false);
+            AttackButton.gameObject.SetActive(true);
+            RefuseAttackButton.gameObject.SetActive(true);
+
+            //disable other buttons' functions while the player decides to attack
+            EndTurnButton.interactable = false;
+            ExtraMovesButton.interactable = false;
+            MainMenuButton.interactable = false;
         }
         else
         {
-            Question.text = "Can't attack the enemy.";
-            Yes.gameObject.SetActive(false);
-            No.gameObject.SetActive(false);
-            Ok.gameObject.SetActive(true);
-
+            AttackConfirmationBox.SetActive(false);
+            GameplayManager.CancelAttack();
         }
 
-        //disable other buttons' functions while the player decides to attack
-        EndTurnButton.interactable = false;
-        ExtraMovesButton.interactable = false;
-        MainMenuButton.interactable = false;
+        
     }
 
     //attack selection screen box
     public void AttackSelectionScreen()
     {
+        Filter.SetActive(true);
         AttackSelectionBox.SetActive(true);
 
         PlayerRButton.interactable = true;
-
+        PlayerRButton.animator.enabled = true;
         PlayerPButton.interactable = true;
-
+        PlayerPButton.animator.enabled = true;
         PlayerSButton.interactable = true;
+        PlayerSButton.animator.enabled = true;
 
         GameplayManager.CheckTokenAvailability();
     }
@@ -255,29 +265,67 @@ public class HUD : MonoBehaviour
     //box with text that shows outcome of the battle
     public void Outcome()
     {
+        Animator AttackerAnimator = AttackerAvatar.GetComponent<Animator>();
+        Animator DefenderAnimator = DefenderAvatar.GetComponent<Animator>();
+        Image AttackerImage = AttackerAvatar.GetComponent<Image>();
+        Image DefenderImage = DefenderAvatar.GetComponent<Image>();
+
+        if (GameplayManager.AttackerController.PlayerID == 1)
+        {
+            AttackerAnimator.runtimeAnimatorController = Player1Animation;
+            AttackerImage.sprite = Player1Image;
+            DefenderAnimator.runtimeAnimatorController = Player2Animation;
+            DefenderImage.sprite = Player2Image;
+        }
+        else
+        {
+            AttackerAnimator.runtimeAnimatorController = Player2Animation;
+            AttackerImage.sprite = Player2Image;
+            DefenderAnimator.runtimeAnimatorController = Player1Animation;
+            DefenderImage.sprite = Player1Image;
+        }
+
         AttackSelectionBox.SetActive(false);
         OutcomeUI.SetActive(true);
 
-        if (GameplayManager.Winner == "" && GameplayManager.MatchWin == true)
+        OutcomeUIText.text = "Battle Outcome";
+        AttackerLostToken.SetActive(false);
+        AttackerObtainedToken.SetActive(false);
+        DefenderLostToken.SetActive(false);
+
+        AttackerAnimator.enabled = false;
+        DefenderAnimator.enabled = false;
+
+        if (GameplayManager.Winner == "" && GameplayManager.MatchWin == true) //Winning a match
         {
             OutcomeUIText.text = $"{GameplayManager.Attacker.name} wins this match.";
+
+            AttackerAnimator.enabled = true;
         }
         else if (GameplayManager.Winner != "")
         {
             OutcomeUIText.text = $"{GameplayManager.Winner} wins the game!";
+
+            AttackerAnimator.enabled = true;
         }
         else if(GameplayManager.Winner == "" && GameplayManager.MatchWin == false)
         {
+            AttackerLostToken.SetActive(true);
+
             switch (GameplayManager.AffinityOutcome)
             {
                 case "Advantage":
-                    OutcomeUIText.text = $"Attack successful! {GameplayManager.Attacker.name} consumes {AttackerChoice} Attack Token. {GameplayManager.Defender.name} loses {DefenderChoice} Defense token. {GameplayManager.Attacker.name} receives {DefenderChoice} Attack Token.";
+                    AttackerObtainedToken.SetActive(true);
+                    DefenderLostToken.SetActive(true);
+                    AttackerAnimator.enabled = true;
                     break;
                 case "Disadvantage":
-                    OutcomeUIText.text = $"Attack unsucessful! {GameplayManager.Attacker.name} loses {AttackerChoice} Attack Token.";
+                    AttackerLostToken.SetActive(true);
+                    DefenderAnimator.enabled = true;
                     break;
                 case "Neutral":
-                    OutcomeUIText.text = $"It's a draw! {GameplayManager.Attacker.name} loses {AttackerChoice} Attack Token. {GameplayManager.Defender.name} loses {DefenderChoice} Defense Token.";
+                    AttackerLostToken.SetActive(true);
+                    DefenderLostToken.SetActive(true);
                     break;
                 default:
                     break;

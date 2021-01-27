@@ -364,7 +364,9 @@ public class GameplayManager : MonoBehaviour
             {
                 Winner = Attacker.name;
             }
-            
+
+            AffinityOutcome = "";
+
             HUD.Outcome();
         }
 
@@ -375,17 +377,20 @@ public class GameplayManager : MonoBehaviour
 
                 if (Player1Player.Tokens[0] == 0)
                 {
-                    HUD.PlayerRButton.interactable = false;                    
+                    HUD.PlayerRButton.interactable = false;
+                    HUD.PlayerRButton.animator.enabled = false;
                 }
 
                 if (Player1Player.Tokens[2] == 0)
                 {
-                    HUD.PlayerPButton.interactable = false;                    
+                    HUD.PlayerPButton.interactable = false;
+                    HUD.PlayerPButton.animator.enabled = false;
                 }
 
                 if (Player1Player.Tokens[4] == 0)
                 {
-                    HUD.PlayerSButton.interactable = false;                    
+                    HUD.PlayerSButton.interactable = false;
+                    HUD.PlayerSButton.animator.enabled = false;
                 }
 
                 break;
@@ -393,17 +398,20 @@ public class GameplayManager : MonoBehaviour
 
                 if (Player1Player.Tokens[1] == 0)
                 {
-                    HUD.PlayerRButton.interactable = false;                   
+                    HUD.PlayerRButton.interactable = false;
+                    HUD.PlayerRButton.animator.enabled = false;
                 }
 
                 if (Player1Player.Tokens[3] == 0)
                 {
-                    HUD.PlayerPButton.interactable = false;                   
+                    HUD.PlayerPButton.interactable = false;
+                    HUD.PlayerPButton.animator.enabled = false;
                 }
 
                 if (Player1Player.Tokens[5] == 0)
                 {
                     HUD.PlayerSButton.interactable = false;
+                    HUD.PlayerSButton.animator.enabled = false;
                 }
 
                 break;
@@ -417,11 +425,14 @@ public class GameplayManager : MonoBehaviour
     {
         if (attackerChoice == "Randomness")
         {
+            HUD.AttackerLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.RedAttackToken;
+
             AttackerTokens[0] -= 1;
             switch (defenderChoice)
             {
                 case "Randomness": //Neutral
                     DefenderTokens[1] -= 1;
+                    HUD.DefenderLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.RedAttackToken;
                     AffinityOutcome = "Neutral";
                     break;
                 case "Patience": //Disadvantage
@@ -430,7 +441,9 @@ public class GameplayManager : MonoBehaviour
                     break;
                 case "Strategy": //Advantage
                     DefenderTokens[5] -= 1;
+                    HUD.DefenderLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.BlueAttackToken;
                     AttackerTokens[4] += 1;
+                    HUD.AttackerObtainedToken.GetComponent<Animator>().runtimeAnimatorController = HUD.BlueAttackToken;
                     AffinityOutcome = "Advantage";
                     break;
                 default:
@@ -440,16 +453,21 @@ public class GameplayManager : MonoBehaviour
 
         if (attackerChoice == "Patience")
         {
+            HUD.AttackerLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.GreenAttackToken;
+
             AttackerTokens[2] -= 1;
             switch (defenderChoice)
             {
                 case "Randomness": //Advantage
                     DefenderTokens[1] -= 1;
+                    HUD.DefenderLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.RedAttackToken;
                     AttackerTokens[0] += 1;
+                    HUD.AttackerObtainedToken.GetComponent<Animator>().runtimeAnimatorController = HUD.RedAttackToken;
                     AffinityOutcome = "Advantage";
                     break;
                 case "Patience": //Neutral
                     DefenderTokens[3] -= 1;
+                    HUD.DefenderLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.GreenAttackToken;
                     AffinityOutcome = "Neutral";
                     break;
                 case "Strategy": //Disadvantage
@@ -463,6 +481,8 @@ public class GameplayManager : MonoBehaviour
 
         if (attackerChoice == "Strategy")
         {
+            HUD.AttackerLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.BlueAttackToken;
+
             AttackerTokens[4] -= 1;
             switch (defenderChoice)
             {
@@ -472,11 +492,14 @@ public class GameplayManager : MonoBehaviour
                     break;
                 case "Patience": //Advantage
                     DefenderTokens[3] -= 1;
+                    HUD.DefenderLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.GreenAttackToken;
                     AttackerTokens[2] += 1;
+                    HUD.AttackerObtainedToken.GetComponent<Animator>().runtimeAnimatorController = HUD.GreenAttackToken;
                     AffinityOutcome = "Advantage";
                     break;
                 case "Strategy": //Neutral
                     DefenderTokens[5] -= 1;
+                    HUD.DefenderLostToken.GetComponent<Animator>().runtimeAnimatorController = HUD.BlueAttackToken;
                     AffinityOutcome = "Neutral";
                     break;
                 default:

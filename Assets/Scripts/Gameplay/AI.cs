@@ -238,7 +238,7 @@ public class AI : MonoBehaviour
                     }
                 }
             }
-        } while (targetTokenPositionX == 0 && targetTokenPositionY == 0);      
+        } while (targetTokenPositionX == -1 && targetTokenPositionY == -1);      
 
             
         MakePath();
@@ -282,6 +282,10 @@ public class AI : MonoBehaviour
 
     public void FindSpecialTile() //in case AI chooses a token tile as a target, this function will select which specific tile he is going to
     {
+        //just to make sure
+        targetTokenPositionX = -1;
+        targetTokenPositionY = -1;
+
         foundTarget = false;
         int tilesNearEnemy = 0;
 
