@@ -288,6 +288,7 @@ public class Player : MonoBehaviour
         else if(gameObject.CompareTag("AI") && CanAttack == false) //making sure that the AI doesn't get stuck
         {
             AI.FindAIObjective();
+            GameplayManager.EndTurn();
         }
     }
 }

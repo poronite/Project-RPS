@@ -216,6 +216,7 @@ public class GameplayManager : MonoBehaviour
                     AdjustCamera(6, 8);
                     break;
                 case 3:
+                    AdjustCamera(6, 10);
                     break;
                 default:
                     break;
@@ -243,9 +244,6 @@ public class GameplayManager : MonoBehaviour
             {
                 ai.MakePath();
             }
-
-            //cameraPosition.x = Player2.transform.position.x;
-            //cameraPosition.y = Player2.transform.position.y;
 
             HUD.EndTurnButton.interactable = false;
             HUD.ExtraMovesButton.interactable = false;
@@ -338,10 +336,6 @@ public class GameplayManager : MonoBehaviour
     //get players ready for battle!
     public void ReadyAttack()
     {
-        //re-enable their components
-        AttackerController.enabled = true;
-        DefenderController.enabled = true;
-
         //both are now battling
         AttackerController.IsInAttackMenu = true;
         DefenderController.IsInAttackMenu = true;
@@ -511,7 +505,6 @@ public class GameplayManager : MonoBehaviour
         ai.FindAIObjective();
 
         AttackerController.NumberMovesLeft = 0;
-        AttackerController.enabled = true;
         HUD.Outcome();
     }
 

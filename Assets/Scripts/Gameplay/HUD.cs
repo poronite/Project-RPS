@@ -43,6 +43,11 @@ public class HUD : MonoBehaviour
     //screen gets darker when player is choosing the token
     public GameObject Filter;
 
+    public Animator AttackerAnimator;
+    public Animator DefenderAnimator;
+    public Image AttackerImage;
+    public Image DefenderImage;
+
     //references to the Outcome's elements
     public Text OutcomeUIText;
     public GameObject AttackerAvatar;
@@ -125,6 +130,15 @@ public class HUD : MonoBehaviour
     //display round and player turn
     public void ChangeTurnRoundHUD(int playerturn, int numRounds)
     {
+        if (playerturn == 1)
+        {
+            WhosTurn.color = new Color32(82, 98, 255, 255);
+        }
+        else if (playerturn == 2)
+        {
+            WhosTurn.color = new Color32(255, 82, 98, 255);
+        }
+
         WhosTurn.text = $"Player {playerturn}'s turn";
         NumRounds.text = "Round " + numRounds;
     }
@@ -265,11 +279,6 @@ public class HUD : MonoBehaviour
     //box with text that shows outcome of the battle
     public void Outcome()
     {
-        Animator AttackerAnimator = AttackerAvatar.GetComponent<Animator>();
-        Animator DefenderAnimator = DefenderAvatar.GetComponent<Animator>();
-        Image AttackerImage = AttackerAvatar.GetComponent<Image>();
-        Image DefenderImage = DefenderAvatar.GetComponent<Image>();
-
         if (GameplayManager.AttackerController.PlayerID == 1)
         {
             AttackerAnimator.runtimeAnimatorController = Player1Animation;
