@@ -11,8 +11,6 @@ public class AI : MonoBehaviour
     public bool DrawLine;
 
     public string AIObjective;
-    private bool foundTarget;
-    private int availableTiles = 0;
 
     public GameObject Player;
     public GameplayManager GameplayManager;
@@ -177,6 +175,11 @@ public class AI : MonoBehaviour
                 break;
         }
 
+        if (aiPositionX == TargetPositionX && aiPositionY == TargetPositionY)
+        {
+            FindAIObjective();
+        }
+
         Debug.Log($"Target X: {TargetPositionX}  |  Target Y: {TargetPositionY}");
 
 
@@ -244,18 +247,13 @@ public class AI : MonoBehaviour
         MakePath();
     }
 
-    private bool CheckTileAvailability() //verifies if there are tiles available
+    private bool CheckTileAvailability() //verifies if there are tiles off cooldown
     {
-        bool availability = false;
-
-        availableTiles = 0;
-
         foreach (GameObject RedSpecialTile in redSpecialTiles)
         {
             if (RedSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
             {
-                availableTiles += 1;
-                availability = true;
+                return true;
             }
         }
 
@@ -263,8 +261,7 @@ public class AI : MonoBehaviour
         {
             if (GreenSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
             {
-                availableTiles += 1;
-                availability = true;
+                return true;
             }
         }
 
@@ -272,12 +269,11 @@ public class AI : MonoBehaviour
         {
             if (BlueSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
             {
-                availableTiles += 1;
-                availability = true;
+                return true;
             }
         }
 
-        return availability;
+        return false;
     }
 
     public void FindSpecialTile() //in case AI chooses a token tile as a target, this function will select which specific tile he is going to
@@ -286,125 +282,60 @@ public class AI : MonoBehaviour
         targetTokenPositionX = -1;
         targetTokenPositionY = -1;
 
-        foundTarget = false;
-        int tilesNearEnemy = 0;
+        bool foundTarget = false;
 
-        Vector2 PlayerLocation = new Vector2(Player.transform.position.x, Player.transform.position.y);
+        int whichTileSide;
+
         Vector2 AILocation = new Vector2(transform.position.x, transform.position.y);
 
-        //variables that will help the AI decide whether which [insert color] tile is near him and far from the player
-        float AItoSpecialTile;
-        float PlayertoSpecialTile;
-
-        //do while that runs until AI doesn't find a token tile to go to
-        do
+        if (AILocation.y < 9) //AI will choose the token depending on the color and where he is on the map
         {
-            int SpecialTileTargetTile = Random.Range(1, 4); //1 = red, 2 = green, 3 = blue
+            whichTileSide = 0;
+        }
+        else
+        {
+            whichTileSide = 1;
+        }
 
-            Debug.Log(SpecialTileTargetTile);
+        int SpecialTileTargetTile = Random.Range(1, 4); //1 = red, 2 = green, 3 = blue
 
-            switch (SpecialTileTargetTile)
+        Debug.Log(SpecialTileTargetTile);
+
+        switch (SpecialTileTargetTile)
+        {
+            case 1:
+                foundTarget = decideSpecialTile(redSpecialTiles, whichTileSide, foundTarget);
+                break;
+            case 2:
+                foundTarget = decideSpecialTile(greenSpecialTiles, whichTileSide, foundTarget);
+                break;
+            case 3:
+                foundTarget = decideSpecialTile(blueSpecialTiles, whichTileSide, foundTarget);
+                break;
+            default:
+                break;
+        }
+
+        if (foundTarget == false)
+        {
+            targetTokenPositionX = -1;
+            targetTokenPositionY = -1;
+        }
+    }
+
+    private bool decideSpecialTile(List<GameObject> colorSpecialTiles, int whichTileSide, bool foundTarget)
+    {
+        for (int i = 0; i < colorSpecialTiles.Count; i++)
+        {
+            if (colorSpecialTiles[i].GetComponent<SpecialToken>().OffCooldown == true && i == whichTileSide && foundTarget == false)
             {
-                case 1:
-                    foreach (GameObject RedSpecialTile in redSpecialTiles)
-                    {
-                        if (RedSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
-                        {
-                            Vector2 RedSpecialTileLocation = new Vector2(RedSpecialTile.transform.position.x, RedSpecialTile.transform.position.y);
-
-                            AItoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - AILocation);
-                            PlayertoSpecialTile = Vector2.SqrMagnitude(RedSpecialTileLocation - PlayerLocation);
-
-                            if (foundTarget == false)
-                            {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 2)
-                                {
-                                    targetTokenPositionX = (int)RedSpecialTile.transform.position.x;
-                                    targetTokenPositionY = (int)RedSpecialTile.transform.position.y;
-                                    foundTarget = true;
-                                    availableTiles = 0;
-                                }
-                                else
-                                {
-                                    tilesNearEnemy += 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            targetTokenPositionX = -1;
-                            targetTokenPositionY = -1;
-                        }
-                    }
-                    break;
-                case 2:
-                    foreach (GameObject GreenSpecialTile in greenSpecialTiles)
-                    {
-                        if (GreenSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
-                        {
-                            Vector2 GreenSpecialTileLocation = new Vector2(GreenSpecialTile.transform.position.x, GreenSpecialTile.transform.position.y);
-
-                            AItoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - AILocation);
-                            PlayertoSpecialTile = Vector2.SqrMagnitude(GreenSpecialTileLocation - PlayerLocation);
-
-                            if (foundTarget == false)
-                            {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 2)
-                                {
-                                    targetTokenPositionX = (int)GreenSpecialTile.transform.position.x;
-                                    targetTokenPositionY = (int)GreenSpecialTile.transform.position.y;
-                                    foundTarget = true;
-                                    availableTiles = 0;
-                                }
-                                else
-                                {
-                                    tilesNearEnemy += 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            targetTokenPositionX = -1;
-                            targetTokenPositionY = -1;
-                        }
-                    }
-                    break;
-                case 3:
-                    foreach (GameObject BlueSpecialTile in blueSpecialTiles)
-                    {
-                        if (BlueSpecialTile.GetComponent<SpecialToken>().OffCooldown == true)
-                        {
-                            Vector2 BlueSpecialTileLocation = new Vector2(BlueSpecialTile.transform.position.x, BlueSpecialTile.transform.position.y);
-
-                            AItoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - AILocation);
-                            PlayertoSpecialTile = Vector2.SqrMagnitude(BlueSpecialTileLocation - PlayerLocation);
-
-                            if (foundTarget == false)
-                            {
-                                if (AItoSpecialTile < PlayertoSpecialTile || tilesNearEnemy >= availableTiles - 2)
-                                {
-                                    targetTokenPositionX = (int)BlueSpecialTile.transform.position.x;
-                                    targetTokenPositionY = (int)BlueSpecialTile.transform.position.y;
-                                    foundTarget = true;
-                                    availableTiles = 0;
-                                }
-                                else
-                                {
-                                    tilesNearEnemy += 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            targetTokenPositionX = -1;
-                            targetTokenPositionY = -1;
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                targetTokenPositionX = (int)colorSpecialTiles[i].transform.position.x;
+                targetTokenPositionY = (int)colorSpecialTiles[i].transform.position.y;
+                foundTarget = true;
+                Debug.Log($"Found Target at X: {targetTokenPositionX} | Y: {targetTokenPositionY}");
             }
+        }
 
-        }while (targetTokenPositionX == -1 && targetTokenPositionY == -1);
+        return foundTarget;
     }
 }
