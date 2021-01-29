@@ -104,6 +104,11 @@ public class SpecialToken : MonoBehaviour
                 SpecialTileActivated = true;
             }
 
+            if (SpecialTileActivated == true && collision.CompareTag("Player"))
+            {
+                AudioManager.AudioInstance.PlayClip("ObtainedToken");
+            }
+
             //this only happens if the player/ai gets a token aka activates the tile
             if (SpecialTileActivated == true)
             {

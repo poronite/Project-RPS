@@ -27,6 +27,8 @@ public class Plank : MonoBehaviour
     {
         if (collision.CompareTag("Player") || collision.CompareTag("AI"))
         {
+            AudioManager.AudioInstance.PlayClip("BridgeBreaking");
+
             playercount -= 1;
 
             if (GameplayManager.Map2Planks > 1 && playercount == 0)

@@ -23,7 +23,6 @@ public class HUD : MonoBehaviour
 
     public Button EndTurnButton;
     public Button ExtraMovesButton;
-    public Button MainMenuButton;
     public GameObject AttackConfirmationBox;
     public GameObject AttackSelectionBox;
     public GameObject ExtraMovesBox;
@@ -66,14 +65,25 @@ public class HUD : MonoBehaviour
     public Sprite Player2Image;
 
     //animations
+    //tokens
     public RuntimeAnimatorController RedAttackToken;
     public RuntimeAnimatorController RedDefenseToken;
     public RuntimeAnimatorController GreenAttackToken;
     public RuntimeAnimatorController GreenDefenseToken;
     public RuntimeAnimatorController BlueAttackToken;
     public RuntimeAnimatorController BlueDefenseToken;
+    //player avatar
     public RuntimeAnimatorController Player1Animation;
     public RuntimeAnimatorController Player2Animation;
+
+    //images tokens
+    public Sprite RedAttackImage;
+    public Sprite RedDefenseImage;
+    public Sprite GreenAttackImage;
+    public Sprite GreenDefenseImage;
+    public Sprite BlueAttackImage;
+    public Sprite BlueDefenseImage;
+
 
     //references to the ExtraMovesBox buttons
     public Button SacrificeRAToken;
@@ -156,7 +166,6 @@ public class HUD : MonoBehaviour
             //disable other buttons' functions while the player decides to attack
             EndTurnButton.interactable = false;
             ExtraMovesButton.interactable = false;
-            MainMenuButton.interactable = false;
         }
         else
         {
@@ -311,14 +320,34 @@ public class HUD : MonoBehaviour
             OutcomeUIText.text = $"{GameplayManager.Attacker.name} wins this match.";
 
             AttackerAnimator.enabled = true;
+
+            if (GameplayManager.AttackerController.PlayerID == 1)
+            {
+                AudioManager.AudioInstance.PlayClip("WinMatchGame");
+            }
+            else
+            {
+                AudioManager.AudioInstance.PlayClip("LoseMatchGame");
+            }
+
+            
         }
-        else if (GameplayManager.Winner != "")
+        else if (GameplayManager.Winner != "") //Winning the game
         {
             OutcomeUIText.text = $"{GameplayManager.Winner} wins the game!";
 
             AttackerAnimator.enabled = true;
+
+            if (GameplayManager.AttackerController.PlayerID == 1)
+            {
+                AudioManager.AudioInstance.PlayClip("WinMatchGame");
+            }
+            else
+            {
+                AudioManager.AudioInstance.PlayClip("LoseMatchGame");
+            }
         }
-        else if(GameplayManager.Winner == "" && GameplayManager.MatchWin == false)
+        else if(GameplayManager.Winner == "" && GameplayManager.MatchWin == false) //Normal battle outcomes
         {
             AttackerLostToken.SetActive(true);
 
@@ -328,14 +357,17 @@ public class HUD : MonoBehaviour
                     AttackerObtainedToken.SetActive(true);
                     DefenderLostToken.SetActive(true);
                     AttackerAnimator.enabled = true;
+                    AudioManager.AudioInstance.PlayClip("BattleOutcome");
                     break;
                 case "Disadvantage":
                     AttackerLostToken.SetActive(true);
                     DefenderAnimator.enabled = true;
+                    AudioManager.AudioInstance.PlayClip("BattleOutcome");
                     break;
                 case "Neutral":
                     AttackerLostToken.SetActive(true);
                     DefenderLostToken.SetActive(true);
+                    AudioManager.AudioInstance.PlayClip("BattleOutcome");
                     break;
                 default:
                     break;

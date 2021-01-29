@@ -373,18 +373,21 @@ public class GameplayManager : MonoBehaviour
                 {
                     HUD.PlayerRButton.interactable = false;
                     HUD.PlayerRButton.animator.enabled = false;
+                    HUD.PlayerRButton.image.sprite = HUD.RedAttackImage;
                 }
 
                 if (Player1Player.Tokens[2] == 0)
                 {
                     HUD.PlayerPButton.interactable = false;
                     HUD.PlayerPButton.animator.enabled = false;
+                    HUD.PlayerPButton.image.sprite = HUD.GreenAttackImage;
                 }
 
                 if (Player1Player.Tokens[4] == 0)
                 {
                     HUD.PlayerSButton.interactable = false;
                     HUD.PlayerSButton.animator.enabled = false;
+                    HUD.PlayerSButton.image.sprite = HUD.BlueAttackImage;
                 }
 
                 break;
@@ -394,18 +397,21 @@ public class GameplayManager : MonoBehaviour
                 {
                     HUD.PlayerRButton.interactable = false;
                     HUD.PlayerRButton.animator.enabled = false;
+                    HUD.PlayerRButton.image.sprite = HUD.RedDefenseImage;
                 }
 
                 if (Player1Player.Tokens[3] == 0)
                 {
                     HUD.PlayerPButton.interactable = false;
                     HUD.PlayerPButton.animator.enabled = false;
+                    HUD.PlayerPButton.image.sprite = HUD.BlueDefenseImage;
                 }
 
                 if (Player1Player.Tokens[5] == 0)
                 {
                     HUD.PlayerSButton.interactable = false;
                     HUD.PlayerSButton.animator.enabled = false;
+                    HUD.PlayerSButton.image.sprite = HUD.BlueDefenseImage;
                 }
 
                 break;

@@ -91,6 +91,9 @@ public class AudioManager : MonoBehaviour
             case 2:
                 PlayClip("Map2Theme");
                 break;
+            case 3:
+                PlayClip("Map3Theme");
+                break;
             default:
                 break;
         }

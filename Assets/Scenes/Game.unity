@@ -16116,7 +16116,6 @@ MonoBehaviour:
   NumSDefTokens: {fileID: 2060641816}
   EndTurnButton: {fileID: 1902788708}
   ExtraMovesButton: {fileID: 451683517}
-  MainMenuButton: {fileID: 0}
   AttackConfirmationBox: {fileID: 1070812801}
   AttackSelectionBox: {fileID: 1120609518}
   ExtraMovesBox: {fileID: 1717211709}
@@ -16152,6 +16151,12 @@ MonoBehaviour:
   BlueDefenseToken: {fileID: 9100000, guid: 48504265730574441b66b79f318abad8, type: 2}
   Player1Animation: {fileID: 9100000, guid: 7b707b23bdb45bc4bb9fff145791813b, type: 2}
   Player2Animation: {fileID: 9100000, guid: d3bcc350a8b775346b5dbd4a85c0f66e, type: 2}
+  RedAttackImage: {fileID: 21300000, guid: 102e6833f3faa27418144387fd708c1d, type: 3}
+  RedDefenseImage: {fileID: 21300000, guid: 820c60a03b6532d45b1e6e148748d0e0, type: 3}
+  GreenAttackImage: {fileID: 21300000, guid: 9bb85391713c5344e85d616b078bfda4, type: 3}
+  GreenDefenseImage: {fileID: 21300000, guid: 6ed1735e659dbe241ba0f23ae989e39a, type: 3}
+  BlueAttackImage: {fileID: 21300000, guid: 2e241c428e55e0240921bbcb9513641e, type: 3}
+  BlueDefenseImage: {fileID: 21300000, guid: 13280ff55392a15428fd78ad3f5ceefb, type: 3}
   SacrificeRAToken: {fileID: 1056369727}
   SacrificePAToken: {fileID: 684640659}
   SacrificeSAToken: {fileID: 426592296}
