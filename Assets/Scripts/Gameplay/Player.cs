@@ -182,6 +182,11 @@ public class Player : MonoBehaviour
             GameplayManager.EndTurn();
         }
 
+        if (Input.GetButtonDown("Main Menu"))
+        {
+            GameplayManager.MainMenu();
+        }
+
         //AI
         //AI ends turn if it can't move or attack
         if (CompareTag("AI"))

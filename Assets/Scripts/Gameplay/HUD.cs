@@ -276,7 +276,8 @@ public class HUD : MonoBehaviour
         DefenderChoice = choice;
     }
 
-    //box with text that shows outcome of the battle
+    //images that represent the outcome of the battle
+    //for whatever reason the animation of the player avatars isn't working
     public void Outcome()
     {
         if (GameplayManager.AttackerController.PlayerID == 1)
