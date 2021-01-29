@@ -14,6 +14,7 @@ public class Plank : MonoBehaviour
         GameplayManager.instance.ResetPlanksDelegate += ResetPlanks;
     }
 
+    //when entering bridge
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") || collision.CompareTag("AI"))
@@ -23,16 +24,18 @@ public class Plank : MonoBehaviour
         }
     }
 
+    //when leaving bridge
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") || collision.CompareTag("AI"))
         {
-            AudioManager.AudioInstance.PlayClip("BridgeBreaking");
-
             playercount -= 1;
 
+            //destroy bridge if condition met
             if (GameplayManager.Map2Planks > 1 && playercount == 0)
             {
+                AudioManager.AudioInstance.PlayClip("BridgeBreaking");
+
                 switch (gameObject.name)
                 {
                     case "PlankLeft":

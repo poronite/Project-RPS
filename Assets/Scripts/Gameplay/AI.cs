@@ -205,7 +205,6 @@ public class AI : MonoBehaviour
             else
             {
                 int numberAttackTokens = aiController.Tokens[0] + aiController.Tokens[2] + aiController.Tokens[4];
-                //int tokencount = System.Convert.ToInt32(aiController.Tokens[0] > 0) + System.Convert.ToInt32(aiController.Tokens[2] > 0) + System.Convert.ToInt32(aiController.Tokens[4] > 0);
 
                 switch (numberAttackTokens)
                 {

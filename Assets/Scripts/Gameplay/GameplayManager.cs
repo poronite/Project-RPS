@@ -530,38 +530,32 @@ public class GameplayManager : MonoBehaviour
     {
         if (Player1Player.Tokens[0] == 0)
         {
-            HUD.SacrificeRAToken.interactable = false;
-            HUD.SacrificeRAToken.image.color = Color.gray;
+            HUD.SacrificeRAToken.interactable = false;            
         }
 
         if (Player1Player.Tokens[1] == 0)
         {
-            HUD.SacrificeRDToken.interactable = false;
-            HUD.SacrificeRDToken.image.color = Color.gray;
+            HUD.SacrificeRDToken.interactable = false;            
         }
 
         if (Player1Player.Tokens[2] == 0)
         {
-            HUD.SacrificePAToken.interactable = false;
-            HUD.SacrificePAToken.image.color = Color.gray;
+            HUD.SacrificePAToken.interactable = false;           
         }
 
         if (Player1Player.Tokens[3] == 0)
         {
             HUD.SacrificePDToken.interactable = false;
-            HUD.SacrificePDToken.image.color = Color.gray;
         }
 
         if (Player1Player.Tokens[4] == 0)
         {
             HUD.SacrificeSAToken.interactable = false;
-            HUD.SacrificeSAToken.image.color = Color.gray;
         }
 
         if (Player1Player.Tokens[5] == 0)
         {
             HUD.SacrificeSDToken.interactable = false;
-            HUD.SacrificeSDToken.image.color = Color.gray;
         }
     }
 
