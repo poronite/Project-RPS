@@ -114,14 +114,15 @@ public class HUD : MonoBehaviour
     //display moves left
     public void MovesLeftHUD(int movesleft)
     {
+        CurrentPlayerMovesLeft.text = $"{movesleft} moves left";
+
+        //and change EndTurnButton color to a light yellow
         if (movesleft > 0)
         {
-            CurrentPlayerMovesLeft.text = $"{movesleft} moves left";
             EndTurnButton.image.color = new Color32(255, 255, 255, 255);
         }
         else if (movesleft == 0)
-        {
-            CurrentPlayerMovesLeft.text = "No moves left";
+        {            
             EndTurnButton.image.color = new Color32(255, 242, 136, 255);
         }
     }
